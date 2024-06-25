@@ -1,36 +1,51 @@
 package Game;
 
+import java.util.*;
+
 public class Cards {
-
-    enum ValueName{ //doing these to make everything look better
-        Two (2), //started from 2 instead of 0 to avoid confusion. might change this later
-        Three (3),
-        Four (4),
-        Five (5),
-        Six (6),
-        Seven (7),
-        Eight (8),
-        Nine (9),
-        Jack (10),
-        Queen (11),
-        King (12),
-        Ace (13);
-
-        private final int value;
-        ValueName(int value){this.value = value;}
-
-        public int getValue() {return this.value;}
-
-        public static ValueName getValueName(int value){
-            for(ValueName desiredValue : ValueName.values()){
-                if(desiredValue.getValue() == value){
-                    return desiredValue;
-                }
-            }
-            return null; //might have to change this
-        }
-
-
+    private  ArrayList<Card> cards = new ArrayList<>();
+    public  ArrayList<Card> getCards() {
+        return cards;
     }
-
+    public void setCards(ArrayList<Card> cards) {
+        this.cards = cards;
+    }
+    public Cards() {
+        CreateCards();
+        ShuffleCards();
+    }
+    public void CreateCards () {
+        ArrayList<Card> card = new ArrayList<>();
+        for (Rank rank : Rank.values()) {
+            for (CardSuit suit : CardSuit.values()) {
+                card.add(new Card(suit, rank));
+            }
+        }
+        setCards(card);
+    }
+    public void ShuffleCards () {
+        Collections.shuffle(getCards());
+    }
 }
+//private static String[][] cards = new String[4][13];
+//public static String[][] getCards() {
+//    return cards;
+//}
+//public void setCards(String[][] cards) {
+//    this.cards = cards;
+//}
+//
+//
+//public static String[][] ShuffleTheCards(String[][] cards) {
+//    Random random = new Random();
+//    for (int i = 0; i < 4 ; i++) {
+//        for (int j = 0 ; j < 13 ; j++) {
+//            int RandomNumberForChangeRank = random.nextInt(13);
+//            int RandomNumberForChangeSuit = random.nextInt(4);
+//            String temp = cards[i][j];
+//            cards[i][j] = cards[RandomNumberForChangeSuit][RandomNumberForChangeRank];
+//            cards[RandomNumberForChangeSuit][RandomNumberForChangeRank] = temp;
+//        }
+//    }
+//    return cards;
+//}
