@@ -9,4 +9,7 @@ public enum Rank {
     public int getRankValue() {
         return rank;
     }
+    public String getName() {
+        return this.name();
+    }
 }

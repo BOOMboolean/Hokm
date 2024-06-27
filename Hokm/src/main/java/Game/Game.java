@@ -3,16 +3,14 @@ package Game;
 import java.util.*;
 
 public class Game {
-    Team team;
-    Cards cards = new Cards();
-    CardSuit cardSuit;
+    Cards cards ;
     public Game() {
-        this.team = new Team(new Player("navid", "1", cards.getHand1()), new Player("amir", "2", cards.getHand2()), new Player("danial", "3", cards.getHand3()), new Player("mahta", "4", cards.getHand3()));
+        this.cards = new Cards();
     }
     public void Specify_Hokm() {
-        System.out.println("please set the hokm"  /* "( + team.getHakem().getName() + ")"*/);
+        System.out.println("please set the hokm" +  "(" + cards.team.getHakem().getName() + ")");
         for (int i = 0; i < 5; i++) {
-            System.out.println(cards.getHand1().get(i));
+            System.out.println(cards.team.getPlayer1().getHand().get(i));
         }
         while (true)
         {
@@ -40,6 +38,14 @@ public class Game {
             }
             System.out.println("Something went wrong, try again");
         }
+        System.out.println("Hokm is : " + cards.getHOKM());
     }
+    public void StartGame() {
+        cards.ShowHand(cards.team.getHakem());
+        System.out.println("enter the card(suit.rank)");
+        Scanner scanner = new Scanner(System.in);
+        String inputHakem = scanner.nextLine();
+        cards.ConvertPlayingCards(inputHakem);
 
+    }
 }

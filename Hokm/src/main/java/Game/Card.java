@@ -15,4 +15,16 @@ public class Card {
 //                '}';
         return (suit + "." + rank.toString());
     }
+    public CardSuit getSuit() {
+        return suit;
+    }
+    public Rank getRank() {
+        return rank;
+    }
+    public void setRank(Rank rank) {
+        this.rank = rank;
+    }
+    public void setSuit(CardSuit suit) {
+        this.suit = suit;
+    }
 }

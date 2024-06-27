@@ -13,21 +13,20 @@ public class Team {
             this.player3 = player3;
             this.player4 = player4;
         }
-        public void Specify_Hakem()
-        {
-            Player[] players = {player1, player2, player3, player4};
-            Random random = new Random();
-            int randomIndex = random.nextInt(4);
-            setHakem(players[randomIndex]) ;
-            System.out.println("Hakem is:" + getHakem().getName());
+        public void Specify_Hakem() {
+         Player[] players = {player1, player2, player3, player4};
+         Random random = new Random();
+         int randomIndex = random.nextInt(4);
+         setHakem(players[randomIndex]) ;
+//         System.out.println("Hakem is:" + getHakem().getName());
         }
-    public Player getHakem() {
+        public Player getHakem() {
         return Hakem;
     }
-    public void setHakem(Player hakem) {
+        public void setHakem(Player hakem) {
         Hakem = hakem;
     }
-    public Player getPlayer1() {
+        public Player getPlayer1() {
             return player1;
         }
         public void setPlayer1(Player player1) {
