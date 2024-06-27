@@ -1,1 +1,1 @@
-Hello and welcome to our Hokm project!
+Add the function of determining the verdict by the ruler with the test

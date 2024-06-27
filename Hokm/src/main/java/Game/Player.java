@@ -1,7 +1,6 @@
 package Game;
 
-import java.util.ArrayList;
-
+import java.util.*;
 public class Player {
     private String Name;
     private String ID;
@@ -12,7 +11,6 @@ public class Player {
         this.ID = Id;
         this.Hand = Hand;
     }
-    
     public String getName() {
         return Name;
     }
@@ -25,21 +23,16 @@ public class Player {
     public void setID(String iD) {
         ID = iD;
     }
-
     public Team getTeam() {
       return team;
     }
-
     public void setTeam(Team team) {
       this.team = team;
     }
-
     public ArrayList<Card> getHand() {
         return Hand;
     }
-
     public void setHand(ArrayList<Card> hand) {
         Hand = hand;
     }
-    
 }
