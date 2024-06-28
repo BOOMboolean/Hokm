@@ -31,7 +31,7 @@ public class Cards {
         }
         setCards(card);
     }
-    public void ConvertPlayingCards (String input) {
+    public Card ConvertPlayingCards (String input) {
         Card card = null;
         String[] list = input.split("\\.");
         if (Objects.equals(list[0], CardSuit.Spades.getName())) {card.setSuit(CardSuit.Spades);}
@@ -51,7 +51,7 @@ public class Cards {
         if (Objects.equals(list[1], Rank.Jack.getName())) { card.setRank(Rank.Jack); }
         if (Objects.equals(list[1], Rank.Queen.getName())) { card.setRank(Rank.Queen); }
         if (Objects.equals(list[1], Rank.King.getName())) { card.setRank(Rank.King); }
-        setPlayingCard(card);
+        return card;
     }
     public void ShowHand(Player player) {
         if (player == team.getPlayer1()) {

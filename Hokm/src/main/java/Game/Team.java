@@ -51,5 +51,3 @@ public class Team {
             this.player4 = player4;
         }
 }
-
-

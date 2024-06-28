@@ -15,6 +15,6 @@ public class Test {
 //        System.out.println(cards.getHand1() + "\n"+ cards.getHand2() + "\n" + cards.getHand3() + "\n" + cards.getHand4());
         Game game = new Game();
 //        game.Specify_Hokm();
-        game.StartGame();
+        game.FirstGame();
     }
 }
