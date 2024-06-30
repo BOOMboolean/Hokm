@@ -4,12 +4,25 @@ import java.util.*;
 public class Team {
         private Player player1 ;
         private Player player2 ;
+        private int score;
        // private Player Hakem ;
         public Team (Player player1, Player player2) {
             this.player1 = player1;
             this.player2 = player2;
+            this.score = 0;
         }
-       // public void Specify_Hakem() {
+        public void addScore(Team team){
+            int i = team.getScore();
+            i++;
+            team.setScore(i);
+        }
+    public int getScore() {
+        return score;
+    }
+    public void setScore(int score) {
+        this.score = score;
+    }
+    // public void Specify_Hakem() {
         // Player[] players = {player1, player2};
          //Random random = new Random();
          //int randomIndex = random.nextInt(2);

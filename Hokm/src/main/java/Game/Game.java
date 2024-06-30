@@ -77,10 +77,16 @@ public class Game {
         temp.remove(card);
         player.setHand(temp);
     }
-    public void SuitCheck (CardSuit firstCard , Card newCard){
+
+    public void Throw (Player player , Card card){
 
     }
-    public Team WinningHandCheck (Card card1 , Card card2 , Card card3 , Card card4) {
-
+    public boolean SuitCheck (Card firstCard , Card newCard){
+        if(newCard.getSuit() == firstCard.getSuit()){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }
