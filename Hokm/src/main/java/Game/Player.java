@@ -6,10 +6,17 @@ public class Player {
     private String ID;
     Team team;
     private ArrayList<Card> Hand;
+    private Card card;
     public Player(String name , String Id, ArrayList<Card> Hand) {
         this.Name = name;
         this.ID = Id;
         this.Hand = Hand;
+    }
+    public Card getCard() {
+        return card;
+    }
+    public void setCard(Card card) {
+        this.card = card;
     }
     public String getName() {
         return Name;

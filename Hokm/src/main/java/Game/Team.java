@@ -18,7 +18,7 @@ public class Team {
          Random random = new Random();
          int randomIndex = random.nextInt(4);
          setHakem(players[randomIndex]) ;
-//         System.out.println("Hakem is:" + getHakem().getName());
+//       System.out.println("Hakem is:" + getHakem().getName());
         }
         public Player getHakem() {
         return Hakem;

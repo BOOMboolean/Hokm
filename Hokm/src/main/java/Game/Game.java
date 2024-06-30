@@ -4,32 +4,11 @@ import java.util.*;
 
 public class Game {
     private Cards cards ;
-    private Card card2;
-    private Card card3;
-    private Card card4;
-    public Card getCard2() {
-        return card2;
-    }
-    public Card getCard4() {
-        return card4;
-    }
-    public Card getCard3() {
-        return card3;
-    }
     public Cards getCards() {
         return cards;
     }
     public void setCards(Cards cards) {
         this.cards = cards;
-    }
-    public void setCard2(Card card2) {
-        this.card2 = card2;
-    }
-    public void setCard3(Card card3) {
-        this.card3 = card3;
-    }
-    public void setCard4(Card card4) {
-        this.card4 = card4;
     }
     public Game() {
         this.cards = new Cards();
@@ -90,5 +69,8 @@ public class Game {
         temp = player.getHand();
         temp.remove(card);
         player.setHand(temp);
+    }
+    public void ValueCheck(Card card1 , Card card2) {
+
     }
 }
