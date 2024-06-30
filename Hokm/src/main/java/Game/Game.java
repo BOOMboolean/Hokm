@@ -13,10 +13,17 @@ public class Game {
     public Game() {
         this.cards = new Cards();
     }
+    // public void Specify_Hakem() {
+    // Player[] players = {player1, player2};
+    //Random random = new Random();
+    //int randomIndex = random.nextInt(2);
+    //setHakem(players[randomIndex]) ;
+//       System.out.println("Hakem is:" + getHakem().getName());
+//        }
     public void Specify_Hokm() {
         System.out.println("please set the hokm" +  "(" + cards.team.getHakem().getName() + ")");
         for (int i = 0; i < 5; i++) {
-            System.out.println(cards.team.getPlayer1().getHand().get(i));  //player1 is presumably the Hakem
+            System.out.println(cards.team1.getPlayer1().getHand().get(i));  //player1 is presumably the Hakem
         }
         while (true)
         {
@@ -70,7 +77,10 @@ public class Game {
         temp.remove(card);
         player.setHand(temp);
     }
-    public void ValueCheck(Card card1 , Card card2) {
+    public void SuitCheck (CardSuit firstCard , Card newCard){
+
+    }
+    public Team WinningHandCheck (Card card1 , Card card2 , Card card3 , Card card4) {
 
     }
 }

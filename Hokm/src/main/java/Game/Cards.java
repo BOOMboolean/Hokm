@@ -4,7 +4,8 @@ import java.util.*;
 
 public class Cards {
     private ArrayList<Card> cards;
-    Team team;
+    Team team1;
+    Team team2;
     Card PlayingCard;
     ArrayList<Card> hand1 = new ArrayList<>();
     ArrayList<Card> hand2 = new ArrayList<>();
@@ -13,10 +14,11 @@ public class Cards {
     private CardSuit HOKM;
     public Cards() {
           this.cards = new ArrayList<>();
-          this.team = new Team(new Player("navid", "1", hand1), new Player("amir", "2", hand2), new Player("danial", "3", hand3), new Player("mahta", "4",hand4));
+          this.team1 = new Team(new Player("navid", "1", hand1), new Player("amir", "2", hand2));
+          this.team2 = new Team( new Player("danial", "3", hand3), new Player("mahta", "4",hand4));
           //این بالا جای این پلیر ها باید اسم هایی که تو  سرور هست رو بزاریم  و بعد بازی ادامه پیدا کنه
           Hand();
-          team.Specify_Hakem();
+//          team.Specify_Hakem();
     }
     public void Deck() {
         CreateCards();
@@ -54,17 +56,17 @@ public class Cards {
         return card;
     }
     public void ShowHand(Player player) {
-        if (player == team.getPlayer1()) {
-            System.out.println(team.getPlayer1().getHand());
+        if (player == team1.getPlayer1()) {
+            System.out.println(team1.getPlayer1().getHand());
         }
-        else if (player == team.getPlayer2()) {
-            System.out.println(team.getPlayer2().getHand());
+        else if (player == team1.getPlayer2()) {
+            System.out.println(team1.getPlayer2().getHand());
         }
-        else if (player == team.getPlayer3()) {
-            System.out.println(team.getPlayer3().getHand());
+        else if (player == team2.getPlayer1()) {
+            System.out.println(team2.getPlayer1().getHand());
         }
-        else if (player == team.getPlayer4()) {
-            System.out.println(team.getPlayer4().getHand());
+        else if (player == team2.getPlayer2()) {
+            System.out.println(team2.getPlayer2().getHand());
         }
     }
     public void ShuffleCards () {
@@ -79,6 +81,10 @@ public class Cards {
                 hand3.add(cards.get(i+26));
                 hand4.add(cards.get(i+39));
             }
+            team1.getPlayer1().setHand(hand1);
+            team1.getPlayer2().setHand(hand2);
+            team2.getPlayer1().setHand(hand3);
+            team2.getPlayer2().setHand(hand4);
         }
     public void setPlayingCard(Card playingCard) {
         PlayingCard = playingCard;
@@ -98,34 +104,16 @@ public class Cards {
     public void setCards(ArrayList<Card> cards) {
         this.cards = cards;
     }
-    public Team getTeam() {
-        return team;
+    public Team getTeam1() {
+        return team1;
     }
-    public void setTeam(Team team) {
-        this.team = team;
+    public void setTeam1(Team team) {
+        this.team1 = team;
     }
-    //    public ArrayList<Card> getHand1() {
-//        return hand1;
-//    }
-//    public void setHand1(ArrayList<Card> hand1) {
-//        this.hand1 = hand1;
-//    }
-//    public ArrayList<Card> getHand2() {
-//        return hand2;
-//    }
-//    public void setHand2(ArrayList<Card> hand2) {
-//        this.hand2 = hand2;
-//    }
-//    public ArrayList<Card> getHand3() {
-//        return hand3;
-//    }
-//    public void setHand3(ArrayList<Card> hand3) {
-//        this.hand3 = hand3;
-//    }
-//    public ArrayList<Card> getHand4() {
-//        return hand4;
-//    }
-//    public void setHand4(ArrayList<Card> hand4) {
-//        this.hand4 = hand4;
-//    }
+    public Team getTeam2() {
+        return team2;
+    }
+    public void setTeam2(Team team2) {
+        this.team2 = team2;
+    }
 }
