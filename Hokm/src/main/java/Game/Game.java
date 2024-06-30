@@ -6,7 +6,7 @@ public class Game {
     private Cards cards ;
     private CardSuit HOKM;
     private Player Hakem;
-    private Card PlayingCard;
+    private Card FisrtPlayedCard;
     public Player getHakem() {
         return Hakem;
     }
@@ -14,10 +14,10 @@ public class Game {
         Hakem = hakem;
     }
     public void setPlayingCard(Card playingCard) {
-        PlayingCard = playingCard;
+        FisrtPlayedCard = playingCard;
     }
     public Card getPlayingCard() {
-        return PlayingCard;
+        return FisrtPlayedCard;
     }
     public CardSuit getHOKM() {
         return HOKM;
