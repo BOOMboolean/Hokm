@@ -6,14 +6,11 @@ public class Cards {
     private ArrayList<Card> cards;
     Team team1;
     Team team2;
-    ArrayList<Card> hand1 = new ArrayList<>();
-    ArrayList<Card> hand2 = new ArrayList<>();
-    ArrayList<Card> hand3 = new ArrayList<>();
-    ArrayList<Card> hand4 = new ArrayList<>();
+
     public Cards() {
           this.cards = new ArrayList<>();
-          this.team1 = new Team(new Player("navid", "1", hand1), new Player("amir", "2", hand2));
-          this.team2 = new Team( new Player("danial", "3", hand3), new Player("mahta", "4",hand4));
+          //this.team1 = new Team(new Player("navid", "1", hand1), new Player("amir", "2", hand2));
+          //this.team2 = new Team( new Player("danial", "3", hand3), new Player("mahta", "4",hand4));
           //این بالا جای این پلیر ها باید اسم هایی که تو  سرور هست رو بزاریم  و بعد بازی ادامه پیدا کنه
           Hand();
 //          team.Specify_Hakem();
@@ -72,6 +69,10 @@ public class Cards {
     }
     public void Hand() {
             Deck();
+        ArrayList<Card> hand1 = new ArrayList<>();
+        ArrayList<Card> hand2 = new ArrayList<>();
+        ArrayList<Card> hand3 = new ArrayList<>();
+        ArrayList<Card> hand4 = new ArrayList<>();
             for(int i = 0 ; i < 13 ; i++ )
             {
                 hand1.add(cards.get(i));

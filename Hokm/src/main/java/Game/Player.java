@@ -4,6 +4,7 @@ import java.util.*;
 public class Player {
     private String Name;
     private String ID;
+    private boolean isHakem;
     Team team;
     private ArrayList<Card> hand;
     private Card playingCard;
@@ -12,6 +13,7 @@ public class Player {
         this.Name = name;
         this.ID = Id;
         this.hand = hand;
+        this.isHakem = false;
     }
     public void RemoveCard (Card card) {
         ArrayList<Card> temp = new ArrayList<>();
@@ -52,5 +54,13 @@ public class Player {
     }
     public void setHand(ArrayList<Card> hand) {
         hand = hand;
+    }
+
+    public void setHakem(boolean hakem) {
+        isHakem = hakem;
+    }
+
+    public boolean isHakem() {
+        return isHakem;
     }
 }
