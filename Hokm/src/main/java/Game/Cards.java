@@ -6,12 +6,10 @@ public class Cards {
     private ArrayList<Card> cards;
     Team team1;
     Team team2;
-    Card PlayingCard;
     ArrayList<Card> hand1 = new ArrayList<>();
     ArrayList<Card> hand2 = new ArrayList<>();
     ArrayList<Card> hand3 = new ArrayList<>();
     ArrayList<Card> hand4 = new ArrayList<>();
-    private CardSuit HOKM;
     public Cards() {
           this.cards = new ArrayList<>();
           this.team1 = new Team(new Player("navid", "1", hand1), new Player("amir", "2", hand2));
@@ -86,18 +84,6 @@ public class Cards {
             team2.getPlayer1().setHand(hand3);
             team2.getPlayer2().setHand(hand4);
         }
-    public void setPlayingCard(Card playingCard) {
-        PlayingCard = playingCard;
-    }
-    public Card getPlayingCard() {
-        return PlayingCard;
-    }
-    public CardSuit getHOKM() {
-        return HOKM;
-    }
-    public void setHOKM(CardSuit HOKM) {
-        this.HOKM = HOKM;
-    }
     public  ArrayList<Card> getCards() {
         return cards;
     }
