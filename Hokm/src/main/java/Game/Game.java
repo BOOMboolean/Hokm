@@ -4,6 +4,27 @@ import java.util.*;
 
 public class Game {
     private Cards cards ;
+    private CardSuit HOKM;
+    private Player Hakem;
+    private Card PlayingCard;
+    public Player getHakem() {
+        return Hakem;
+    }
+    public void setHakem(Player hakem) {
+        Hakem = hakem;
+    }
+    public void setPlayingCard(Card playingCard) {
+        PlayingCard = playingCard;
+    }
+    public Card getPlayingCard() {
+        return PlayingCard;
+    }
+    public CardSuit getHOKM() {
+        return HOKM;
+    }
+    public void setHOKM(CardSuit HOKM) {
+        this.HOKM = HOKM;
+    }
     public Cards getCards() {
         return cards;
     }
@@ -13,17 +34,17 @@ public class Game {
     public Game() {
         this.cards = new Cards();
     }
-    // public void Specify_Hakem() {
-    // Player[] players = {player1, player2};
-    //Random random = new Random();
-    //int randomIndex = random.nextInt(2);
-    //setHakem(players[randomIndex]) ;
+     public void Specify_Hakem() {
+         Player[] players = {cards.team1.getPlayer1(), cards.team1.getPlayer2() , cards.team2.getPlayer1() , cards.team2.getPlayer2()};
+         Random random = new Random();
+         int randomIndex = random.nextInt(2);
+         setHakem(players[randomIndex]);
 //       System.out.println("Hakem is:" + getHakem().getName());
-//        }
+        }
     public void Specify_Hokm() {
-        System.out.println("please set the hokm" +  "(" + cards.team.getHakem().getName() + ")");
+        System.out.println("please set the hokm" +  "(" + getHakem().getName() + ")");
         for (int i = 0; i < 5; i++) {
-            System.out.println(cards.team1.getPlayer1().getHand().get(i));  //player1 is presumably the Hakem
+            System.out.println(getHakem().getHand().get(i));  //player1 is presumably the Hakem
         }
         while (true)
         {
@@ -31,45 +52,46 @@ public class Game {
             String test = inputHakem.nextLine();
             if (Objects.equals(test, CardSuit.Clubs.getName()))
             {
-                cards.setHOKM(CardSuit.Clubs);
+                setHOKM(CardSuit.Clubs);
                 break;
             }
             else if (Objects.equals(test, CardSuit.Spades.getName()))
             {
-                cards.setHOKM(CardSuit.Spades);
+                setHOKM(CardSuit.Spades);
                 break;
             }
             else if (Objects.equals(test, CardSuit.Hearts.getName()))
             {
-                cards.setHOKM(CardSuit.Hearts);
+                setHOKM(CardSuit.Hearts);
                 break;
             }
             else if (Objects.equals(test, CardSuit.Diamonds.getName()))
             {
-                cards.setHOKM(CardSuit.Diamonds);
+                setHOKM(CardSuit.Diamonds);
                 break;
             }
             System.out.println("Something went wrong, try again");
         }
-        System.out.println("Hokm is : " + cards.getHOKM());
+        System.out.println("Hokm is : " + getHOKM().getName());
     }
-    public void FirstGame() {
-        cards.ShowHand(cards.team.getHakem());
+//    public void FirstGame() {
+//        cards.ShowHand(cards.team.getHakem());
+//        System.out.println("enter the card(suit.rank)");
+//        Scanner scanner = new Scanner(System.in);
+//        String input = scanner.nextLine();
+//        cards.setPlayingCard(cards.ConvertPlayingCards(input));
+//        RemoveCard(cards.team.getHakem(), cards.getPlayingCard());
+////        System.out.println(input);
+////        باید برای همه نشون داده شه
+//    }
+    public void StartGame() {
+        cards.ShowHand(getHakem());
         System.out.println("enter the card(suit.rank)");
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
-        cards.setPlayingCard(cards.ConvertPlayingCards(input));
-        RemoveCard(cards.team.getHakem(), cards.getPlayingCard());
-//        System.out.println(input);
-//        باید برای همه نشون داده شه
-    }
-    public void StartGame(Player player) {
-        cards.ShowHand(player);
-        System.out.println("enter the card(suit.rank)");
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-        cards.setPlayingCard(cards.ConvertPlayingCards(input));
-        RemoveCard(player,cards.getPlayingCard());
+        setPlayingCard(cards.ConvertPlayingCards(input));
+        RemoveCard(getHakem(),getPlayingCard());
+        //  باید برای همه نشون داده شه
     }
     public void RemoveCard (Player player , Card card) {
         ArrayList<Card> temp = new ArrayList<>();
