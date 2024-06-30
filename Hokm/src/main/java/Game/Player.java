@@ -5,18 +5,29 @@ public class Player {
     private String Name;
     private String ID;
     Team team;
-    private ArrayList<Card> Hand;
-    private Card card;
-    public Player(String name , String Id, ArrayList<Card> Hand) {
+    private ArrayList<Card> hand;
+    private Card playingCard;
+    public OnGoingRound onGoingRound;
+    public Player(String name , String Id, ArrayList<Card> hand) {
         this.Name = name;
         this.ID = Id;
-        this.Hand = Hand;
+        this.hand = hand;
     }
-    public Card getCard() {
-        return card;
+    public void RemoveCard (Card card) {
+        ArrayList<Card> temp = new ArrayList<>();
+        temp = getHand();
+        temp.remove(card);
+        setHand(temp);
     }
-    public void setCard(Card card) {
-        this.card = card;
+    public void Throw (Card card){
+        RemoveCard(card);
+        onGoingRound.ShowPlayedCard(card);
+    }
+    public Card getPlayingCard() {
+        return playingCard;
+    }
+    public void setPlayingCard(Card playingCard) {
+        this.playingCard = playingCard;
     }
     public String getName() {
         return Name;
@@ -37,9 +48,9 @@ public class Player {
       this.team = team;
     }
     public ArrayList<Card> getHand() {
-        return Hand;
+        return hand;
     }
     public void setHand(ArrayList<Card> hand) {
-        Hand = hand;
+        hand = hand;
     }
 }

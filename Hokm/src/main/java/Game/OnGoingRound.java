@@ -2,37 +2,31 @@ package Game;
 
 import java.util.*;
 
-public class Game {
+public class OnGoingRound {
     private Cards cards ;
     private CardSuit HOKM;
     private Player Hakem;
     private Card FisrtPlayedCard;
-    public Player getHakem() {
-        return Hakem;
+    private boolean isFirstRound;
+    private Team team1;
+    private Team team2;
+    public OnGoingRound(boolean isFirstRound) {
+        this.isFirstRound = isFirstRound;
+
+     //   this.cards = new Cards();
+      //  cards.team1.getPlayer1();
     }
-    public void setHakem(Player hakem) {
-        Hakem = hakem;
+    public void FirstGameStartUp(){
+
     }
-    public void setPlayingCard(Card playingCard) {
-        FisrtPlayedCard = playingCard;
-    }
-    public Card getPlayingCard() {
-        return FisrtPlayedCard;
-    }
-    public CardSuit getHOKM() {
-        return HOKM;
-    }
-    public void setHOKM(CardSuit HOKM) {
-        this.HOKM = HOKM;
-    }
-    public Cards getCards() {
-        return cards;
-    }
-    public void setCards(Cards cards) {
-        this.cards = cards;
-    }
-    public Game() {
-        this.cards = new Cards();
+    public void roundWin(){
+        if(/*any team reaching the score of 7*/){
+            new OnGoingRound(true);
+        }
+        else {
+            new OnGoingRound(false);
+        }
+
     }
      public void Specify_Hakem() {
          Player[] players = {cards.team1.getPlayer1(), cards.team1.getPlayer2() , cards.team2.getPlayer1() , cards.team2.getPlayer2()};
@@ -84,31 +78,45 @@ public class Game {
 ////        System.out.println(input);
 ////        باید برای همه نشون داده شه
 //    }
-    public void StartGame() {
-        cards.ShowHand(getHakem());
-        System.out.println("enter the card(suit.rank)");
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-        setPlayingCard(cards.ConvertPlayingCards(input));
-        RemoveCard(getHakem(),getPlayingCard());
+    //public void StartingRound() {
+        //cards.ShowHand(getHakem());
+        //System.out.println("enter the card(suit.rank)");
+        //Scanner scanner = new Scanner(System.in);
+        //String input = scanner.nextLine();
+        //setFisrtPlayedCard(cards.ConvertPlayingCards(input));
+        //RemoveCard(getHakem(),getFisrtPlayedCard());
         //  باید برای همه نشون داده شه
+    //}
+    public void ShowPlayedCard(Card playedCard){
+        System.out.println(playedCard.getRank().getName() + " of " + playedCard.getSuit().getName());
     }
-    public void RemoveCard (Player player , Card card) {
-        ArrayList<Card> temp = new ArrayList<>();
-        temp = player.getHand();
-        temp.remove(card);
-        player.setHand(temp);
+    public Player getHakem() {
+        return Hakem;
+    }
+    public void setHakem(Player hakem) {
+        Hakem = hakem;
+    }
+    public void setFisrtPlayedCard(Card firstPlayedCard) {
+        FisrtPlayedCard = firstPlayedCard;
+    }
+    public Card getFisrtPlayedCard() {
+        return FisrtPlayedCard;
+    }
+    public CardSuit getHOKM() {
+        return HOKM;
+    }
+    public void setHOKM(CardSuit HOKM) {
+        this.HOKM = HOKM;
+    }
+    public Cards getCards() {
+        return cards;
+    }
+    public void setCards(Cards cards) {
+        this.cards = cards;
     }
 
-    public void Throw (Player player , Card card){
 
-    }
-    public boolean SuitCheck (Card firstCard , Card newCard){
-        if(newCard.getSuit() == firstCard.getSuit()){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
+
+
+
 }
