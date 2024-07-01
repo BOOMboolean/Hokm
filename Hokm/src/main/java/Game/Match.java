@@ -10,9 +10,10 @@ public class Match {
     private Team team1 = new Team(player1 , player3);
     private Team team2 = new Team(player2 , player4);
     private ArrayList<Card> deck;
+    private Game onGoingGame;
     public Match(){
         DeckMaker();
-        Game newGame = new Game(true);
+        this.onGoingGame = new Game(true);
     }
 
     public void DeckMaker () {
