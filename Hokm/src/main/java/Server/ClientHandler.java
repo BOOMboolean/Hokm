@@ -3,7 +3,8 @@ package Server;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
-
+import Game.*;
+import GUI.*;
 public class ClientHandler implements Runnable{
 
     public static ArrayList<ClientHandler> clients = new ArrayList<>();

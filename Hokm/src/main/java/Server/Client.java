@@ -7,7 +7,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Random;
 import java.util.Scanner;
-
+import Game.*;
+import GUI.*;
 public class Client {
     private Socket socket;
     private BufferedReader br;

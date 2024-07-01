@@ -3,7 +3,8 @@ import java.io.*;
 import java.net.*;
 import java.sql.SQLException;
 import java.util.Random;
-
+import Game.*;
+import GUI.*;
 public class Server {
     private ServerSocket ss;
     private int token;

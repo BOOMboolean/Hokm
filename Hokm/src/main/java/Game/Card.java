@@ -1,5 +1,6 @@
 package Game;
-
+import Server.*;
+import GUI.*;
 public class Card {
     CardSuit suit;
     Rank rank;

@@ -1,6 +1,8 @@
 package Game;
 
 import java.util.*;
+import Server.*;
+import GUI.*;
 public class Player {
     private String Name;
     private String ID;

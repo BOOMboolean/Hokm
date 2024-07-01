@@ -1,7 +1,8 @@
 package Game;
 
 import java.util.*;
-
+import Server.*;
+import GUI.*;
 public class Cards {
     private ArrayList<Card> cards;
     Team team1;

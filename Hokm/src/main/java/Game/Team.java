@@ -1,6 +1,8 @@
 package Game;
 
 import java.util.*;
+import Server.*;
+import GUI.*;
 public class Team {
         private Player player1 ;
         private Player player2 ;

@@ -1,7 +1,8 @@
 package Game;
 
 import java.util.*;
-
+import Server.*;
+import GUI.*;
 public class OnGoingRound {
     private Cards cards;
     private ArrayList<Card> deck;
