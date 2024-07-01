@@ -81,9 +81,9 @@ public class OnGoingRound {
 //       System.out.println("Hakem is:" + getHakem().getName());
         }
     public void Specify_Hokm() {
-        System.out.println("please set the hokm" +  "(" + getHakem().getName() + ")");
+//        System.out.println("please set the hokm" +  "(" + getHakem().getName() + ")");
         for (int i = 0; i < 5; i++) {
-            System.out.println(getHakem().getHand().get(i));  //player1 is presumably the Hakem
+//            System.out.println(getHakem().getHand().get(i));  //player1 is presumably the Hakem
         }
         while (true)
         {

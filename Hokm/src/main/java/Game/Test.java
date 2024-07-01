@@ -15,7 +15,7 @@ public class Test {
 //        System.out.println(cards.getHand1() + "\n"+ cards.getHand2() + "\n" + cards.getHand3() + "\n" + cards.getHand4());
           OnGoingRound game = new OnGoingRound();
           game.Specify_Hokm();
-          game.FirstGame();
+//          game.FirstGame();
 //          Database db = new Database();
 //          db.printData();
     }
