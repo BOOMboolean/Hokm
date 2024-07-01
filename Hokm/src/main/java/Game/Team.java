@@ -7,11 +7,13 @@ public class Team {
         private Player player1 ;
         private Player player2 ;
         private int score;
+        private int matchScore;
        // private Player Hakem ;
         public Team (Player player1, Player player2) {
             this.player1 = player1;
             this.player2 = player2;
-            this.score = 0;
+            this.matchScore = 0;
+
         }
         public void addScore(Team team){
             int i = team.getScore();
@@ -50,4 +52,11 @@ public class Team {
             this.player2 = player2;
         }
 
+    public int getMatchScore() {
+        return matchScore;
+    }
+
+    public void setMatchScore(int matchScore) {
+        this.matchScore = matchScore;
+    }
 }

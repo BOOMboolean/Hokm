@@ -1,26 +1,13 @@
 package Game;
 
 import java.util.*;
-import Server.*;
-import GUI.*;
-public class OnGoingRound {
+
+public class Round {
     private Cards cards;
-    private ArrayList<Card> deck;
-    private CardSuit HOKM;
     private Card FisrtPlayedCard;
     private boolean isFirstRound;
 
-    private Player player1 = new Player("given to by the client 1", "client id 1", null);
-    private Player player2 = new Player("given to by the client 2", "client id 2", null);
-    private Player player3 = new Player("given to by the client 3", "client id 3", null);
-    private Player player4 = new Player("given to by the client 4", "client id 4", null);
-    private Team team1 = new Team(player1 , player3);
-
-    private Team team2 = new Team(player2 , player4);
-
-
-
-    public OnGoingRound() {
+    public Round(int roundNumber) {
         this.isFirstRound = true;
         DeckMaker();
         DeckShuffler();
@@ -29,18 +16,7 @@ public class OnGoingRound {
       //  this.cards = new Cards();
       //  cards.team1.getPlayer1();
     }
-    public void DeckMaker () {
-        ArrayList<Card> deck = new ArrayList<>();
-        for (Rank rank : Rank.values()) {
-            for (CardSuit suit : CardSuit.values()) {
-                deck.add(new Card(suit, rank));
-            }
-        }
-        setDeck(deck);
-    }
-    public void DeckShuffler() {
-        Collections.shuffle(getDeck());
-    }
+
     public void HandDistributer() {
 
         ArrayList<Card> hand1 = new ArrayList<>();
@@ -60,20 +36,7 @@ public class OnGoingRound {
         team2.getPlayer2().setHand(hand4);
     }
 
-    public void RoundWin(Team winningTeam){
-        //tedious ifs and elses for cycling who the hakem is in progress
-        if(winningTeam.equals(this.team1)){
-            if(this.team2.getPlayer1().isHakem() || this.team2.getPlayer2().isHakem())
-            {
 
-            }
-        }
-        {
-
-        }
-            winningTeam.setScore(winningTeam.getScore()+1);
-            setFirstRound(false);
-    }
      public void HakemRandomiser() {
          Player[] players = {cards.team1.getPlayer1(), cards.team1.getPlayer2() , cards.team2.getPlayer1() , cards.team2.getPlayer2()};
          Random random = new Random();
@@ -163,11 +126,5 @@ public class OnGoingRound {
         isFirstRound = firstRound;
     }
 
-    public ArrayList<Card> getDeck() {
-        return deck;
-    }
 
-    public void setDeck(ArrayList<Card> deck) {
-        this.deck = deck;
-    }
 }
