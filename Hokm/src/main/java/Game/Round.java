@@ -9,8 +9,6 @@ public class Round {
 
     public Round(int roundNumber) {
         this.isFirstRound = true;
-        DeckMaker();
-        DeckShuffler();
         HandDistributer();
 
       //  this.cards = new Cards();
@@ -25,15 +23,15 @@ public class Round {
         ArrayList<Card> hand4 = new ArrayList<>();
         for(int i = 0 ; i < 13 ; i++ )
         {
-            hand1.add(deck.get(i));
-            hand2.add(deck.get(i+13));
-            hand3.add(deck.get(i+26));
-            hand4.add(deck.get(i+39));
+//            hand1.add(deck.get(i));
+//            hand2.add(deck.get(i+13));
+//            hand3.add(deck.get(i+26));
+//            hand4.add(deck.get(i+39));
         }
-        team1.getPlayer1().setHand(hand1);
-        team1.getPlayer2().setHand(hand2);
-        team2.getPlayer1().setHand(hand3);
-        team2.getPlayer2().setHand(hand4);
+//        team1.getPlayer1().setHand(hand1);
+//        team1.getPlayer2().setHand(hand2);
+//        team2.getPlayer1().setHand(hand3);
+//        team2.getPlayer2().setHand(hand4);
     }
 
 
@@ -106,10 +104,10 @@ public class Round {
         return FisrtPlayedCard;
     }
     public CardSuit getHOKM() {
-        return HOKM;
+        return null;
     }
     public void setHOKM(CardSuit HOKM) {
-        this.HOKM = HOKM;
+//        this.HOKM = HOKM;
     }
     public Cards getCards() {
         return cards;

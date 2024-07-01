@@ -10,7 +10,7 @@ public class Player {
     Team team;
     private ArrayList<Card> hand;
     private Card playingCard;
-    public OnGoingRound onGoingRound;
+    public Round onGoingRound;
     public Player(String name , String Id, ArrayList<Card> hand) {
         this.Name = name;
         this.ID = Id;

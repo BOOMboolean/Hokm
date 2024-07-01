@@ -6,26 +6,26 @@ import GUI.*;
 public class Team {
         private Player player1 ;
         private Player player2 ;
-        private int score;
-        private int matchScore;
+        private int roundScore;
+        private int gameScore;
+
        // private Player Hakem ;
         public Team (Player player1, Player player2) {
             this.player1 = player1;
             this.player2 = player2;
-            this.matchScore = 0;
-
+            this.gameScore= 0;
         }
-        public void addScore(Team team){
-            int i = team.getScore();
+        public void addRoundScore(Team team){
+            int i = team.getRoundScore();
             i++;
-            team.setScore(i);
+            team.setRoundScore(i);
         }
-    public int getScore() {
-        return score;
+        public void addGameScore(Team team){
+        int i = team.getGameScore();
+        i++;
+        team.setGameScore(i);
     }
-    public void setScore(int score) {
-        this.score = score;
-    }
+
     // public void Specify_Hakem() {
         // Player[] players = {player1, player2};
          //Random random = new Random();
@@ -52,11 +52,19 @@ public class Team {
             this.player2 = player2;
         }
 
-    public int getMatchScore() {
-        return matchScore;
+    public int getRoundScore() {
+        return roundScore;
     }
 
-    public void setMatchScore(int matchScore) {
-        this.matchScore = matchScore;
+    public void setRoundScore(int roundScore) {
+        this.roundScore = roundScore;
+    }
+
+    public int getGameScore() {
+        return gameScore;
+    }
+
+    public void setGameScore(int gameScore) {
+        gameScore = gameScore;
     }
 }
