@@ -3,7 +3,6 @@ package Game;
 import java.util.*;
 
 public class Round {
-    private Cards cards;
     private Card FisrtPlayedCard;
     private boolean isFirstRound;
 
@@ -52,18 +51,6 @@ public class Round {
     }
     public Card getFisrtPlayedCard() {
         return FisrtPlayedCard;
-    }
-    public CardSuit getHOKM() {
-        return null;
-    }
-    public void setHOKM(CardSuit HOKM) {
-//        this.HOKM = HOKM;
-    }
-    public Cards getCards() {
-        return cards;
-    }
-    public void setCards(Cards cards) {
-        this.cards = cards;
     }
 
     public boolean isFirstRound() {

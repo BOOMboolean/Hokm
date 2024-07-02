@@ -27,6 +27,9 @@ public class Player {
         RemoveCard(card);
         onGoingRound.ShowPlayedCard(card);
     }
+    public void ShowHand() {
+            System.out.println(this.hand);
+    }
     public Card getPlayingCard() {
         return playingCard;
     }
