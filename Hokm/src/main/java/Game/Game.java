@@ -5,7 +5,6 @@ import java.util.*;
 public class Game {
 private Match thisMatch;
 private CardSuit hokm;
-private Round onGoingRound;
 private int roundNumber;
 public Game(boolean isFirstGame){
     DeckShuffler(thisMatch.getDeck());
@@ -14,7 +13,7 @@ public Game(boolean isFirstGame){
         HakemRandomiser();
     }
     //hokm specifier method placeholder
-    this.onGoingRound = new Round(1,true,HakemPlayer());
+    new Round(true,HakemPlayer());
 }
     public Player HakemPlayer(){
         Player[] players = {thisMatch.getTeam1().getPlayer1(), thisMatch.getTeam1().getPlayer2() , thisMatch.getTeam2().getPlayer1() , thisMatch.getTeam2().getPlayer2()};
@@ -76,7 +75,7 @@ public Game(boolean isFirstGame){
         thisMatch.getTeam2().getPlayer2().setHand(hand4);
     }
 
-    public void RoundWin(Team winningTeam){
+    public void GameWin(Team winningTeam){
         //tedious ifs and elses for cycling who the hakem is in progress
         //sitting placements :
         //team1's player1: north
@@ -116,12 +115,8 @@ public Game(boolean isFirstGame){
                 thisMatch.getTeam2().getPlayer2().setHakem(true);
             }
         }
-        winningTeam.setScore(winningTeam.getScore()+1);
-        onGoingRound.setFirstRound(false);
     }
-//    public void GameWin(Team winningTeam){
-//        winningTeam.setMatchScore(winningTeam.getMatchScore()+1);
-//    }
+
 
     public void DeckShuffler(ArrayList<Card> deck) {
         Collections.shuffle(deck);
@@ -138,4 +133,9 @@ public Game(boolean isFirstGame){
     public void setRoundNumber(int roundNumber) {
         this.roundNumber = roundNumber;
     }
+
+    public Match getThisMatch() {
+        return thisMatch;
+    }
+
 }

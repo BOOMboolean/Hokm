@@ -23,6 +23,10 @@ public class Player {
         temp.remove(card);
         setHand(temp);
     }
+    public Card cardThrow(Card card){
+
+        return null;
+    }
     public void Throw (Card card){
         RemoveCard(card);
         onGoingRound.ShowPlayedCard(card);

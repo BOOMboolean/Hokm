@@ -5,44 +5,63 @@ import java.util.*;
 public class Round {
     private Card FisrtPlayedCard;
     private boolean isFirstRound;
+    private ArrayList<Card> playedCards = new ArrayList<>(4);
+    private Game onGoingGame;
 
-    public Round(int roundNumber , boolean isFirstRound, Player firstThrower) {
-
-
-      //  this.cards = new Cards();
-      //  cards.team1.getPlayer1();
+    public Round(boolean isFirstRound, Player firstThrower) {
+        playedCards.set(0,firstThrower.cardThrow(firstThrower.getPlayingCard()));
     }
 
 
-
-
-
-    public void Specify_Hokm() {
-//        System.out.println("please set the hokm" +  "(" + getHakem().getName() + ")");
-        for (int i = 0; i < 5; i++) {
-//            System.out.println(getHakem().getHand().get(i));  //player1 is presumably the Hakem
+    public Card WinnerCard(ArrayList<Card> playedCards){
+        CardSuit firsPlayedSuit = playedCards.get(0).getSuit();
+        Card winningCard = playedCards.get(0);
+        for (int i = 1; i < playedCards.size();i++)
+        {
+            if(playedCards.get(i).getSuit().equals(firsPlayedSuit)){
+                if(playedCards.get(i).getRank().getRankValue() > winningCard.getRank().getRankValue()){
+                    winningCard = playedCards.get(i);
+                }
+            }
+            else{
+                if(playedCards.get(i).getSuit().equals(onGoingGame.getHokm())){
+                    for (int j = 0; j < i; j++) {
+                        if(playedCards.get(j).getSuit().equals(onGoingGame.getHokm())) {
+                            if (playedCards.get(i).getRank().getRankValue() > playedCards.get(j).getRank().getRankValue()) {
+                                winningCard = playedCards.get(i);
+                            }
+                        }
+                    }
+                }
+            }
         }
-
+        return winningCard;
     }
-//    public void FirstGame() {
-//        cards.ShowHand(cards.team.getHakem());
-//        System.out.println("enter the card(suit.rank)");
-//        Scanner scanner = new Scanner(System.in);
-//        String input = scanner.nextLine();
-//        cards.setPlayingCard(cards.ConvertPlayingCards(input));
-//        RemoveCard(cards.team.getHakem(), cards.getPlayingCard());
-////        System.out.println(input);
-////        باید برای همه نشون داده شه
-//    }
-    //public void StartingRound() {
-        //cards.ShowHand(getHakem());
-        //System.out.println("enter the card(suit.rank)");
-        //Scanner scanner = new Scanner(System.in);
-        //String input = scanner.nextLine();
-        //setFisrtPlayedCard(cards.ConvertPlayingCards(input));
-        //RemoveCard(getHakem(),getFisrtPlayedCard());
-        //  باید برای همه نشون داده شه
-    //}
+
+
+    public void RoundWin(Card winningCard){
+        Player winningPlayer = new Player(null,null,null);//this nigga doesn't exist yet
+        if(winningCard.equals(onGoingGame.getThisMatch().getTeam1().getPlayer1().getPlayingCard())) {
+            onGoingGame.getThisMatch().getTeam1().setRoundScore(onGoingGame.getThisMatch().getTeam1().getRoundScore()+1);
+            winningPlayer = onGoingGame.getThisMatch().getTeam1().getPlayer1();
+        }
+        else if(winningCard.equals(onGoingGame.getThisMatch().getTeam1().getPlayer2().getPlayingCard())) {
+            onGoingGame.getThisMatch().getTeam1().setRoundScore(onGoingGame.getThisMatch().getTeam1().getRoundScore()+1);
+            winningPlayer = onGoingGame.getThisMatch().getTeam1().getPlayer2();
+        }
+        else if(winningCard.equals(onGoingGame.getThisMatch().getTeam2().getPlayer1().getPlayingCard())) {
+            onGoingGame.getThisMatch().getTeam2().setRoundScore(onGoingGame.getThisMatch().getTeam2().getRoundScore()+1);
+            winningPlayer = onGoingGame.getThisMatch().getTeam2().getPlayer1();
+        }
+        else if(winningCard.equals(onGoingGame.getThisMatch().getTeam2().getPlayer2().getPlayingCard())) {
+            onGoingGame.getThisMatch().getTeam2().setRoundScore(onGoingGame.getThisMatch().getTeam2().getRoundScore()+1);
+            winningPlayer = onGoingGame.getThisMatch().getTeam2().getPlayer2();
+        }
+        new Round(false,winningPlayer);
+     }
+
+
+
     public void ShowPlayedCard(Card playedCard){
         System.out.println(playedCard.getRank().getName() + " of " + playedCard.getSuit().getName());
     }

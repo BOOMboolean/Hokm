@@ -7,6 +7,7 @@ import java.util.Objects;
 public class Card {
     CardSuit suit;
     Rank rank;
+
     public Card(CardSuit suit, Rank rank) {
         this.suit = suit;
         this.rank = rank;
