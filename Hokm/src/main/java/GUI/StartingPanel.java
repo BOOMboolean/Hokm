@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
 import Game.*;
 import Server.*;
 
@@ -17,10 +21,10 @@ public class StartingPanel {
         frame.setResizable(false);
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(2,1));
-        JButton createGame = new JButton("Creare Game");
+        JButton createGame = new JButton("Create Game");
         JButton joinGame = new JButton("Join Game");
         createGame.setToolTipText("Create game for playing :)");
-        joinGame.setToolTipText("join game for playing :)");
+        joinGame.setToolTipText("Join game for playing :)");
         createGame.setFocusable(false);
         joinGame.setFocusable(false);
         createGame.addActionListener(new ActionListener() {
@@ -45,21 +49,20 @@ public class StartingPanel {
         frame.setVisible(true);
     }
     public Frame createGame(String Token) {
-        JFrame frame = new JFrame();
-        frame.setTitle("Create Game");
+        JFrame frame = new JFrame("Create Game");
         frame.setSize(300,300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         JPanel panel = new JPanel();
-        JButton returnMain = new JButton("Menu");
+        JButton returnMain = new JButton("Return");
         returnMain.setToolTipText("return first page");
         returnMain.setFocusable(true);
         panel.setLayout(new GridLayout(3,2));
-        JLabel nameLabel = new JLabel("please enter your name :");
+        JLabel nameLabel = new JLabel("please enter your username :");
         JTextField nameTextField = new JTextField();
-        JLabel ipLabel = new JLabel("Your Token is : ");
-        JLabel showToken = new JLabel(Token);
-        JButton startgame = new JButton("enter for game");
+        JLabel ipLabel = new JLabel("Enter the server's token: ");
+        JTextField clientToken = new JTextField();
+        JButton startgame = new JButton("enter the game");
         returnMain.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -70,15 +73,32 @@ public class StartingPanel {
         startgame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String nameClient = nameTextField.getText();
-                // یرای اسم یارو بگیر و ادامه
-                frame.setVisible(false);
+                try {
+                    String ID = nameTextField.getText();
+                    String strToken = clientToken.getText();
+                    Integer token = Integer.valueOf(strToken);
+                    System.out.println(token);
+
+                    Socket socket = new Socket("localhost", 1234);
+                    Client client = new Client(socket, ID);
+
+                    client.listenForMessage();
+                    client.sendMessage();
+
+                    frame.dispose();
+                    System.out.println("Returning back to terminal");
+                    frame.setVisible(false);
+                } catch (UnknownHostException eh) {
+                    eh.printStackTrace();
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
+                }
             }
         });
         panel.add(nameLabel);
         panel.add(nameTextField);
         panel.add(ipLabel);
-        panel.add(showToken);
+        panel.add(clientToken);
         panel.add(returnMain);
         panel.add(startgame);
         frame.add(panel);
@@ -87,19 +107,18 @@ public class StartingPanel {
     }
     public Frame joinGame () {
         JFrame frame = new JFrame("Join game");
-        frame.setTitle("Create Game");
         frame.setSize(300,300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(3,2));
-        JButton returnMain = new JButton("Menu");
+        JButton returnMain = new JButton("Return");
         JTextField nameTextField = new JTextField();
         JLabel ipLabel = new JLabel("enter your Token : ");
-        JTextField tokenTextField = new JTextField();
-        returnMain.setToolTipText("return first page");
+        JTextField clientToken = new JTextField();
+        returnMain.setToolTipText("return to first page");
         returnMain.setFocusable(true);
-        JLabel nameLabel = new JLabel("please enter your name :");
+        JLabel nameLabel = new JLabel("please enter your username :");
         JButton joinButton = new JButton("join");
         returnMain.addActionListener(new ActionListener() {
             @Override
@@ -111,16 +130,32 @@ public class StartingPanel {
         joinButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String nameClient = nameTextField.getText();
-                String Token = tokenTextField.getText();
-                //تکن میگیره با اسم میده به تابع های دیگه
+                String ID = nameTextField.getText();
+                String strToken = clientToken.getText();
+                Integer token = Integer.valueOf(strToken);
+                try {
+                    Socket socket = new Socket("localhost", 1234);
+                    Client client = new Client(socket, ID);
+
+                    client.listenForMessage();
+                    client.sendMessage();
+
+                    frame.dispose();
+                    System.out.println("Returning back to terminal");
+                    frame.setVisible(false);
+                } catch (UnknownHostException eh) {
+                    eh.printStackTrace();
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
+                }
+
                 frame.setVisible(false);
             }
         });
         panel.add(nameLabel);
         panel.add(nameTextField);
         panel.add(ipLabel);
-        panel.add(tokenTextField);
+        panel.add(clientToken);
         panel.add(returnMain);
         panel.add(joinButton);
         frame.add(panel);
