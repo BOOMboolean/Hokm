@@ -8,7 +8,7 @@ public class Round {
     private ArrayList<Card> playedCards = new ArrayList<>(4);
     private Game onGoingGame;
 
-    public Round(Player ){
+    public Round( ){
 
     }
 

@@ -1,6 +1,7 @@
 package ServerPack;
 
 import ClientPack.Client;
+import Game.Player;
 import MessageClasses.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -132,12 +133,12 @@ public class Server extends Thread {
             if (msg instanceof CreateMessage) {
                 registerNewClient((CreateMessage) msg);
             }
-//            else if (msg instanceof JoinMessage) {
-//                sendBioToClient((JoinMessage) msg);
-//            } else if (msg instanceof ThrowCardMessage) {
-//                updateBioOfClient((ThrowCardMessage) msg);
-//            } else if (msg instanceof HokmMessage)
-//                logoutClient((HokmMessage) msg);
+            else if (msg instanceof JoinMessage) {
+                joinPlayer((JoinMessage) msg);
+            } else if (msg instanceof ThrowCardMessage) {
+                throwCard((ThrowCardMessage) msg);
+            } else if (msg instanceof HokmMessage)
+                logoutClient((HokmMessage) msg);
             else
                 sendFailure(INTERNAL_ERROR);
 
@@ -149,7 +150,16 @@ public class Server extends Thread {
         }
     }
 
-        public static void main(String[] args) {
+    private void throwCard(ThrowCardMessage msg) {
+        msg.getToken();
+        Player player ;
+        player.throwCard();
+    }
+
+    private void joinPlayer(JoinMessage msg) {
+    }
+
+    public static void main(String[] args) {
         try {
             Server.setupServer(5000);
             new Server().start();

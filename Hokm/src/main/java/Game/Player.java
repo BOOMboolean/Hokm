@@ -9,11 +9,11 @@ public class Player {
     private Team team;
     private ArrayList<Card> hand;
     private Card playingCard;
-    private Match playerMatch;
-    public Player(String name , String token) {
+    Match playerMatch;
+    public Player(String name , Match match) {
         this.Name = name;
         this.isHakem = false;
-        this.playerMatch = new Match(token);
+        this.playerMatch = match;
     }
     public void playCard(Card card){
         if(isPlayable(card,this.hand,this.playerMatch.getOnGoingGame().getOnGoingRound())) {

@@ -9,7 +9,6 @@ public class Match {
         DeckMaker();
         this.onGoingGame = new Game(true);
     }
-
     public void DeckMaker () {
         ArrayList<Card> deck = new ArrayList<>();
         for (Rank rank : Rank.values()) {
