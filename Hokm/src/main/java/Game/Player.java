@@ -5,21 +5,46 @@ import java.util.*;
 import GUI.*;
 public class Player {
     private String Name;
-    private String ID;
     private boolean isHakem;
     private Team team;
     private ArrayList<Card> hand;
     private Card playingCard;
     private Match playerMatch;
-    public Player(String name) {
+    public Player(String name , String token) {
         this.Name = name;
         this.isHakem = false;
+        this.playerMatch = new Match(token);
+    }
+    public void playCard(Card card){
+        if(isPlayable(card,this.hand,this.playerMatch.getOnGoingGame().getOnGoingRound())) {
+            throwCard(card);
+        }
+        else{
+            System.out.println("try another one dumbass");
+        }
+    }
+    public boolean isPlayable(Card card,ArrayList<Card> hand,Round onGoingRound){
+    for(int i = 0 ; i<hand.size(); i++){
+        if(onGoingRound.getPlayedCards().get(0).getSuit().equals(hand.get(i).getSuit())){//checks if you have the first played card's suit in your hand
+            if(onGoingRound.getPlayedCards().get(0).getSuit().equals(card)){
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    }
+    return true;
     }
     public void throwCard(Card card){
         //some ifs and elses have to be implemented to check whether the card can be played or not
         //the thrown card by this method will be displayed to everyone once the gui is completed
         //the card argument = a button that will be implemented in the gui
+        RemoveCard(card);
+        this.playerMatch.getOnGoingGame().getOnGoingRound().getPlayedCards().add(card);
+        System.out.println(card.toString() + " was played");
     }
+
     public boolean winnerOrNot(Player player){
        if(playerMatch.getOnGoingGame().getOnGoingRound().WinnerCard(playerMatch.getOnGoingGame().getOnGoingRound().getPlayedCards()).equals(player.getPlayingCard())){
            return true;
@@ -35,10 +60,6 @@ public class Player {
         temp.remove(card);
         setHand(temp);
     }
-    public Card cardThrow(Card card){
-
-        return null;
-    }
     public void ShowHand() {
             System.out.println(this.hand);
     }
@@ -53,12 +74,6 @@ public class Player {
     }
     public void setName(String name) {
         Name = name;
-    }
-    public String getID() {
-        return ID;
-    }
-    public void setID(String iD) {
-        ID = iD;
     }
     public Team getTeam() {
       return team;
@@ -88,4 +103,5 @@ public class Player {
     public void setPlayerMatch(Match playerMatch) {
         this.playerMatch = playerMatch;
     }
+
 }

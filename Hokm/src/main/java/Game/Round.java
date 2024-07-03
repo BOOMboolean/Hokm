@@ -8,11 +8,13 @@ public class Round {
     private ArrayList<Card> playedCards = new ArrayList<>(4);
     private Game onGoingGame;
 
-    public Round(boolean isFirstRound, Player firstThrower) {
-        playedCards.set(0,firstThrower.cardThrow(firstThrower.getPlayingCard()));
+    public Round(Player ){
+
     }
 
+    public void cardsBeingPlayed(){
 
+    }
     public Card WinnerCard(ArrayList<Card> playedCards){
         CardSuit firsPlayedSuit = playedCards.get(0).getSuit();
         Card winningCard = playedCards.get(0);
@@ -38,26 +40,11 @@ public class Round {
         return winningCard;
     }
 
-    public void RoundWin(Card winningCard){
-       // Player winningPlayer = new Player(null,null,null);//this nigga doesn't exist yet
-        if(winningCard.equals(onGoingGame.getThisMatch().getTeam1().getPlayer1().getPlayingCard())) {
-            onGoingGame.getThisMatch().getTeam1().setRoundScore(onGoingGame.getThisMatch().getTeam1().getRoundScore()+1);
-            winningPlayer = onGoingGame.getThisMatch().getTeam1().getPlayer1();
+    public void RoundWin(Card winningCard , Player winningPlayer) {
+        if (winningCard.equals(winningPlayer.getPlayingCard())) {
+            winningPlayer.getTeam().setRoundScore(winningPlayer.getTeam().getRoundScore() + 1);
         }
-        else if(winningCard.equals(onGoingGame.getThisMatch().getTeam1().getPlayer2().getPlayingCard())) {
-            onGoingGame.getThisMatch().getTeam1().setRoundScore(onGoingGame.getThisMatch().getTeam1().getRoundScore()+1);
-            winningPlayer = onGoingGame.getThisMatch().getTeam1().getPlayer2();
-        }
-        else if(winningCard.equals(onGoingGame.getThisMatch().getTeam2().getPlayer1().getPlayingCard())) {
-            onGoingGame.getThisMatch().getTeam2().setRoundScore(onGoingGame.getThisMatch().getTeam2().getRoundScore()+1);
-            winningPlayer = onGoingGame.getThisMatch().getTeam2().getPlayer1();
-        }
-        else if(winningCard.equals(onGoingGame.getThisMatch().getTeam2().getPlayer2().getPlayingCard())) {
-            onGoingGame.getThisMatch().getTeam2().setRoundScore(onGoingGame.getThisMatch().getTeam2().getRoundScore()+1);
-            winningPlayer = onGoingGame.getThisMatch().getTeam2().getPlayer2();
-        }
-        new Round(false,winningPlayer);
-     }
+    }
 
 
 

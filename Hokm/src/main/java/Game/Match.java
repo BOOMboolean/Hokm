@@ -5,9 +5,7 @@ import java.util.ArrayList;
 public class Match {
     private ArrayList<Card> deck;
     private Game onGoingGame;
-
-    public Match(Player player1 , Player player2 , Player player3 , Player player4){
-
+    public Match(String token){
         DeckMaker();
         this.onGoingGame = new Game(true);
     }
