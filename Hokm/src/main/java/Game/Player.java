@@ -7,16 +7,28 @@ public class Player {
     private String Name;
     private String ID;
     private boolean isHakem;
-    Team team;
+    private Team team;
     private ArrayList<Card> hand;
     private Card playingCard;
-    public Round onGoingRound;
-    public Player(String name , String Id, ArrayList<Card> hand) {
+    private Match playerMatch;
+    public Player(String name) {
         this.Name = name;
-        this.ID = Id;
-        this.hand = hand;
         this.isHakem = false;
     }
+    public void throwCard(Card card){
+        //some ifs and elses have to be implemented to check whether the card can be played or not
+        //the thrown card by this method will be displayed to everyone once the gui is completed
+        //the card argument = a button that will be implemented in the gui
+    }
+    public boolean winnerOrNot(Player player){
+       if(playerMatch.getOnGoingGame().getOnGoingRound().WinnerCard(playerMatch.getOnGoingGame().getOnGoingRound().getPlayedCards()).equals(player.getPlayingCard())){
+           return true;
+       }
+       else{
+           return false;
+       }
+    }
+
     public void RemoveCard (Card card) {
         ArrayList<Card> temp = new ArrayList<>();
         temp = getHand();
@@ -26,10 +38,6 @@ public class Player {
     public Card cardThrow(Card card){
 
         return null;
-    }
-    public void Throw (Card card){
-        RemoveCard(card);
-        onGoingRound.ShowPlayedCard(card);
     }
     public void ShowHand() {
             System.out.println(this.hand);
@@ -71,5 +79,13 @@ public class Player {
 
     public boolean isHakem() {
         return isHakem;
+    }
+
+    public Match getPlayerMatch() {
+        return playerMatch;
+    }
+
+    public void setPlayerMatch(Match playerMatch) {
+        this.playerMatch = playerMatch;
     }
 }

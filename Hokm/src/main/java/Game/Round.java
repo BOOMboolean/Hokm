@@ -38,9 +38,8 @@ public class Round {
         return winningCard;
     }
 
-
     public void RoundWin(Card winningCard){
-        Player winningPlayer = new Player(null,null,null);//this nigga doesn't exist yet
+       // Player winningPlayer = new Player(null,null,null);//this nigga doesn't exist yet
         if(winningCard.equals(onGoingGame.getThisMatch().getTeam1().getPlayer1().getPlayingCard())) {
             onGoingGame.getThisMatch().getTeam1().setRoundScore(onGoingGame.getThisMatch().getTeam1().getRoundScore()+1);
             winningPlayer = onGoingGame.getThisMatch().getTeam1().getPlayer1();
@@ -78,5 +77,13 @@ public class Round {
 
     public void setFirstRound(boolean firstRound) {
         isFirstRound = firstRound;
+    }
+
+    public ArrayList<Card> getPlayedCards() {
+        return playedCards;
+    }
+
+    public void setPlayedCards(ArrayList<Card> playedCards) {
+        this.playedCards = playedCards;
     }
 }

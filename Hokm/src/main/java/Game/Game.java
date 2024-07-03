@@ -3,20 +3,20 @@ package Game;
 import java.util.*;
 
 public class Game {
-private Match thisMatch;
 private CardSuit hokm;
-private int roundNumber;
+private Round onGoingRound;
 public Game(boolean isFirstGame){
-    DeckShuffler(thisMatch.getDeck());
-    HandDistributer(thisMatch.getDeck());
+    DeckShuffler(getDeck());
+    HandDistributer(getDeck());
     if(isFirstGame){
         HakemRandomiser();
     }
+
     //hokm specifier method placeholder
-    new Round(true,HakemPlayer());
+    this.onGoingRound = new Round(true,HakemPlayer());
 }
     public Player HakemPlayer(){
-        Player[] players = {thisMatch.getTeam1().getPlayer1(), thisMatch.getTeam1().getPlayer2() , thisMatch.getTeam2().getPlayer1() , thisMatch.getTeam2().getPlayer2()};
+        Player[] players = {getTeam1().getPlayer1(), getTeam1().getPlayer2() , getTeam2().getPlayer1() , getTeam2().getPlayer2()};
         for(int i = 0 ; i<4 ; i++){
             if(players[i].isHakem()){
                 return players[i];
@@ -25,7 +25,7 @@ public Game(boolean isFirstGame){
         return null;
     }
     public void HakemRandomiser() {
-        Player[] players = {thisMatch.getTeam1().getPlayer1(), thisMatch.getTeam1().getPlayer2() , thisMatch.getTeam2().getPlayer1() , thisMatch.getTeam2().getPlayer2()};
+        Player[] players = {getTeam1().getPlayer1(), getTeam1().getPlayer2() , getTeam2().getPlayer1() , getTeam2().getPlayer2()};
         Random random = new Random();
         int randomIndex = random.nextInt(4);
         players[randomIndex].setHakem(true);
@@ -69,10 +69,10 @@ public Game(boolean isFirstGame){
             hand3.add(deck.get(i+26));
             hand4.add(deck.get(i+39));
         }
-        thisMatch.getTeam1().getPlayer1().setHand(hand1);
-        thisMatch.getTeam2().getPlayer1().setHand(hand2);
-        thisMatch.getTeam1().getPlayer2().setHand(hand3);
-        thisMatch.getTeam2().getPlayer2().setHand(hand4);
+        getTeam1().getPlayer1().setHand(hand1);
+        getTeam2().getPlayer1().setHand(hand2);
+        getTeam1().getPlayer2().setHand(hand3);
+        getTeam2().getPlayer2().setHand(hand4);
     }
 
     public void GameWin(Team winningTeam){
@@ -84,35 +84,35 @@ public Game(boolean isFirstGame){
         //team2's player2: west
         //and the hakem switches clockwise
 
-        if(winningTeam.equals(thisMatch.getTeam1())){
-            if(thisMatch.getTeam2().getPlayer1().isHakem())
+        if(winningTeam.equals(getTeam1())){
+            if(getTeam2().getPlayer1().isHakem())
             {
-                thisMatch.getTeam1().getPlayer1().setHakem(false);
-                thisMatch.getTeam2().getPlayer1().setHakem(false);
-                thisMatch.getTeam1().getPlayer2().setHakem(true);
-                thisMatch.getTeam2().getPlayer2().setHakem(false);
-            } else if (thisMatch.getTeam2().getPlayer2().isHakem()) {
-                thisMatch.getTeam1().getPlayer1().setHakem(true);
-                thisMatch.getTeam2().getPlayer1().setHakem(false);
-                thisMatch.getTeam1().getPlayer2().setHakem(false);
-                thisMatch.getTeam2().getPlayer2().setHakem(false);
+                getTeam1().getPlayer1().setHakem(false);
+                getTeam2().getPlayer1().setHakem(false);
+                getTeam1().getPlayer2().setHakem(true);
+                getTeam2().getPlayer2().setHakem(false);
+            } else if (getTeam2().getPlayer2().isHakem()) {
+                getTeam1().getPlayer1().setHakem(true);
+                getTeam2().getPlayer1().setHakem(false);
+                getTeam1().getPlayer2().setHakem(false);
+                getTeam2().getPlayer2().setHakem(false);
             }
         }
-        else if(winningTeam.equals(thisMatch.getTeam2()))
+        else if(winningTeam.equals(getTeam2()))
         {
-            if(thisMatch.getTeam1().getPlayer1().isHakem())
+            if(getTeam1().getPlayer1().isHakem())
             {
-                thisMatch.getTeam1().getPlayer1().setHakem(false);
-                thisMatch.getTeam2().getPlayer1().setHakem(true);
-                thisMatch.getTeam1().getPlayer2().setHakem(false);
-                thisMatch.getTeam2().getPlayer2().setHakem(false);
+                getTeam1().getPlayer1().setHakem(false);
+                getTeam2().getPlayer1().setHakem(true);
+                getTeam1().getPlayer2().setHakem(false);
+                getTeam2().getPlayer2().setHakem(false);
             }
-            else if(thisMatch.getTeam1().getPlayer2().isHakem())
+            else if(getTeam1().getPlayer2().isHakem())
             {
-                thisMatch.getTeam1().getPlayer1().setHakem(false);
-                thisMatch.getTeam2().getPlayer1().setHakem(false);
-                thisMatch.getTeam1().getPlayer2().setHakem(false);
-                thisMatch.getTeam2().getPlayer2().setHakem(true);
+                getTeam1().getPlayer1().setHakem(false);
+                getTeam2().getPlayer1().setHakem(false);
+                getTeam1().getPlayer2().setHakem(false);
+                getTeam2().getPlayer2().setHakem(true);
             }
         }
     }
@@ -134,8 +134,7 @@ public Game(boolean isFirstGame){
         this.roundNumber = roundNumber;
     }
 
-    public Match getThisMatch() {
-        return thisMatch;
+    public Round getOnGoingRound() {
+        return onGoingRound;
     }
-
 }
