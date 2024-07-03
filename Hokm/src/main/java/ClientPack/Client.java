@@ -1,6 +1,7 @@
 package ClientPack;
 
 import MessageClasses.CreateMessage;
+import MessageClasses.JoinMessage;
 import MessageClasses.ServerMessage;
 import com.google.gson.*;
 
@@ -18,11 +19,14 @@ public class Client {
     private String groupName;
     private ServerMessage lastServerMessage;
     private static final Gson gsonAgent = new GsonBuilder().create();
+    private String serverIP;
+    private int serverPort;
 
-    public Client(String username, String groupName) { //for creating a room
-        this.username = username;
-        this.groupName = groupName;
+    public Client(String serverIP, int serverPort) {
+        this.serverIP = serverIP;
+        this.serverPort = serverPort;
     }
+    public Client() {};
 
     private boolean establishConnection() {
         try {
@@ -81,6 +85,9 @@ public class Client {
     public String getUsername() {
         return username;
     }
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
 
     public int getToken() {
         return token;
@@ -109,7 +116,28 @@ public class Client {
         }
     }
 
+    public boolean joinGame() {
+        JoinMessage msg = new JoinMessage(username, token);
+        try {
+            establishConnection();
+            sendMessage(gsonAgent.toJson(msg));
+            lastServerMessage = gsonAgent.fromJson(
+                    recieveResponse(), ServerMessage.class);
+            endConnection();
+            boolean success = lastServerMessage.wasSuccessfull();
+            if (success) {
+                return true;
+            }
+            return false;
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
 
+    public static void main(String[] args) {
+        Client client = new Client("localhost", 5000);
+    }
 
 }
 

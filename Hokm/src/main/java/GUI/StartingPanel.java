@@ -4,13 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.net.Socket;
-import java.net.UnknownHostException;
 
 import ClientPack.Client;
-import Game.*;
-import ServerPack.*;
 
 public class StartingPanel {
     public StartingPanel() {
@@ -77,9 +72,18 @@ public class StartingPanel {
                     String ID = nameTextField.getText();
                     String groupName = roomName.getText();
 
-                    Client client = new Client(ID, groupName);
+                    Client client = new Client();
+                    client.setUsername(ID);
+                    client.setGroupName(groupName);
+                    Client.main(new String[0]);
 
-                    frame.setVisible(false);
+                    if (client.createRoom()) {
+                        frame.setVisible(false);
+                        //open the game panel
+                    }
+                    else
+                        JOptionPane.showMessageDialog(frame, "An error occured! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);
+
             }
         });
         panel.add(nameLabel);
@@ -121,8 +125,17 @@ public class StartingPanel {
                 String strToken = clientToken.getText();
                 Integer token = Integer.valueOf(strToken);
 
+                Client client = new Client();
+                client.setUsername(ID);
+                client.setToken(token);
+                Client.main(new String[0]);
 
-                frame.setVisible(false);
+                if(client.joinGame()) {
+                    frame.setVisible(false);
+                    //open the game frame
+                }
+                else
+                    JOptionPane.showMessageDialog(frame, "An error occured! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         });
         panel.add(nameLabel);

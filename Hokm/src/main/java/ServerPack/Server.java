@@ -1,5 +1,6 @@
 package ServerPack;
 
+import ClientPack.Client;
 import MessageClasses.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -106,7 +107,11 @@ public class Server extends Thread {
         return sendMessage(true, info);
     }
 
-    /** methods for messages**/
+    /** methods for linking server and client**/
+    public void registerNewClient(CreateMessage msg) {
+        Room room = new Room(msg.getUsername(), msg.getToken());
+//        sendSuccess(room.getToken());     IDK HOW THIS WORKS
+    }
 
     private void handleConnection(Socket socket) {
         String clientRequest;
@@ -123,20 +128,18 @@ public class Server extends Thread {
             clientRequest = receiveBuffer.readUTF();
             ClientMessage msg = extractClientMessage(clientRequest);
 
-//            if (msg instanceof CreateMessage) {
-//                if (((CreateMessage) msg).newUser)
-//                    registerNewClient((SignupLoginMessage) msg);
-//                else
-//                    loginClient((SignupLoginMessage) msg);
-//            } else if (msg instanceof GetBioMessage) {
-//                sendBioToClient((GetBioMessage) msg);
-//            } else if (msg instanceof SetBioMessage) {
-//                updateBioOfClient((SetBioMessage) msg);
-//            } else if (msg instanceof LogoutMessage) {
-//                logoutClient((LogoutMessage) msg);
-//            } else {
-//                sendFailure(INTERNAL_ERROR);
-//            }
+            Client client = new Client();
+            if (msg instanceof CreateMessage) {
+                registerNewClient((CreateMessage) msg);
+            }
+//            else if (msg instanceof JoinMessage) {
+//                sendBioToClient((JoinMessage) msg);
+//            } else if (msg instanceof ThrowCardMessage) {
+//                updateBioOfClient((ThrowCardMessage) msg);
+//            } else if (msg instanceof HokmMessage)
+//                logoutClient((HokmMessage) msg);
+            else
+                sendFailure(INTERNAL_ERROR);
 
             sendBuffer.close();
             receiveBuffer.close();
@@ -146,7 +149,7 @@ public class Server extends Thread {
         }
     }
 
-    public static void main(String[] args) {
+        public static void main(String[] args) {
         try {
             Server.setupServer(5000);
             new Server().start();
