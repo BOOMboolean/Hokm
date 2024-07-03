@@ -8,8 +8,9 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import ClientPack.Client;
 import Game.*;
-import Server.*;
+import ServerPack.*;
 
 public class StartingPanel {
     public StartingPanel() {
@@ -55,13 +56,13 @@ public class StartingPanel {
         frame.setLocationRelativeTo(null);
         JPanel panel = new JPanel();
         JButton returnMain = new JButton("Return");
-        returnMain.setToolTipText("return first page");
+        returnMain.setToolTipText("return to first page");
         returnMain.setFocusable(true);
         panel.setLayout(new GridLayout(3,2));
         JLabel nameLabel = new JLabel("please enter your username :");
         JTextField nameTextField = new JTextField();
-        JLabel ipLabel = new JLabel("Enter the server's token: ");
-        JTextField clientToken = new JTextField();
+        JLabel ipLabel = new JLabel("Enter a name for the room: ");
+        JTextField roomName = new JTextField();
         JButton startgame = new JButton("enter the game");
         returnMain.addActionListener(new ActionListener() {
             @Override
@@ -73,32 +74,18 @@ public class StartingPanel {
         startgame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
                     String ID = nameTextField.getText();
-                    String strToken = clientToken.getText();
-                    Integer token = Integer.valueOf(strToken);
-                    System.out.println(token);
+                    String groupName = roomName.getText();
 
-                    Socket socket = new Socket("localhost", 1234);
-                    Client client = new Client(socket, ID);
+                    Client client = new Client(ID, groupName);
 
-                    client.listenForMessage();
-                    client.sendMessage();
-
-                    frame.dispose();
-                    System.out.println("Returning back to terminal");
                     frame.setVisible(false);
-                } catch (UnknownHostException eh) {
-                    eh.printStackTrace();
-                } catch (IOException ioe) {
-                    ioe.printStackTrace();
-                }
             }
         });
         panel.add(nameLabel);
         panel.add(nameTextField);
         panel.add(ipLabel);
-        panel.add(clientToken);
+        panel.add(roomName);
         panel.add(returnMain);
         panel.add(startgame);
         frame.add(panel);
@@ -114,7 +101,7 @@ public class StartingPanel {
         panel.setLayout(new GridLayout(3,2));
         JButton returnMain = new JButton("Return");
         JTextField nameTextField = new JTextField();
-        JLabel ipLabel = new JLabel("enter your Token : ");
+        JLabel ipLabel = new JLabel("enter your token : ");
         JTextField clientToken = new JTextField();
         returnMain.setToolTipText("return to first page");
         returnMain.setFocusable(true);
@@ -133,21 +120,7 @@ public class StartingPanel {
                 String ID = nameTextField.getText();
                 String strToken = clientToken.getText();
                 Integer token = Integer.valueOf(strToken);
-                try {
-                    Socket socket = new Socket("localhost", 1234);
-                    Client client = new Client(socket, ID);
 
-                    client.listenForMessage();
-                    client.sendMessage();
-
-                    frame.dispose();
-                    System.out.println("Returning back to terminal");
-                    frame.setVisible(false);
-                } catch (UnknownHostException eh) {
-                    eh.printStackTrace();
-                } catch (IOException ioe) {
-                    ioe.printStackTrace();
-                }
 
                 frame.setVisible(false);
             }

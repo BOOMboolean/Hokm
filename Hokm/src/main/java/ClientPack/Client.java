@@ -1,6 +1,8 @@
-package Client;
+package ClientPack;
 
+import MessageClasses.CreateMessage;
 import MessageClasses.ServerMessage;
+import com.google.gson.*;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -12,8 +14,15 @@ public class Client {
     private DataInputStream recieveBuffer;
     private DataOutputStream sendBuffer;
     private String username;
-    private String clientToken;
+    private int token;
+    private String groupName;
     private ServerMessage lastServerMessage;
+    private static final Gson gsonAgent = new GsonBuilder().create();
+
+    public Client(String username, String groupName) { //for creating a room
+        this.username = username;
+        this.groupName = groupName;
+    }
 
     private boolean establishConnection() {
         try {
@@ -65,21 +74,41 @@ public class Client {
         this.username = username;
     }
 
-    public void setClientToken(String clientToken) {
-        this.clientToken = clientToken;
+    public void setToken(int token) {
+        this.token = token;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public String getClientToken() {
-        return clientToken;
+    public int getToken() {
+        return token;
     }
 
     public ServerMessage getLastServerMessage() {
         return lastServerMessage;
     }
+
+    public boolean createRoom() {
+        CreateMessage msg = new CreateMessage(username, groupName);
+        try {
+            establishConnection();
+            sendMessage(gsonAgent.toJson(msg));
+            lastServerMessage = gsonAgent.fromJson(
+                    recieveResponse(), ServerMessage.class);
+            endConnection();
+            boolean success = lastServerMessage.wasSuccessfull();
+            if (success) {
+                return true;
+            }
+            return false;
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
+
 
 
 }

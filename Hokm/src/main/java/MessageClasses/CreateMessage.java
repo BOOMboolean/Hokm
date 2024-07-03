@@ -2,10 +2,11 @@ package MessageClasses;
 
 public class CreateMessage extends ClientMessage{
     private String username;
+    private String groupName;
 
-    public CreateMessage(String username, int token) {
+    public CreateMessage(String username, String groupName) {
         this.username = username;
-        this.token = token;
+        this.groupName = groupName;
     }
 
     public String getUsername() {

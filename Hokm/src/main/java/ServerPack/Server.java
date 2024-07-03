@@ -123,8 +123,8 @@ public class Server extends Thread {
             clientRequest = receiveBuffer.readUTF();
             ClientMessage msg = extractClientMessage(clientRequest);
 
-//            if (msg instanceof SignupLoginMessage) {
-//                if (((SignupLoginMessage) msg).newUser)
+//            if (msg instanceof CreateMessage) {
+//                if (((CreateMessage) msg).newUser)
 //                    registerNewClient((SignupLoginMessage) msg);
 //                else
 //                    loginClient((SignupLoginMessage) msg);
