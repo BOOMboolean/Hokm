@@ -15,14 +15,20 @@ public class Player {
         this.isHakem = false;
         this.playerMatch = match;
     }
-    public void playCard(Card card){
-        if(isPlayable(card,this.hand,this.playerMatch.getOnGoingGame().getOnGoingRound())) {
-            throwCard(card);
-        }
-        else{
-            System.out.println("try another one dumbass");
-        }
+
+    public Player(String username) {
+        this.Name = username;
+        this.isHakem = false;
     }
+
+    //    public void playCard(Card card){
+//        if(isPlayable(card,this.hand,this.playerMatch.getOnGoingGame().getOnGoingRound())) {
+//            throwCard(card);
+//        }
+//        else{
+//            System.out.println("try another one dumbass");
+//        }
+//    }
     public boolean isPlayable(Card card,ArrayList<Card> hand,Round onGoingRound){
     for(int i = 0 ; i<hand.size(); i++){
         if(onGoingRound.getPlayedCards().get(0).getSuit().equals(hand.get(i).getSuit())){//checks if you have the first played card's suit in your hand
@@ -41,18 +47,18 @@ public class Player {
         //the thrown card by this method will be displayed to everyone once the gui is completed
         //the card argument = a button that will be implemented in the gui
         RemoveCard(card);
-        this.playerMatch.getOnGoingGame().getOnGoingRound().getPlayedCards().add(card);
+//        this.playerMatch.getOnGoingGame().getOnGoingRound().getPlayedCards().add(card);
         System.out.println(card.toString() + " was played");
     }
 
-    public boolean winnerOrNot(Player player){
-       if(playerMatch.getOnGoingGame().getOnGoingRound().WinnerCard(playerMatch.getOnGoingGame().getOnGoingRound().getPlayedCards()).equals(player.getPlayingCard())){
-           return true;
-       }
-       else{
-           return false;
-       }
-    }
+//    public boolean winnerOrNot(Player player){
+//       if(playerMatch.getOnGoingGame().getOnGoingRound().WinnerCard(playerMatch.getOnGoingGame().getOnGoingRound().getPlayedCards()).equals(player.getPlayingCard())){
+//           return true;
+//       }
+//       else{
+//           return false;
+//       }
+//    }
 
     public void RemoveCard (Card card) {
         ArrayList<Card> temp = new ArrayList<>();

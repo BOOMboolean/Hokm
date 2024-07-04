@@ -1,6 +1,7 @@
 package ServerPack;
 
 import ClientPack.Client;
+import Game.Match;
 import Game.Player;
 import MessageClasses.*;
 import com.google.gson.Gson;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Server extends Thread {
+    Match match;
     private static ServerSocket server;
     private static ArrayList<Socket> connections;
     private DataOutputStream sendBuffer;
@@ -109,10 +111,6 @@ public class Server extends Thread {
     }
 
     /** methods for linking server and client**/
-    public void registerNewClient(CreateMessage msg) {
-        Room room = new Room(msg.getUsername(), msg.getToken());
-//        sendSuccess(room.getToken());     IDK HOW THIS WORKS
-    }
 
     private void handleConnection(Socket socket) {
         String clientRequest;
@@ -131,16 +129,16 @@ public class Server extends Thread {
 
             Client client = new Client();
             if (msg instanceof CreateMessage) {
-                registerNewClient((CreateMessage) msg);
+                CreateMatch((CreateMessage) msg);
             }
             else if (msg instanceof JoinMessage) {
-                joinPlayer((JoinMessage) msg);
-            } else if (msg instanceof ThrowCardMessage) {
-                throwCard((ThrowCardMessage) msg);
-            } else if (msg instanceof HokmMessage)
-                logoutClient((HokmMessage) msg);
-            else
-                sendFailure(INTERNAL_ERROR);
+                joinPlayer((JoinMessage) msg);}
+//            } else if (msg instanceof ThrowCardMessage) {
+//                throwCard((ThrowCardMessage) msg);}
+//            } else if (msg instanceof HokmMessage)
+//                logoutClient((HokmMessage) msg);
+            else {
+                sendFailure(INTERNAL_ERROR);}
 
             sendBuffer.close();
             receiveBuffer.close();
@@ -150,13 +148,22 @@ public class Server extends Thread {
         }
     }
 
+    private void CreateMatch(CreateMessage msg) {
+        sendSuccess("Create match");
+        match = new Match(String.valueOf(msg.getToken()),msg.getPlayer());
+//        match.getPlayers().add(msg.getPlayer());
+    }
+
     private void throwCard(ThrowCardMessage msg) {
         msg.getToken();
         Player player ;
-        player.throwCard();
+//        player.throwCard();
     }
 
     private void joinPlayer(JoinMessage msg) {
+        sendSuccess("player join");
+        match.addPLayer(msg.getPlayer());
+        match.alaki();
     }
 
     public static void main(String[] args) {

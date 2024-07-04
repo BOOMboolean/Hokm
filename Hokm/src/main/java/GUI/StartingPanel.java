@@ -79,7 +79,6 @@ public class StartingPanel {
 
                     if (client.createRoom()) {
                         frame.setVisible(false);
-                        //open the game panel
                     }
                     else
                         JOptionPane.showMessageDialog(frame, "An error occured! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -147,5 +146,9 @@ public class StartingPanel {
         frame.add(panel);
         frame.setResizable(false);
         return frame;
+    }
+
+    public static void main(String[] args) {
+        StartingPanel startingPanel = new StartingPanel();
     }
 }

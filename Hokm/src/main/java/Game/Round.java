@@ -26,15 +26,15 @@ public class Round {
                 }
             }
             else{
-                if(playedCards.get(i).getSuit().equals(onGoingGame.getHokm())){
-                    for (int j = 0; j < i; j++) {
-                        if(playedCards.get(j).getSuit().equals(onGoingGame.getHokm())) {
-                            if (playedCards.get(i).getRank().getRankValue() > playedCards.get(j).getRank().getRankValue()) {
-                                winningCard = playedCards.get(i);
-                            }
-                        }
-                    }
-                }
+//                if(playedCards.get(i).getSuit().equals(onGoingGame.getHokm())){
+//                    for (int j = 0; j < i; j++) {
+//                        if(playedCards.get(j).getSuit().equals(onGoingGame.getHokm())) {
+//                            if (playedCards.get(i).getRank().getRankValue() > playedCards.get(j).getRank().getRankValue()) {
+//                                winningCard = playedCards.get(i);
+//                            }
+//                        }
+//                    }
+//                }
             }
         }
         return winningCard;

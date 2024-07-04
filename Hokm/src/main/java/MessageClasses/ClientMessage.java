@@ -1,6 +1,9 @@
 package MessageClasses;
 
+import Game.Player;
+
 public class ClientMessage {
+    private Player player;
     protected int token;
     protected ClientMessageType type;
 
@@ -17,7 +20,13 @@ public class ClientMessage {
     public void setType(ClientMessageType type) {
         this.type = type;
     }
-//    public void Convert(String input) {
+    public Player getPlayer() {
+        return player;
+    }
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+    //    public void Convert(String input) {
 //        if (input.equals(ClientMessageType.throwCard.getName())){
 //            setType(ClientMessageType.throwCard);
 //        }
