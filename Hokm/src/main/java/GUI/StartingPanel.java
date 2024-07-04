@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import ClientPack.Client;
+import ServerPack.Room;
+import ServerPack.Server;
 
 public class StartingPanel {
     public StartingPanel() {
@@ -79,6 +81,7 @@ public class StartingPanel {
 
                     if (client.createRoom()) {
                         frame.setVisible(false);
+                        //open the game panel
                     }
                     else
                         JOptionPane.showMessageDialog(frame, "An error occured! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -127,14 +130,22 @@ public class StartingPanel {
                 Client client = new Client();
                 client.setUsername(ID);
                 client.setToken(token);
-                Client.main(new String[0]);
 
-                if(client.joinGame()) {
-                    frame.setVisible(false);
-                    //open the game frame
+                Server server = new Server();
+                if (token == server.getToken()) {
+                    Room room = new Room(ID, token);
+                    room.verifyPlayer(token);
+                    Client.main(new String[0]);
+
+                    if(client.joinGame()) {
+                        frame.setVisible(false);
+                        //open the game frame
+                    }
+                    else
+                        JOptionPane.showMessageDialog(frame, "An error occured! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
                 else
-                    JOptionPane.showMessageDialog(frame, "An error occured! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "Invalid token! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         });
         panel.add(nameLabel);

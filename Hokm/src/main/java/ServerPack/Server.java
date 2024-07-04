@@ -20,13 +20,23 @@ public class Server extends Thread {
     private DataOutputStream sendBuffer;
     private DataInputStream receiveBuffer;
     private static final Gson gsonAgent = new GsonBuilder().create();
-
+    private int token;
     private static final String INTERNAL_ERROR = "internal server error";
 
-    private static boolean setupServer(int portNumber) {
+    public int getToken() {
+        return token;
+    }
+
+    public void setToken(int token) {
+        this.token = token;
+    }
+
+    public boolean setupServer(int portNumber) {
         try {
             server = new ServerSocket(portNumber);
             connections = new ArrayList <Socket>();
+            generateToken();
+            System.out.println("Token: " + getToken());
             return true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -37,6 +47,7 @@ public class Server extends Thread {
         Socket socket;
         while (true) {
             socket = server.accept();
+            System.out.println("A new player has joined");
             synchronized (connections) {
                 connections.add(socket);
                 connections.notify();
@@ -64,10 +75,10 @@ public class Server extends Thread {
             }
         }
     }
-    private int generateToken() {
+    private void generateToken() {
         Random random = new Random();
         int token = random.nextInt(5000) + 1001;
-        return token;
+        setToken(token);
     }
     private ClientMessage extractClientMessage(String clientStr) {
         try {
@@ -168,7 +179,8 @@ public class Server extends Thread {
 
     public static void main(String[] args) {
         try {
-            Server.setupServer(5000);
+            Server server1 = new Server();
+            server1.setupServer(5000);
             new Server().start();
             new Server().listen();
         } catch (Exception e) {

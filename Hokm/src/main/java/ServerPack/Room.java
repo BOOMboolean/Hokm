@@ -11,7 +11,7 @@ public class Room { //change the class name to Group
         this.username = username;
         this.token = token;
     }
-    public void setToken (int token) {
+    public void verifyPlayer(int token) {
 //        if (this.currentToken != 0)
 //            allGroupsByToken.remove (this.currentToken);
         //CHECK HOW MANY TIMES THIS SPECIFIC TOKEN IS USED FROM THE HASHMAP
