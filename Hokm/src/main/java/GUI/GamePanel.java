@@ -15,6 +15,8 @@ import Game.*;
 public class GamePanel extends JFrame {
     private JPanel panel;
     private JLabel scoreLabel;
+    private JPanel cardPanel;
+    private ArrayList<NewButton> buttons;
 
     public GamePanel(String playerName, String score) {
         setTitle("Play Game");
@@ -89,9 +91,11 @@ public class GamePanel extends JFrame {
         gbc.gridy = 3;
         playerPanel.add(player1Label, gbc);
 
-// Panel for player hand
-        JPanel cardPanel = new JPanel(new FlowLayout());
+        // Panel for player hand
+        cardPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
         cardPanel.setOpaque(false); // Make panel transparent
+        buttons = new ArrayList<>();
+
         ArrayList<Card> hand = new ArrayList<>();
         hand.add(new Card(CardSuit.Hearts, Rank.Five));
         hand.add(new Card(CardSuit.Clubs, Rank.Six));
@@ -129,13 +133,29 @@ public class GamePanel extends JFrame {
             newButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    cardPanel.remove(newButton);
-                    cardPanel.revalidate();
-                    cardPanel.repaint();
+                    throwCard(newButton);
                 }
             });
-            cardPanel.add(newButton);
+            buttons.add(newButton);
         }
+
+        // Timer to add buttons one by one
+        Timer timer = new Timer(90, new ActionListener() {
+            int index = 0;
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (index < buttons.size()) {
+                    cardPanel.add(buttons.get(index));
+                    cardPanel.revalidate();
+                    cardPanel.repaint();
+                    index++;
+                } else {
+                    ((Timer) e.getSource()).stop();
+                }
+            }
+        });
+        timer.start();
 
         panel.add(playerPanel, BorderLayout.CENTER);
         panel.add(cardPanel, BorderLayout.SOUTH);
@@ -143,6 +163,16 @@ public class GamePanel extends JFrame {
         add(panel);
         setVisible(true);
     }
+
+    // Function to be called when a card button is pressed
+    private void throwCard(NewButton button) {
+        cardPanel.remove(button);
+        cardPanel.revalidate();
+        cardPanel.repaint();
+        // Call your custom function here
+        // For example: performThrowCardAction(button);
+    }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new GamePanel("player", "1"));
     }
