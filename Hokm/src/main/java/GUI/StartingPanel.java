@@ -5,9 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import ClientPack.Client;
-import ServerPack.Room;
-import ServerPack.Server;
+import Client.Client;
+import Server.Server;
 
 public class StartingPanel {
     public StartingPanel() {
