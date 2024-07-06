@@ -14,7 +14,6 @@ import Game.*;
 
 public class GamePanel extends JFrame {
     private JPanel panel;
-    private JLabel scoreLabel;
     private JPanel cardPanel;
     private ArrayList<NewButton> buttons;
 
@@ -37,14 +36,52 @@ public class GamePanel extends JFrame {
         panel = new BackgroundPanel(backgroundImage);
         panel.setLayout(new BorderLayout());
 
-        // Top panel for score
+        // Top panel for score and team labels
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.setOpaque(false); // Make panel transparent
 
-        scoreLabel = new JLabel("Score: " + score, SwingConstants.RIGHT);
-        scoreLabel.setFont(new Font("Arial", Font.BOLD, 24)); // Set font size
-        scoreLabel.setForeground(Color.YELLOW); // Set font color
-        topPanel.add(scoreLabel, BorderLayout.EAST);
+        // Create team labels
+        // JLabel team1Label = new JLabel("team 1:");
+        // team1Label.setFont(new Font("Arial", Font.BOLD, 24)); // Set font size
+        // team1Label.setForeground(Color.WHITE); // Set font color
+
+        // JLabel team2Label = new JLabel("team 2:");
+        // team2Label.setFont(new Font("Arial", Font.BOLD, 24)); // Set font size
+        // team2Label.setForeground(Color.WHITE); // Set font color
+
+        // Create additional team score labels
+        JLabel team1GameScoreLabel = new JLabel("Team1 Game Score:    ");
+        team1GameScoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        team1GameScoreLabel.setForeground(Color.YELLOW);
+
+        JLabel team1RoundScoreLabel = new JLabel("Team1 Round Score:   ");
+        team1RoundScoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        team1RoundScoreLabel.setForeground(Color.YELLOW);
+
+        JLabel team2GameScoreLabel = new JLabel("Team2 Game Score:    ");
+        team2GameScoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        team2GameScoreLabel.setForeground(Color.YELLOW);
+
+        JLabel team2RoundScoreLabel = new JLabel("Team2 Round Score:    ");
+        team2RoundScoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        team2RoundScoreLabel.setForeground(Color.YELLOW);
+
+        // Create a panel for the team labels on the left
+        JPanel teamPanelLeft = new JPanel(new GridLayout(3, 1));
+        teamPanelLeft.setOpaque(false); // Make panel transparent
+        // teamPanelLeft.add(team1Label);
+        teamPanelLeft.add(team1GameScoreLabel);
+        teamPanelLeft.add(team1RoundScoreLabel);
+
+        // Create a panel for the team labels on the right
+        JPanel teamPanelRight = new JPanel(new GridLayout(3, 1));
+        teamPanelRight.setOpaque(false); // Make panel transparent
+        // teamPanelRight.add(team2Label);
+        teamPanelRight.add(team2GameScoreLabel);
+        teamPanelRight.add(team2RoundScoreLabel);
+
+        topPanel.add(teamPanelLeft, BorderLayout.WEST);
+        topPanel.add(teamPanelRight, BorderLayout.EAST);
 
         panel.add(topPanel, BorderLayout.NORTH);
 
@@ -140,7 +177,7 @@ public class GamePanel extends JFrame {
         }
 
         // Timer to add buttons one by one
-        Timer timer = new Timer(90, new ActionListener() {
+        Timer timer = new Timer(120, new ActionListener() {
             int index = 0;
 
             @Override
