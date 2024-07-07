@@ -3,9 +3,9 @@ package Game;
 import java.util.*;
 
 public class Game {
-private static CardSuit hokm;
+private  CardSuit hokm;
 private Round onGoingRound;
-public Game(boolean isFirstGame){
+public Game(boolean isFirstGame,Player hakem){
     DeckShuffler(getDeck());
     HandDistributer(getDeck());
     if(isFirstGame){

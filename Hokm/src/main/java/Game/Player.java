@@ -9,7 +9,7 @@ public class Player {
     private Team team;
     private ArrayList<Card> hand;
     private Card playingCard;
-    Match playerMatch;
+    private Match playerMatch;
     public Player(String name , Match match) {
         this.Name = name;
         this.isHakem = false;

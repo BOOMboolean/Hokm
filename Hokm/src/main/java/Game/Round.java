@@ -9,19 +9,19 @@ public class Round {
     private ArrayList<Card> playedCards = new ArrayList<>(4);
     public Round(Player lastRoundWinner , ArrayList<Player> players){
         this.playedCards.clear();
-        int index = lastRoundWinner.getPlayerMatch().getPlayers().indexOf(lastRoundWinner);
+        int index = players.indexOf(lastRoundWinner);
         for (int i = 0; i < 4 ;i++ ){
             if(index >= 4){
-                this.playerTurn.set(i,players.get(index % 4));
+                playerTurn.set(i,players.get(index % 4));
                 index ++;
             }
             else
             {
-                this.playerTurn.set(i,players.get(index));
+                playerTurn.set(i,players.get(index));
                 index ++;
             }
         }
-        roundBeingPlayed(this.playerTurn);
+        roundBeingPlayed(playerTurn);
     }
 
     public void roundBeingPlayed(ArrayList<Player> playerTurn){
@@ -30,7 +30,8 @@ public class Round {
             playerTurn.get(i).setPlayingCard(cardFromPlayer);
             this.playedCards.set(i,playerTurn.get(i).playCard(playerTurn.get(i).getPlayingCard()));
         }
-
+        RoundWin(WinnerCard(playedCards),playerTurn);
+        if()
     }
     public Card WinnerCard(ArrayList<Card> playedCards){
         CardSuit firsPlayedSuit = playedCards.get(0).getSuit();
@@ -62,7 +63,12 @@ public class Round {
         for(int i = 0 ; i<playerTurn.size(); i++){
             if(winningCard.equals(playerTurn.get(i).getPlayingCard())){
                 winningPlayer = playerTurn.get(i);
+                winningPlayer.getTeam().setRoundScore(winningPlayer.getTeam().getRoundScore()+1);
             }
+        }
+        if(winningPlayer.getTeam().getRoundScore() >= 7){
+            winningPlayer.getTeam().setGameScore(winningPlayer.getTeam().getGameScore()+1);
+            winningPlayer.getPlayerMatch().setOnGoingGame(new Game());
         }
         winningPlayer.getPlayerMatch().getOnGoingGame().setOnGoingRound(new Round(winningPlayer,winningPlayer.getPlayerMatch().getPlayers()));
     }
