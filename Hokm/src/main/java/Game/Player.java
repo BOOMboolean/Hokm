@@ -21,14 +21,16 @@ public class Player {
         this.isHakem = false;
     }
 
-    //    public void playCard(Card card){
-//        if(isPlayable(card,this.hand,this.playerMatch.getOnGoingGame().getOnGoingRound())) {
-//            throwCard(card);
-//        }
-//        else{
-//            System.out.println("try another one dumbass");
-//        }
-//    }
+        public Card playCard(Card card){
+        if(isPlayable(card,this.hand,this.playerMatch.getOnGoingGame().getOnGoingRound())) {
+            throwCard(card);
+            return card;
+        }
+        else{
+            System.out.println("try another one dumbass");
+        }
+        return null;
+    }
     public boolean isPlayable(Card card,ArrayList<Card> hand,Round onGoingRound){
     for(int i = 0 ; i<hand.size(); i++){
         if(onGoingRound.getPlayedCards().get(0).getSuit().equals(hand.get(i).getSuit())){//checks if you have the first played card's suit in your hand
@@ -42,13 +44,13 @@ public class Player {
     }
     return true;
     }
-    public void throwCard(Card card){
+    public Card throwCard(Card card){
         //some ifs and elses have to be implemented to check whether the card can be played or not
         //the thrown card by this method will be displayed to everyone once the gui is completed
         //the card argument = a button that will be implemented in the gui
         RemoveCard(card);
-//        this.playerMatch.getOnGoingGame().getOnGoingRound().getPlayedCards().add(card);
         System.out.println(card.toString() + " was played");
+        return  null;
     }
 
 //    public boolean winnerOrNot(Player player){
@@ -109,5 +111,6 @@ public class Player {
     public void setPlayerMatch(Match playerMatch) {
         this.playerMatch = playerMatch;
     }
+
 
 }

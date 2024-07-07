@@ -5,14 +5,31 @@ import java.util.*;
 public class Round {
     private Card FisrtPlayedCard;
     private boolean isFirstRound;
+    private ArrayList<Player> playerTurn = new ArrayList<>(4);
     private ArrayList<Card> playedCards = new ArrayList<>(4);
-    private Game onGoingGame;
-
-    public Round( ){
-
+    public Round(Player lastRoundWinner , ArrayList<Player> players){
+        this.playedCards.clear();
+        int index = lastRoundWinner.getPlayerMatch().getPlayers().indexOf(lastRoundWinner);
+        for (int i = 0; i < 4 ;i++ ){
+            if(index >= 4){
+                this.playerTurn.set(i,players.get(index % 4));
+                index ++;
+            }
+            else
+            {
+                this.playerTurn.set(i,players.get(index));
+                index ++;
+            }
+        }
+        roundBeingPlayed(this.playerTurn);
     }
 
-    public void cardsBeingPlayed(){
+    public void roundBeingPlayed(ArrayList<Player> playerTurn){
+        Card cardFromPlayer = null; //temporary placeholder for the card we will be getting from the player
+        for(int i = 0; i<4 ;i++){
+            playerTurn.get(i).setPlayingCard(cardFromPlayer);
+            this.playedCards.set(i,playerTurn.get(i).playCard(playerTurn.get(i).getPlayingCard()));
+        }
 
     }
     public Card WinnerCard(ArrayList<Card> playedCards){
@@ -26,24 +43,28 @@ public class Round {
                 }
             }
             else{
-//                if(playedCards.get(i).getSuit().equals(onGoingGame.getHokm())){
-//                    for (int j = 0; j < i; j++) {
-//                        if(playedCards.get(j).getSuit().equals(onGoingGame.getHokm())) {
-//                            if (playedCards.get(i).getRank().getRankValue() > playedCards.get(j).getRank().getRankValue()) {
-//                                winningCard = playedCards.get(i);
-//                            }
-//                        }
-//                    }
-//                }
+                if(playedCards.get(i).getSuit().equals(playerTurn.get(0).getPlayerMatch().getOnGoingGame().getHokm())){
+                    for (int j = 0; j < i; j++) {
+                        if(playedCards.get(j).getSuit().equals(playerTurn.get(0).getPlayerMatch().getOnGoingGame().getHokm())) {
+                            if (playedCards.get(i).getRank().getRankValue() > playedCards.get(j).getRank().getRankValue()) {
+                                winningCard = playedCards.get(i);
+                            }
+                        }
+                    }
+                }
             }
         }
         return winningCard;
     }
 
-    public void RoundWin(Card winningCard , Player winningPlayer) {
-        if (winningCard.equals(winningPlayer.getPlayingCard())) {
-            winningPlayer.getTeam().setRoundScore(winningPlayer.getTeam().getRoundScore() + 1);
+    public void RoundWin(Card winningCard , ArrayList<Player> playerTurn) {
+        Player winningPlayer = null;
+        for(int i = 0 ; i<playerTurn.size(); i++){
+            if(winningCard.equals(playerTurn.get(i).getPlayingCard())){
+                winningPlayer = playerTurn.get(i);
+            }
         }
+        winningPlayer.getPlayerMatch().getOnGoingGame().setOnGoingRound(new Round(winningPlayer,winningPlayer.getPlayerMatch().getPlayers()));
     }
 
 
@@ -72,5 +93,13 @@ public class Round {
 
     public void setPlayedCards(ArrayList<Card> playedCards) {
         this.playedCards = playedCards;
+    }
+
+    public ArrayList<Player> getPlayerturn() {
+        return playerTurn;
+    }
+
+    public void setPlayerturn(ArrayList<Player> playerturn) {
+        this.playerTurn = playerturn;
     }
 }

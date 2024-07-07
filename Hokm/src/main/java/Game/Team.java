@@ -27,19 +27,19 @@ public class Team {
         team.setGameScore(i);
     }
 
-    // public void Specify_Hakem() {
-        // Player[] players = {player1, player2};
-         //Random random = new Random();
-         //int randomIndex = random.nextInt(2);
-         //setHakem(players[randomIndex]) ;
-//       System.out.println("Hakem is:" + getHakem().getName());
-//        }
-//        public Player getHakem() {
-//        return Hakem;
-//    }
-//        public void setHakem(Player hakem) {
-//        Hakem = hakem;
-//    }
+     public void Specify_Hakem() {
+         Player[] players = {player1, player2};
+         Random random = new Random();
+         int randomIndex = random.nextInt(2);
+         setHakem(players[randomIndex]) ;
+       System.out.println("Hakem is:" + getHakem().getName());
+        }
+        public Player getHakem() {
+        return Hakem;
+    }
+        public void setHakem(Player hakem) {
+        Hakem = hakem;
+    }
         public Player getPlayer1() {
             return player1;
         }

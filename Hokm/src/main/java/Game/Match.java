@@ -6,6 +6,7 @@ public class Match {
     private ArrayList<Card> deck;
     private ArrayList<Player> players ;
     private Game onGoingGame;
+
     public Match(String token , Player player){
         DeckMaker();
         this.players = new ArrayList<>();
