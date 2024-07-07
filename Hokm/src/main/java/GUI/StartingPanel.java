@@ -6,9 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import Client.Client;
-import Server.Server;
+import Game.Match;
+import Game.Player;
 
-public class StartingPanel {
+public class StartingPanel{
+    private Match match = new Match();
+
     public StartingPanel() {
         JFrame frame = new JFrame();
         frame.setTitle("Welcome");
@@ -54,11 +57,9 @@ public class StartingPanel {
         JButton returnMain = new JButton("Return");
         returnMain.setToolTipText("return to first page");
         returnMain.setFocusable(true);
-        panel.setLayout(new GridLayout(3,2));
+        panel.setLayout(new GridLayout(2,2));
         JLabel nameLabel = new JLabel("please enter your username :");
         JTextField nameTextField = new JTextField();
-        JLabel ipLabel = new JLabel("Enter a name for the room: ");
-        JTextField roomName = new JTextField();
         JButton startgame = new JButton("enter the game");
         returnMain.addActionListener(new ActionListener() {
             @Override
@@ -71,26 +72,29 @@ public class StartingPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                     String ID = nameTextField.getText();
-                    String groupName = roomName.getText();
+                    Client client = new Client();
 
-//                    Client client = new Client();
-//                    client.setUsername(ID);
-//                    client.setGroupName(groupName);
-//                    Client.main(new String[0]);
-//
-//                    if (client.createRoom()) {
-//                        frame.setVisible(false);
-//                        //open the game panel
-//                    }
-//                    else
-//                        JOptionPane.showMessageDialog(frame, "An error occured! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);
+                if (client.connect()) {
+                    JOptionPane info = new JOptionPane("Connected to server. \n Waiting for players to join...");
+
+                    Player player = new Player(ID);
+                    match.addPlayer(player);
+
+                    JDialog dialog = info.createDialog("");
+                    dialog.setVisible(true);
+
+                    if (client.isGameStarted()) {
+                        frame.setVisible(false);
+                        dialog.setVisible(false);
+                        //open the game panel
+                    }
+                } else
+                    JOptionPane.showMessageDialog(frame, "Couldn't connect to server! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);
 
             }
         });
         panel.add(nameLabel);
         panel.add(nameTextField);
-        panel.add(ipLabel);
-        panel.add(roomName);
         panel.add(returnMain);
         panel.add(startgame);
         frame.add(panel);
@@ -103,11 +107,11 @@ public class StartingPanel {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3,2));
+        panel.setLayout(new GridLayout(2,2));
         JButton returnMain = new JButton("Return");
         JTextField nameTextField = new JTextField();
-        JLabel ipLabel = new JLabel("enter your token : ");
-        JTextField clientToken = new JTextField();
+//        JLabel ipLabel = new JLabel("enter server IP : ");
+//        JTextField clientToken = new JTextField();
         returnMain.setToolTipText("return to first page");
         returnMain.setFocusable(true);
         JLabel nameLabel = new JLabel("please enter your username :");
@@ -119,38 +123,36 @@ public class StartingPanel {
                 new StartingPanel();
             }
         });
+
         joinButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String ID = nameTextField.getText();
-                String strToken = clientToken.getText();
-                Integer token = Integer.valueOf(strToken);
-//
-//                Client client = new Client();
-//                client.setUsername(ID);
-//                client.setToken(token);
-//
-//                Server server = new Server();
-//                if (token == server.getToken()) {
-//                    Room room = new Room(ID, token);
-//                    room.verifyPlayer(token);
-//                    Client.main(new String[0]);
-//
-//                    if(client.joinGame()) {
-//                        frame.setVisible(false);
-//                        //open the game frame
-//                    }
-//                    else
-//                        JOptionPane.showMessageDialog(frame, "An error occured! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);
-//                }
-//                else
-//                    JOptionPane.showMessageDialog(frame, "Invalid token! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);
+                Client client = new Client();
+
+                if (client.connect()) {
+                    JOptionPane info = new JOptionPane("Connected to server. \n Waiting for players to join...");
+
+                    Player player = new Player(ID);
+                    match.addPlayer(player);
+
+                    JDialog dialog = info.createDialog("");
+                    dialog.setVisible(true);
+
+                    if (client.isGameStarted()) {
+                        frame.setVisible(false);
+                        dialog.setVisible(false);
+                        //open the game panel
+                    }
+                } else
+                    JOptionPane.showMessageDialog(frame, "Couldn't connect to server! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);
+
             }
         });
         panel.add(nameLabel);
         panel.add(nameTextField);
-        panel.add(ipLabel);
-        panel.add(clientToken);
+//        panel.add(ipLabel);
+//        panel.add(clientToken);
         panel.add(returnMain);
         panel.add(joinButton);
         frame.add(panel);

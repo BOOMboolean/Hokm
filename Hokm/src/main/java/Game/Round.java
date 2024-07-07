@@ -31,7 +31,6 @@ public class Round {
             this.playedCards.set(i,playerTurn.get(i).playCard(playerTurn.get(i).getPlayingCard()));
         }
         RoundWin(WinnerCard(playedCards),playerTurn);
-        if()
     }
     public Card WinnerCard(ArrayList<Card> playedCards){
         CardSuit firsPlayedSuit = playedCards.get(0).getSuit();

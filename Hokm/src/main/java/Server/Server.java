@@ -14,7 +14,7 @@ import java.util.concurrent.Executors;
 
 public class Server {
     private static final int MAX_PLAYERS = 4;
-    private static final int port = 1234;
+    private static final int port = 4000;
     private static ExecutorService pool = Executors.newFixedThreadPool(MAX_PLAYERS);
     private static List<ClientHandler> clients = Collections.synchronizedList(new ArrayList<>());
 
@@ -74,6 +74,7 @@ public class Server {
         System.out.println("A client has been disconnected.");
         broadcastPlayerCount();
     }
+
 }
 class ClientHandler implements Runnable {
     private Socket clientSocket;
