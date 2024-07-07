@@ -21,7 +21,7 @@ public class Server {
     public static void main(String[] args) {
         try {
             ServerSocket serverSocket = new ServerSocket(port);
-            System.out.println("Server started"); //System.out.println is for logging
+            System.out.println("Server started. Waiting for clients..."); //System.out.println is for logging
 
             while(true) {
                 if (clients.size() < MAX_PLAYERS) {
@@ -74,45 +74,43 @@ public class Server {
         System.out.println("A client has been disconnected.");
         broadcastPlayerCount();
     }
+}
+class ClientHandler implements Runnable {
+    private Socket clientSocket;
+    private BufferedReader in;
+    private PrintWriter out;
 
-
-    static class ClientHandler implements Runnable {
-        private Socket clientSocket;
-        private BufferedReader in;
-        private PrintWriter out;
-
-        public ClientHandler(Socket socket) {
-            this.clientSocket = socket;
+    public ClientHandler(Socket socket) {
+        this.clientSocket = socket;
+        try {
+            this.out = new PrintWriter(clientSocket.getOutputStream(), true); // Initialize PrintWriter here
+            this.in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void sendMessage(String msg) {
+        out.println(msg);
+    }
+    @Override
+    public void run() {
+        try {
+            String msg;
+            while((msg = in.readLine()) != null) {
+                if (msg.equals("PLAYER_COUNT"))
+                    sendMessage(String.valueOf(Server.getPlayerCount()));
+                else
+                    sendMessage("Invalid request");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
             try {
-                this.out = new PrintWriter(clientSocket.getOutputStream(), true); // Initialize PrintWriter here
-                this.in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                clientSocket.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        public void sendMessage(String msg) {
-            out.println(msg);
-        }
-        @Override
-        public void run() {
-            try {
-                String msg;
-                while((msg = in.readLine()) != null) {
-                    if (msg.equals("PLAYER_COUNT"))
-                        sendMessage(String.valueOf(Server.getPlayerCount()));
-                    else
-                        sendMessage("Invalid request");
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } finally {
-                try {
-                    clientSocket.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                Server.removeClient(this);
-            }
+            Server.removeClient(this);
         }
     }
 }

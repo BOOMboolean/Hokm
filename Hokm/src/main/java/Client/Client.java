@@ -8,8 +8,6 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class Client implements Runnable {
-    private String serverIp;
-    private int serverPort;
     private Socket socket;
     private BufferedReader in;
     private PrintWriter out;
@@ -17,12 +15,7 @@ public class Client implements Runnable {
     private boolean connecting;
     private boolean running;
 
-    public Client(String serverIp, int serverPort, Socket socket, BufferedReader in, PrintWriter out) {
-        this.serverIp = serverIp;
-        this.serverPort = serverPort;
-        this.socket = socket;
-        this.in = in;
-        this.out = out;
+    public Client() {
         this.running = false;
         this.PLAYER_COUNT = -1;
     }
@@ -52,10 +45,10 @@ public class Client implements Runnable {
     public void connect() {
         connecting = true;
         try {
-            socket = new Socket(serverIp, serverPort);
+            socket = new Socket("localhost", 1234);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
-            System.out.println("Connected to server: " + serverIp + " :" + serverPort);
+            System.out.println("Connected to server.");
             running = true;
             connecting = false;
             new Thread(this).start();
@@ -91,7 +84,8 @@ public class Client implements Runnable {
         return this.PLAYER_COUNT;
     }
 
-    public static void main(String[] args) {
-        Client client = new Client("localhost", 1234);
+    public static void main(String[] args) throws IOException {
+       Client client = new Client();
+       client.connect();
     }
 }

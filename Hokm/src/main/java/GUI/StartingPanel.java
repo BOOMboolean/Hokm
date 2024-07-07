@@ -73,17 +73,17 @@ public class StartingPanel {
                     String ID = nameTextField.getText();
                     String groupName = roomName.getText();
 
-                    Client client = new Client();
-                    client.setUsername(ID);
-                    client.setGroupName(groupName);
-                    Client.main(new String[0]);
-
-                    if (client.createRoom()) {
-                        frame.setVisible(false);
-                        //open the game panel
-                    }
-                    else
-                        JOptionPane.showMessageDialog(frame, "An error occured! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);
+//                    Client client = new Client();
+//                    client.setUsername(ID);
+//                    client.setGroupName(groupName);
+//                    Client.main(new String[0]);
+//
+//                    if (client.createRoom()) {
+//                        frame.setVisible(false);
+//                        //open the game panel
+//                    }
+//                    else
+//                        JOptionPane.showMessageDialog(frame, "An error occured! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);
 
             }
         });
@@ -125,26 +125,26 @@ public class StartingPanel {
                 String ID = nameTextField.getText();
                 String strToken = clientToken.getText();
                 Integer token = Integer.valueOf(strToken);
-
-                Client client = new Client();
-                client.setUsername(ID);
-                client.setToken(token);
-
-                Server server = new Server();
-                if (token == server.getToken()) {
-                    Room room = new Room(ID, token);
-                    room.verifyPlayer(token);
-                    Client.main(new String[0]);
-
-                    if(client.joinGame()) {
-                        frame.setVisible(false);
-                        //open the game frame
-                    }
-                    else
-                        JOptionPane.showMessageDialog(frame, "An error occured! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);
-                }
-                else
-                    JOptionPane.showMessageDialog(frame, "Invalid token! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);
+//
+//                Client client = new Client();
+//                client.setUsername(ID);
+//                client.setToken(token);
+//
+//                Server server = new Server();
+//                if (token == server.getToken()) {
+//                    Room room = new Room(ID, token);
+//                    room.verifyPlayer(token);
+//                    Client.main(new String[0]);
+//
+//                    if(client.joinGame()) {
+//                        frame.setVisible(false);
+//                        //open the game frame
+//                    }
+//                    else
+//                        JOptionPane.showMessageDialog(frame, "An error occured! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);
+//                }
+//                else
+//                    JOptionPane.showMessageDialog(frame, "Invalid token! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         });
         panel.add(nameLabel);
