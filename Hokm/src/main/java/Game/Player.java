@@ -11,9 +11,9 @@ public class Player {
     private Card playingCard;
     private Match playerMatch;
     public Player(String name , Match match) {
+        this.playerMatch = match;
         this.Name = name;
         this.isHakem = false;
-        this.playerMatch = match;
     }
 
     public Player(String username) {
