@@ -85,7 +85,7 @@ public class StartingPanel{
                     if (client.isGameStarted()) {
                         frame.setVisible(false);
                         dialog.setVisible(false);
-                        SwingUtilities.invokeLater(() -> new GamePanel(match));
+                        SwingUtilities.invokeLater(() -> new GamePanel());
                     }
                 } else
                     JOptionPane.showMessageDialog(frame, "Couldn't connect to server! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -134,10 +134,7 @@ public class StartingPanel{
 
                 if (client.connect()) {
                     JOptionPane info = new JOptionPane("Connected to server. \n Waiting for players to join...");
-
                     client.sendMessage(ID);
-                    client.
-
 
                     JDialog dialog = info.createDialog("");
                     dialog.setVisible(true);

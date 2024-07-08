@@ -1,7 +1,5 @@
 package Game;
 
-import Server.ClientHandler;
-
 import java.util.ArrayList;
 
 public class Match {

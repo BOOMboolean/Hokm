@@ -36,10 +36,13 @@ public class Server {
                     clients.add(clientHandler);
                     pool.execute(clientHandler);
                     broadcastPlayerCount();
+                    broadcastPlayerIDs();
                 } else if(clients.size() == MAX_PLAYERS) {
                     match = new Match();
                 } else {
                     try {
+                        match.getPlayers().get(0).getClient() == clients.get(0)
+                        match.getPlayers().get(0).getName() == clients.get(0).getName()
 //                        match = new Match();
                         Socket tmpSocket = serverSocket.accept();
                         PrintWriter out = new PrintWriter(tmpSocket.getOutputStream(), true);
@@ -53,9 +56,16 @@ public class Server {
             throw new RuntimeException(e);
         }
     }
+
     public static void broadcastPlayerCount() {
         synchronized (clients) {
             System.out.println("Number of clients present: " + clients.size());
+            for(ClientHandler client : clients)
+                client.sendMessage("Number of clients present: " + clients.size());
+        }
+    }
+    public static void broadcastPlayerIDs() {
+        synchronized (clients) {
             StringBuilder message = new StringBuilder();
             for (int i = 0; i < clients.size(); i++) {
                 message.append(clients.get(i).getName());
@@ -63,6 +73,7 @@ public class Server {
             }
             for (ClientHandler client:clients)
                 client.sendMessage(message.toString());
+
             if (clients.size() == MAX_PLAYERS) {
                 broadcastStart();
             }
@@ -92,14 +103,15 @@ class ClientHandler implements Runnable {
     private BufferedReader in;
     private PrintWriter out;
     private String name;
-    private int index;
+//    private int index;
 
     public ClientHandler(Socket socket, int index) {
         this.clientSocket = socket;
         try {
-            this.out = new PrintWriter(clientSocket.getOutputStream(), true); // Initialize PrintWriter here
+            this.out = new PrintWriter(clientSocket.getOutputStream(), true);
             this.in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             this.name = in.readLine();
+            Server.match.getPlayers().get(index).setName(this.name);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -122,10 +134,10 @@ class ClientHandler implements Runnable {
             String msg;
             while((msg = in.readLine()) != null) {
                 //switch case
-                if (msg.equals("PLAYER_COUNT"))
+                if (msg.equals("PLAYER_COUNT")) {
                     Server.match.
-                    sendMessage(String.valueOf(Server.getPlayerCount()));
-                else
+                            sendMessage(String.valueOf(Server.getPlayerCount()));
+                } else
                     sendMessage("Invalid request");
             }
         } catch (IOException e) {

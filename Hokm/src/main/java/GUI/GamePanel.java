@@ -19,7 +19,7 @@ public class GamePanel extends JFrame {
     private JButton button1, button2, button3, button4;
     private Match match;
 
-    public GamePanel(Match match) {
+    public GamePanel() {
         this.match = match;
         setTitle("Play Game");
         setSize(1500, 1200);

@@ -16,11 +16,6 @@ public class Player {
         this.isHakem = false;
     }
 
-    public Player(String username) {
-        this.Name = username;
-        this.isHakem = false;
-    }
-
         public Card playCard(Card card){
         if(isPlayable(card,this.hand,this.playerMatch.getOnGoingGame().getOnGoingRound())) {
             throwCard(card);
