@@ -1,5 +1,4 @@
 package Game;
-import ServerPack.*;
 import GUI.*;
 
 import java.util.Objects;

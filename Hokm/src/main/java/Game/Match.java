@@ -11,9 +11,11 @@ public class Match {
 
     public Match(){
         setDeck(DeckMaker());
-
     }
 
+    public void start(){
+        onGoingGame = new Game(true,players,deck);
+    }
     public ArrayList<Card> DeckMaker () {
         ArrayList<Card> deck = new ArrayList<>();
         for (Rank rank : Rank.values()) {
@@ -25,6 +27,19 @@ public class Match {
     }
     public void addPlayer(Player player){
         this.players.add(player);
+        if(players.indexOf(player) == 0){
+            team1.setPlayer1(player);
+        }
+        if(players.indexOf(player) == 1){
+            team2.setPlayer1(player);
+        }
+        if(players.indexOf(player) == 2){
+            team1.setPlayer2(player);
+        }
+        if(players.indexOf(player) == 3){
+            team2.setPlayer2(player);
+        }
+
     }
     public void setOnGoingGame(Game onGoingGame) {
         this.onGoingGame = onGoingGame;
@@ -49,4 +64,19 @@ public class Match {
         this.deck = deck;
     }
 
+    public Team getTeam1() {
+        return team1;
+    }
+
+    public Team getTeam2() {
+        return team2;
+    }
+
+    public void setTeam1(Team team1) {
+        this.team1 = team1;
+    }
+
+    public void setTeam2(Team team2) {
+        this.team2 = team2;
+    }
 }

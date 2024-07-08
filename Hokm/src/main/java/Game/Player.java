@@ -52,15 +52,19 @@ public class Player {
         System.out.println(card.toString() + " was played");
         return  null;
     }
+    public void display(Card card){
+        //swing display placeholder
+        return;
+    }
 
-//    public boolean winnerOrNot(Player player){
-//       if(playerMatch.getOnGoingGame().getOnGoingRound().WinnerCard(playerMatch.getOnGoingGame().getOnGoingRound().getPlayedCards()).equals(player.getPlayingCard())){
-//           return true;
-//       }
-//       else{
-//           return false;
-//       }
-//    }
+    public CardSuit hokmSpecifier(ArrayList<Card> hand){
+            CardSuit hokmChosenByHakem = null;//another swing placeholder
+            for(int i = 0; i < 5; i++){
+                display(hand.get(i));
+            }
+            return hokmChosenByHakem;
+
+    }
 
     public void RemoveCard (Card card) {
         ArrayList<Card> temp = new ArrayList<>();

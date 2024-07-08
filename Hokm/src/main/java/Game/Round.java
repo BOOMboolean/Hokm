@@ -5,9 +5,17 @@ import java.util.*;
 public class Round {
     private Card FisrtPlayedCard;
     private boolean isFirstRound;
-    private ArrayList<Player> playerTurn = new ArrayList<>(4);
+    private ArrayList<Player> playerTurn = new ArrayList<>(4);//contains the players of our match
     private ArrayList<Card> playedCards = new ArrayList<>(4);
+
+
+
+
+
+
     public Round(Player lastRoundWinner , ArrayList<Player> players){
+        players.get(0).getPlayerMatch().getTeam1().setRoundScore(0);
+        players.get(0).getPlayerMatch().getTeam2().setRoundScore(0);
         this.playedCards.clear();
         int index = players.indexOf(lastRoundWinner);
         for (int i = 0; i < 4 ;i++ ){
@@ -24,14 +32,24 @@ public class Round {
         roundBeingPlayed(playerTurn);
     }
 
+
+
+
+
     public void roundBeingPlayed(ArrayList<Player> playerTurn){
         Card cardFromPlayer = null; //temporary placeholder for the card we will be getting from the player
-        for(int i = 0; i<4 ;i++){
-            playerTurn.get(i).setPlayingCard(cardFromPlayer);
-            this.playedCards.set(i,playerTurn.get(i).playCard(playerTurn.get(i).getPlayingCard()));
-        }
-        RoundWin(WinnerCard(playedCards),playerTurn);
+            for (int i = 0; i < 4; i++) {
+                playerTurn.get(i).setPlayingCard(cardFromPlayer);
+                this.playedCards.set(i, playerTurn.get(i).playCard(playerTurn.get(i).getPlayingCard()));
+            }
+            RoundWin(WinnerCard(playedCards), playerTurn);
+
+
     }
+
+
+
+
     public Card WinnerCard(ArrayList<Card> playedCards){
         CardSuit firsPlayedSuit = playedCards.get(0).getSuit();
         Card winningCard = playedCards.get(0);
@@ -67,9 +85,11 @@ public class Round {
         }
         if(winningPlayer.getTeam().getRoundScore() >= 7){
             winningPlayer.getTeam().setGameScore(winningPlayer.getTeam().getGameScore()+1);
-            winningPlayer.getPlayerMatch().setOnGoingGame(new Game());
+            winningPlayer.getPlayerMatch().setOnGoingGame(new Game(false,playerTurn,winningPlayer.getPlayerMatch().getDeck()));
         }
-        winningPlayer.getPlayerMatch().getOnGoingGame().setOnGoingRound(new Round(winningPlayer,winningPlayer.getPlayerMatch().getPlayers()));
+        else {
+            winningPlayer.getPlayerMatch().getOnGoingGame().setOnGoingRound(new Round(winningPlayer, winningPlayer.getPlayerMatch().getPlayers()));
+        }
     }
 
 
