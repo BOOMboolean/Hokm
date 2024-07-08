@@ -1,7 +1,6 @@
 package Game;
 
 import java.sql.*;
-import ServerPack.*;
 import GUI.*;
 public class Database {
     public void addRow(String roundWinner) {

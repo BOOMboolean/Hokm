@@ -41,8 +41,6 @@ public class Server {
                     match = new Match();
                 } else {
                     try {
-                        match.getPlayers().get(0).getClient() == clients.get(0)
-                        match.getPlayers().get(0).getName() == clients.get(0).getName()
 //                        match = new Match();
                         Socket tmpSocket = serverSocket.accept();
                         PrintWriter out = new PrintWriter(tmpSocket.getOutputStream(), true);
@@ -133,12 +131,38 @@ class ClientHandler implements Runnable {
         try {
             String msg;
             while((msg = in.readLine()) != null) {
-                //switch case
-                if (msg.equals("PLAYER_COUNT")) {
-                    Server.match.
-                            sendMessage(String.valueOf(Server.getPlayerCount()));
-                } else
-                    sendMessage("Invalid request");
+                switch (msg) {
+                    case "GET_HAKEM":
+                        getHakemName();
+                        break;
+                    case "GET_HOKM":
+                        getHokm();
+                        break;
+                    case "JOIN_MATCH":
+                        joinMatch();
+                        break;
+                    case "CREATE_MATCH":
+                        createMatch();
+                        break;
+                    case "SPECIFY_HOKM":
+                        specifyHokm();
+                        break;
+                    case "THROW_CARD":
+                        throwCard();
+                        break;
+                    case "PLAYER_COUNT":
+                        sendMessage(String.valueOf(Server.getPlayerCount()));
+                        break;
+                    case "GET_TEAM_SCORE":
+                        getTeamScore();
+                        break;
+                    case "GET_ROUND_SCORE":
+                        getRoundScore();
+                        break;
+                    default:
+                        System.out.println("___________Invalid request________________");
+                        break;
+                }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -150,5 +174,28 @@ class ClientHandler implements Runnable {
             }
             Server.removeClient(this);
         }
+    }
+    private void getRoundScore() {
+
+    }
+    private void getTeamScore() {
+
+    }
+    private void throwCard() {
+
+    }
+    private void specifyHokm() {
+
+    }
+    private void createMatch() {
+
+    }
+    private void joinMatch() {
+
+    }
+    private void getHokm() {
+
+    }
+    private void getHakemName() {
     }
 }
