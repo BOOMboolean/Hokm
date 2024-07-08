@@ -115,7 +115,23 @@ class ClientHandler implements Runnable {
             this.name = in.readLine();
             synchronized (Server.match) {
                 Player player = new Player(this.name, Server.match);
-                Server.match.getPlayers().add(player);
+                switch (index) {
+                    case 0:
+                        Server.match.getTeam1().setPlayer1(player);
+                        break;
+                    case 1:
+                        Server.match.getTeam1().setPlayer2(player);
+                        break;
+                    case 2:
+                        Server.match.getTeam2().setPlayer1(player);
+                        break;
+                    case 3:
+                        Server.match.getTeam2().setPlayer2(player);
+                        break;
+                    default:
+                        System.out.println("fuck");
+                }
+//                Server.match.getPlayers().add(player);
             }
         } catch (IOException e) {
             e.printStackTrace();
