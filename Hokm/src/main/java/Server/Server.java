@@ -4,6 +4,7 @@ import GUI.GamePanel;
 import Game.Match;
 import Game.Player;
 
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,9 +22,11 @@ public class Server {
     private static final int port = 4000;
     private static ExecutorService pool = Executors.newFixedThreadPool(MAX_PLAYERS);
     private static List<ClientHandler> clients = Collections.synchronizedList(new ArrayList<>());
-    static Match match;
+    public static Match match;
+    private static boolean isOpened = true;
 
     public static void main(String[] args) {
+        match = new Match();
         try {
             ServerSocket serverSocket = new ServerSocket(port);
             System.out.println("Server started. Waiting for clients..."); //System.out.println is for logging
@@ -37,12 +40,11 @@ public class Server {
                     pool.execute(clientHandler);
                     broadcastPlayerCount();
                     broadcastPlayerIDs();
-                } else if(clients.size() == MAX_PLAYERS) {
-                    match = new Match();
+                } else if(clients.size() == MAX_PLAYERS && isOpened) {
+                    SwingUtilities.invokeLater(() -> new GamePanel());
+                    isOpened = false;
                 } else {
                     try {
-                        match.getPlayers().get(0).getClient() == clients.get(0)
-                        match.getPlayers().get(0).getName() == clients.get(0).getName()
 //                        match = new Match();
                         Socket tmpSocket = serverSocket.accept();
                         PrintWriter out = new PrintWriter(tmpSocket.getOutputStream(), true);
@@ -111,7 +113,10 @@ class ClientHandler implements Runnable {
             this.out = new PrintWriter(clientSocket.getOutputStream(), true);
             this.in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             this.name = in.readLine();
-            Server.match.getPlayers().get(index).setName(this.name);
+            synchronized (Server.match) {
+                Player player = new Player(this.name, Server.match);
+                Server.match.getPlayers().add(player);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -135,8 +140,7 @@ class ClientHandler implements Runnable {
             while((msg = in.readLine()) != null) {
                 //switch case
                 if (msg.equals("PLAYER_COUNT")) {
-                    Server.match.
-                            sendMessage(String.valueOf(Server.getPlayerCount()));
+
                 } else
                     sendMessage("Invalid request");
             }

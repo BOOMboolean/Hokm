@@ -85,7 +85,7 @@ public class StartingPanel{
                     if (client.isGameStarted()) {
                         frame.setVisible(false);
                         dialog.setVisible(false);
-                        SwingUtilities.invokeLater(() -> new GamePanel());
+//                        SwingUtilities.invokeLater(() -> new GamePanel());
                     }
                 } else
                     JOptionPane.showMessageDialog(frame, "Couldn't connect to server! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -142,7 +142,7 @@ public class StartingPanel{
                     if (client.isGameStarted()) {
                         frame.setVisible(false);
                         dialog.setVisible(false);
-                        SwingUtilities.invokeLater(() -> new GamePanel());
+//                        SwingUtilities.invokeLater(() -> new GamePanel());
                     }
                 } else
                     JOptionPane.showMessageDialog(frame, "Couldn't connect to server! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);

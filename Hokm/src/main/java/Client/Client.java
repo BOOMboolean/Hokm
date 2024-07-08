@@ -1,5 +1,6 @@
 package Client;
 
+import GUI.GamePanel;
 import GUI.StartingPanel;
 import Game.Match;
 import Game.Player;
