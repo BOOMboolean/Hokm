@@ -89,4 +89,9 @@ public class Client implements Runnable {
     public void startGame() {
 
     }
+
+    public static void main(String[] args) {
+        Client client = new Client();
+        client.connect();
+    }
 }

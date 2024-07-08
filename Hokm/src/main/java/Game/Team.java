@@ -16,7 +16,10 @@ public class Team {
             this.roundScore = 0;
             this.gameScore= 0;
         }
-        public void addRoundScore(Team team){
+
+    public Team() {}
+
+    public void addRoundScore(Team team){
             int i = team.getRoundScore();
             i++;
             team.setRoundScore(i);

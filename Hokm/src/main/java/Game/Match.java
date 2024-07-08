@@ -10,6 +10,9 @@ public class Match {
     private Game onGoingGame;
 
     public Match(){
+        this.players = new ArrayList<>();
+        this.team1 = new Team();
+        this.team2 = new Team();
         setDeck(DeckMaker());
     }
 

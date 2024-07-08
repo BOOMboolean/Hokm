@@ -17,7 +17,7 @@ public class GamePanel extends JFrame {
     private JPanel cardPanel;
     private ArrayList<NewButton> buttons;
 
-    public GamePanel(String playerName, String score) {
+    public GamePanel(String playerName) {
         setTitle("Play Game");
         setSize(1500, 1200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -210,7 +210,8 @@ public class GamePanel extends JFrame {
         // For example: performThrowCardAction(button);
     }
 
+    //delete the main method when you're done
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new GamePanel("player", "1"));
+        SwingUtilities.invokeLater(() -> new GamePanel("player"));
     }
 }
