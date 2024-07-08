@@ -1,6 +1,8 @@
 package Client;
 
 import GUI.StartingPanel;
+import Game.Match;
+import Game.Player;
 
 import javax.swing.*;
 import java.io.BufferedReader;
@@ -33,7 +35,6 @@ public class Client implements Runnable {
     public boolean isGameStarted() {
         return gameStarted;
     }
-
     @Override
     public void run() {
         String msg;
@@ -84,14 +85,5 @@ public class Client implements Runnable {
     public int getPlayersCount() {
         sendMessage("GET_PLAYER_COUNT");
         return this.PLAYER_COUNT;
-    }
-
-    public void startGame() {
-
-    }
-
-    public static void main(String[] args) {
-        Client client = new Client();
-        client.connect();
     }
 }

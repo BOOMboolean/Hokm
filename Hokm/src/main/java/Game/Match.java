@@ -1,5 +1,7 @@
 package Game;
 
+import Server.ClientHandler;
+
 import java.util.ArrayList;
 
 public class Match {
@@ -43,6 +45,19 @@ public class Match {
             team2.setPlayer2(player);
         }
 
+    }
+
+    public void updateMatch(Match match) {
+        for (int i = 0; i < players.size(); i++) {
+            players.get(i).setPlayerMatch(match);
+        }
+    }
+
+
+    public void add(Player player) {
+        ArrayList<Player> temp = getPlayers();
+        temp.add(player);
+        setPlayers(temp);
     }
     public void setOnGoingGame(Game onGoingGame) {
         this.onGoingGame = onGoingGame;

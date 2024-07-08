@@ -1,5 +1,9 @@
 package Server;
 
+import GUI.GamePanel;
+import Game.Match;
+import Game.Player;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,6 +21,7 @@ public class Server {
     private static final int port = 4000;
     private static ExecutorService pool = Executors.newFixedThreadPool(MAX_PLAYERS);
     private static List<ClientHandler> clients = Collections.synchronizedList(new ArrayList<>());
+    static Match match;
 
     public static void main(String[] args) {
         try {
@@ -27,12 +32,15 @@ public class Server {
                 if (clients.size() < MAX_PLAYERS) {
                     Socket clientSocket = serverSocket.accept();
                     System.out.println("A new client has joined.");
-                    ClientHandler clientHandler = new ClientHandler(clientSocket);
+                    ClientHandler clientHandler = new ClientHandler(clientSocket,clients.size());
                     clients.add(clientHandler);
                     pool.execute(clientHandler);
                     broadcastPlayerCount();
+                } else if(clients.size() == MAX_PLAYERS) {
+                    match = new Match();
                 } else {
                     try {
+//                        match = new Match();
                         Socket tmpSocket = serverSocket.accept();
                         PrintWriter out = new PrintWriter(tmpSocket.getOutputStream(), true);
                         out.println("There's no room for you! Try again later.");
@@ -48,10 +56,13 @@ public class Server {
     public static void broadcastPlayerCount() {
         synchronized (clients) {
             System.out.println("Number of clients present: " + clients.size());
-            for (ClientHandler client : clients) {
-                client.sendMessage("Number of clients present: " + clients.size());
+            StringBuilder message = new StringBuilder();
+            for (int i = 0; i < clients.size(); i++) {
+                message.append(clients.get(i).getName());
+                if (i != clients.size() - 1) message.append(',');
             }
-
+            for (ClientHandler client:clients)
+                client.sendMessage(message.toString());
             if (clients.size() == MAX_PLAYERS) {
                 broadcastStart();
             }
@@ -80,16 +91,28 @@ class ClientHandler implements Runnable {
     private Socket clientSocket;
     private BufferedReader in;
     private PrintWriter out;
+    private String name;
+    private int index;
 
-    public ClientHandler(Socket socket) {
+    public ClientHandler(Socket socket, int index) {
         this.clientSocket = socket;
         try {
             this.out = new PrintWriter(clientSocket.getOutputStream(), true); // Initialize PrintWriter here
             this.in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            this.name = in.readLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void sendMessage(String msg) {
         out.println(msg);
     }
@@ -98,7 +121,9 @@ class ClientHandler implements Runnable {
         try {
             String msg;
             while((msg = in.readLine()) != null) {
+                //switch case
                 if (msg.equals("PLAYER_COUNT"))
+                    Server.match.
                     sendMessage(String.valueOf(Server.getPlayerCount()));
                 else
                     sendMessage("Invalid request");

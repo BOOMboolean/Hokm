@@ -10,8 +10,6 @@ import Game.Match;
 import Game.Player;
 
 public class StartingPanel{
-    private Match match = new Match();
-
     public StartingPanel() {
         JFrame frame = new JFrame();
         frame.setTitle("Welcome");
@@ -76,17 +74,18 @@ public class StartingPanel{
 
                 if (client.connect()) {
                     JOptionPane info = new JOptionPane("Connected to server. \n Waiting for players to join...");
+                    client.sendMessage(ID);
 
-                    Player player = new Player(ID);
-                    match.addPlayer(player);
 
                     JDialog dialog = info.createDialog("");
                     dialog.setVisible(true);
 
+
+
                     if (client.isGameStarted()) {
                         frame.setVisible(false);
                         dialog.setVisible(false);
-                        SwingUtilities.invokeLater(() -> new GamePanel(ID));
+                        SwingUtilities.invokeLater(() -> new GamePanel(match));
                     }
                 } else
                     JOptionPane.showMessageDialog(frame, "Couldn't connect to server! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -136,8 +135,9 @@ public class StartingPanel{
                 if (client.connect()) {
                     JOptionPane info = new JOptionPane("Connected to server. \n Waiting for players to join...");
 
-                    Player player = new Player(ID);
-                    match.addPlayer(player);
+                    client.sendMessage(ID);
+                    client.
+
 
                     JDialog dialog = info.createDialog("");
                     dialog.setVisible(true);
@@ -145,7 +145,7 @@ public class StartingPanel{
                     if (client.isGameStarted()) {
                         frame.setVisible(false);
                         dialog.setVisible(false);
-                        SwingUtilities.invokeLater(() -> new GamePanel(ID));
+                        SwingUtilities.invokeLater(() -> new GamePanel());
                     }
                 } else
                     JOptionPane.showMessageDialog(frame, "Couldn't connect to server! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);

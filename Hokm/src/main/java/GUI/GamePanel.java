@@ -17,8 +17,10 @@ public class GamePanel extends JFrame {
     private JPanel cardPanel;
     private ArrayList<NewButton> buttons;
     private JButton button1, button2, button3, button4;
+    private Match match;
 
-    public GamePanel(String playerName, String score) {
+    public GamePanel(Match match) {
+        this.match = match;
         setTitle("Play Game");
         setSize(1500, 1200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -81,19 +83,19 @@ public class GamePanel extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(50, 180, 50, 180);
 
-        JLabel player1Label = new JLabel("player1", SwingConstants.CENTER);
+        JLabel player1Label = new JLabel(this.match.getPlayers().get(0).getName(), SwingConstants.CENTER);
         player1Label.setFont(new Font("Arial", Font.BOLD, 40)); // Set font size
         player1Label.setForeground(Color.orange); // Set font color
 
-        JLabel player2Label = new JLabel("player2", SwingConstants.CENTER);
+        JLabel player2Label = new JLabel(this.match.getPlayers().get(1).getName(), SwingConstants.CENTER);
         player2Label.setFont(new Font("Arial", Font.BOLD, 40)); // Set font size
         player2Label.setForeground(Color.orange); // Set font color
 
-        JLabel player3Label = new JLabel("player3", SwingConstants.CENTER);
+        JLabel player3Label = new JLabel(this.match.getPlayers().get(2).getName(), SwingConstants.CENTER);
         player3Label.setFont(new Font("Arial", Font.BOLD, 40)); // Set font size
         player3Label.setForeground(Color.orange); // Set font color
 
-JLabel player4Label = new JLabel("player4", SwingConstants.CENTER);
+JLabel player4Label = new JLabel(this.match.getPlayers().get(3).getName(), SwingConstants.CENTER);
         player4Label.setFont(new Font("Arial", Font.BOLD, 40)); // Set font size
         player4Label.setForeground(Color.orange); // Set font color
 
@@ -242,7 +244,7 @@ JLabel player4Label = new JLabel("player4", SwingConstants.CENTER);
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new GamePanel("player", "1"));
+//        SwingUtilities.invokeLater(() -> new GamePanel();
     }
 }
 
