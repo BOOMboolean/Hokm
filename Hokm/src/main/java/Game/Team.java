@@ -9,15 +9,16 @@ public class Team {
         private int roundScore;
         private int gameScore;
 
-       // private Player Hakem ;
+        private Player Hakem ;
         public Team (Player player1, Player player2) {
             this.player1 = player1;
             this.player2 = player2;
             this.roundScore = 0;
             this.gameScore= 0;
         }
+        public Team() {
 
-    public Team() {}
+        }
 
     public void addRoundScore(Team team){
             int i = team.getRoundScore();
