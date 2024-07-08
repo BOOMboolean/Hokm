@@ -14,8 +14,6 @@ public class Round {
 
 
     public Round(Player lastRoundWinner , ArrayList<Player> players){
-        players.get(0).getPlayerMatch().getTeam1().setRoundScore(0);
-        players.get(0).getPlayerMatch().getTeam2().setRoundScore(0);
         this.playedCards.clear();
         int index = players.indexOf(lastRoundWinner);
         for (int i = 0; i < 4 ;i++ ){
@@ -85,7 +83,7 @@ public class Round {
         }
         if(winningPlayer.getTeam().getRoundScore() >= 7){
             winningPlayer.getTeam().setGameScore(winningPlayer.getTeam().getGameScore()+1);
-            winningPlayer.getPlayerMatch().setOnGoingGame(new Game(false,playerTurn,winningPlayer.getPlayerMatch().getDeck()));
+            winningPlayer.getPlayerMatch().setOnGoingGame(new Game(false,winningPlayer.getPlayerMatch().getPlayers(),winningPlayer.getPlayerMatch().getDeck()));
         }
         else {
             winningPlayer.getPlayerMatch().getOnGoingGame().setOnGoingRound(new Round(winningPlayer, winningPlayer.getPlayerMatch().getPlayers()));
