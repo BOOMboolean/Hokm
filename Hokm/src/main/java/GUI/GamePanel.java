@@ -16,8 +16,9 @@ public class GamePanel extends JFrame {
     private JPanel panel;
     private JPanel cardPanel;
     private ArrayList<NewButton> buttons;
+    private JButton button1, button2, button3, button4;
 
-    public GamePanel(String playerName) {
+    public GamePanel(String playerName, String score) {
         setTitle("Play Game");
         setSize(1500, 1200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,7 +27,7 @@ public class GamePanel extends JFrame {
         // Load the background image
         Image backgroundImage = null;
         try {
-            backgroundImage = ImageIO.read(new File("Hokm\\images\\carpet5.jpg")); // Adjust the path to your image
+            backgroundImage = ImageIO.read(new File("Hokm\\images\\Panel Background.png")); // Adjust the path to your image
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Background image not found.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -36,47 +37,36 @@ public class GamePanel extends JFrame {
         panel = new BackgroundPanel(backgroundImage);
         panel.setLayout(new BorderLayout());
 
-        // Top panel for score and team labels
+        // Top panel for team labels
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.setOpaque(false); // Make panel transparent
 
         // Create team labels
-        // JLabel team1Label = new JLabel("team 1:");
-        // team1Label.setFont(new Font("Arial", Font.BOLD, 24)); // Set font size
-        // team1Label.setForeground(Color.WHITE); // Set font color
-
-        // JLabel team2Label = new JLabel("team 2:");
-        // team2Label.setFont(new Font("Arial", Font.BOLD, 24)); // Set font size
-        // team2Label.setForeground(Color.WHITE); // Set font color
-
-        // Create additional team score labels
-        JLabel team1GameScoreLabel = new JLabel("Team1 Game Score:    ");
+        JLabel team1GameScoreLabel = new JLabel("Team1 Game Score:");
         team1GameScoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        team1GameScoreLabel.setForeground(Color.YELLOW);
+        team1GameScoreLabel.setForeground(Color.ORANGE);
 
-        JLabel team1RoundScoreLabel = new JLabel("Team1 Round Score:   ");
+        JLabel team1RoundScoreLabel = new JLabel("Team1 Round Score:");
         team1RoundScoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        team1RoundScoreLabel.setForeground(Color.YELLOW);
+        team1RoundScoreLabel.setForeground(Color.ORANGE);
 
         JLabel team2GameScoreLabel = new JLabel("Team2 Game Score:    ");
         team2GameScoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        team2GameScoreLabel.setForeground(Color.YELLOW);
+        team2GameScoreLabel.setForeground(Color.ORANGE);
 
         JLabel team2RoundScoreLabel = new JLabel("Team2 Round Score:    ");
         team2RoundScoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        team2RoundScoreLabel.setForeground(Color.YELLOW);
+        team2RoundScoreLabel.setForeground(Color.ORANGE);
 
         // Create a panel for the team labels on the left
         JPanel teamPanelLeft = new JPanel(new GridLayout(3, 1));
         teamPanelLeft.setOpaque(false); // Make panel transparent
-        // teamPanelLeft.add(team1Label);
         teamPanelLeft.add(team1GameScoreLabel);
         teamPanelLeft.add(team1RoundScoreLabel);
 
         // Create a panel for the team labels on the right
         JPanel teamPanelRight = new JPanel(new GridLayout(3, 1));
         teamPanelRight.setOpaque(false); // Make panel transparent
-        // teamPanelRight.add(team2Label);
         teamPanelRight.add(team2GameScoreLabel);
         teamPanelRight.add(team2RoundScoreLabel);
 
@@ -89,7 +79,7 @@ public class GamePanel extends JFrame {
         JPanel playerPanel = new JPanel(new GridBagLayout());
         playerPanel.setOpaque(false); // Make panel transparent
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(80, 180, 80, 180);
+        gbc.insets = new Insets(50, 180, 50, 180);
 
         JLabel player1Label = new JLabel("player1", SwingConstants.CENTER);
         player1Label.setFont(new Font("Arial", Font.BOLD, 40)); // Set font size
@@ -103,7 +93,7 @@ public class GamePanel extends JFrame {
         player3Label.setFont(new Font("Arial", Font.BOLD, 40)); // Set font size
         player3Label.setForeground(Color.orange); // Set font color
 
-        JLabel player4Label = new JLabel("player4", SwingConstants.CENTER);
+JLabel player4Label = new JLabel("player4", SwingConstants.CENTER);
         player4Label.setFont(new Font("Arial", Font.BOLD, 40)); // Set font size
         player4Label.setForeground(Color.orange); // Set font color
 
@@ -114,7 +104,7 @@ public class GamePanel extends JFrame {
 
         gbc.gridx = 1;
         gbc.gridy = 1;
-        playerPanel.add(Box.createVerticalStrut(50), gbc); // Add empty space
+        playerPanel.add(Box.createVerticalStrut(1), gbc); // Add empty space
 
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -127,6 +117,41 @@ public class GamePanel extends JFrame {
         gbc.gridx = 1;
         gbc.gridy = 3;
         playerPanel.add(player1Label, gbc);
+
+        // Central panel for buttons
+        JPanel centralPanel = new JPanel(new GridBagLayout());
+        centralPanel.setOpaque(false); // Make panel transparent
+        GridBagConstraints centralGbc = new GridBagConstraints();
+        centralGbc.insets = new Insets(10, 10, 10, 10);
+
+        button1 = new JButton();
+        button2 = new JButton();
+        button3 = new JButton();
+        button4 = new JButton();
+        button1.setToolTipText("Player1.getname");
+        button2.setToolTipText("player2.getname");
+        button3.setToolTipText("Player3.getname");
+        button4.setToolTipText("Player4.getname");
+
+        centralGbc.gridx = 0;
+        centralGbc.gridy = 0;
+        centralPanel.add(button1, centralGbc);
+
+        centralGbc.gridx = 1;
+        centralGbc.gridy = 0;
+        centralPanel.add(button2, centralGbc);
+
+        centralGbc.gridx = 0;
+        centralGbc.gridy = 1;
+        centralPanel.add(button3, centralGbc);
+
+        centralGbc.gridx = 1;
+        centralGbc.gridy = 1;
+        centralPanel.add(button4, centralGbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        playerPanel.add(centralPanel, gbc);
 
         // Panel for player hand
         cardPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
@@ -180,7 +205,7 @@ public class GamePanel extends JFrame {
         Timer timer = new Timer(120, new ActionListener() {
             int index = 0;
 
-            @Override
+@Override
             public void actionPerformed(ActionEvent e) {
                 if (index < buttons.size()) {
                     cardPanel.add(buttons.get(index));
@@ -206,12 +231,19 @@ public class GamePanel extends JFrame {
         cardPanel.remove(button);
         cardPanel.revalidate();
         cardPanel.repaint();
-        // Call your custom function here
-        // For example: performThrowCardAction(button);
+        // Change icon of one of the central buttons
+        button1.setIcon(button.getIcon());
+        button1.setPreferredSize(new Dimension(button1.getIcon().getIconWidth(), button1.getIcon().getIconHeight()));
+        button1.setMinimumSize(new Dimension(button1.getIcon().getIconWidth(), button1.getIcon().getIconHeight()));
+        button1.setMaximumSize(new Dimension(button1.getIcon().getIconWidth(), button1.getIcon().getIconHeight()));
+        button1.setSize(new Dimension(button1.getIcon().getIconWidth(), button1.getIcon().getIconHeight()));
+        button1.revalidate();
+        button1.repaint();
     }
 
-    //delete the main method when you're done
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new GamePanel("player"));
+        SwingUtilities.invokeLater(() -> new GamePanel("player", "1"));
     }
 }
+
+
