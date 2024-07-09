@@ -4,27 +4,37 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 import Client.Client;
 import Game.Match;
 import Game.Player;
 
-public class StartingPanel{
+public class StartingPanel {
+    private Match match = new Match();
+
     public StartingPanel() {
         JFrame frame = new JFrame();
         frame.setTitle("Welcome");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500,500);
+        frame.setSize(700, 400);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(2,1));
-        JButton createGame = new JButton("Create Game");
-        JButton joinGame = new JButton("Join Game");
+        panel.setLayout(new GridLayout(2, 1));
+        ImageIcon createGameIcon = new ImageIcon("Hokm\\images\\Join4.png");
+        ImageIcon joinGameIcon = new ImageIcon("Hokm\\images\\Join3.png");
+
+        JButton createGame = new JButton("", createGameIcon);
+        JButton joinGame = new JButton("Join Game", joinGameIcon);
         createGame.setToolTipText("Create game for playing :)");
         joinGame.setToolTipText("Join game for playing :)");
         createGame.setFocusable(false);
         joinGame.setFocusable(false);
+
         createGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -46,19 +56,49 @@ public class StartingPanel{
         frame.add(panel);
         frame.setVisible(true);
     }
+
+    private class BackgroundPanel extends JPanel {
+        private BufferedImage image;
+
+        public BackgroundPanel(String fileName) {
+            try {
+                image = ImageIO.read(new File(fileName));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            setLayout(new GridBagLayout());
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            if (image != null) {
+                g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+            }
+        }
+    }
+
     public Frame createGame(String Token) {
         JFrame frame = new JFrame("Create Game");
-        frame.setSize(300,300);
+        frame.setSize(600, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
-        JPanel panel = new JPanel();
-        JButton returnMain = new JButton("Return");
-        returnMain.setToolTipText("return to first page");
-        returnMain.setFocusable(true);
-        panel.setLayout(new GridLayout(2,2));
-        JLabel nameLabel = new JLabel("please enter your username :");
+
+        BackgroundPanel panel = new BackgroundPanel("Hokm\\images\\Game.png");
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+
+        JLabel nameLabel = new JLabel("please enter your username:");
+        nameLabel.setFont(new Font("Arial", Font.TYPE1_FONT, 20));
+        nameLabel.setForeground(Color.MAGENTA);
         JTextField nameTextField = new JTextField();
+        nameTextField.setPreferredSize(new Dimension(200, 25));
+
         JButton startgame = new JButton("enter the game");
+        startgame.setPreferredSize(new Dimension(150, 25));
+        JButton returnMain = new JButton("Return");
+        returnMain.setPreferredSize(new Dimension(150, 25));
+
         returnMain.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -69,33 +109,44 @@ public class StartingPanel{
         startgame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    String ID = nameTextField.getText();
-                    Client client = new Client(ID);
+                String ID = nameTextField.getText();
+                Client client = new Client(ID);
 
                 if (client.connect()) {
                     JOptionPane info = new JOptionPane("Connected to server. \n Waiting for players to join...");
                     client.sendMessage(ID);
 
-
                     JDialog dialog = info.createDialog("");
                     dialog.setVisible(true);
-
-
 
                     if (client.isGameStarted()) {
                         frame.setVisible(false);
                         dialog.setVisible(false);
 //                        SwingUtilities.invokeLater(() -> new GamePanel());
                     }
-                } else
+                } else {
                     JOptionPane.showMessageDialog(frame, "Couldn't connect to server! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);
-
+                }
             }
         });
-        panel.add(nameLabel);
-        panel.add(nameTextField);
-        panel.add(returnMain);
-        panel.add(startgame);
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(nameLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        panel.add(nameTextField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 2;
+        panel.add(startgame, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        panel.add(returnMain, gbc);
+
         frame.add(panel);
         frame.setResizable(false);
 
@@ -103,21 +154,28 @@ public class StartingPanel{
 
         return frame;
     }
-    public Frame joinGame () {
+
+    public Frame joinGame() {
         JFrame frame = new JFrame("Join game");
-        frame.setSize(300,300);
+        frame.setSize(600, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(2,2));
-        JButton returnMain = new JButton("Return");
+
+        BackgroundPanel panel = new BackgroundPanel("Hokm\\images\\Game.png");
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+
+        JLabel nameLabel = new JLabel("please enter your username:");
+        nameLabel.setFont(new Font("Arial", Font.TYPE1_FONT, 20));
+        nameLabel.setForeground(Color.MAGENTA);
         JTextField nameTextField = new JTextField();
-//        JLabel ipLabel = new JLabel("enter server IP : ");
-//        JTextField clientToken = new JTextField();
-        returnMain.setToolTipText("return to first page");
-        returnMain.setFocusable(true);
-        JLabel nameLabel = new JLabel("please enter your username :");
+        nameTextField.setPreferredSize(new Dimension(200, 25));
+
         JButton joinButton = new JButton("join");
+        joinButton.setPreferredSize(new Dimension(150, 25));
+        JButton returnMain = new JButton("Return");
+        returnMain.setPreferredSize(new Dimension(150, 25));
+
         returnMain.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -144,17 +202,29 @@ public class StartingPanel{
                         dialog.setVisible(false);
 //                        SwingUtilities.invokeLater(() -> new GamePanel(client));
                     }
-                } else
+                } else {
                     JOptionPane.showMessageDialog(frame, "Couldn't connect to server! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);
-
+                }
             }
         });
-        panel.add(nameLabel);
-        panel.add(nameTextField);
-//        panel.add(ipLabel);
-//        panel.add(clientToken);
-        panel.add(returnMain);
-        panel.add(joinButton);
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(nameLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        panel.add(nameTextField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 2;
+        panel.add(joinButton, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        panel.add(returnMain, gbc);
+
         frame.add(panel);
         frame.setResizable(false);
 
