@@ -10,17 +10,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import javax.imageio.ImageIO;
+
+import Client.Client;
 import Game.*;
-import Server.Server;
+import Server.*;
 
 public class GamePanel extends JFrame {
     private JPanel panel;
+    private static String Massege;
     private JPanel cardPanel;
     private ArrayList<NewButton> buttons;
     private JButton button1, button2, button3, button4;
 //    private Match match;
 
-    public GamePanel() {
+    public GamePanel(String massege) {
 //        this.match = match;
         setTitle("Play Game");
         setSize(1500, 1200);
@@ -30,7 +33,7 @@ public class GamePanel extends JFrame {
         // Load the background image
         Image backgroundImage = null;
         try {
-            backgroundImage = ImageIO.read(new File("Hokm\\images\\Panel Background.png")); // Adjust the path to your image
+            backgroundImage = ImageIO.read(new File("images\\Panel Background.png")); // Adjust the path to your image
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Background image not found.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -84,19 +87,19 @@ public class GamePanel extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(50, 180, 50, 180);
 
-        JLabel player1Label = new JLabel(Server.match.getPlayers().get(0).getName(), SwingConstants.CENTER);
+        JLabel player1Label = new JLabel(Server.match.getTeam1().getPlayer1().getName(), SwingConstants.CENTER);
         player1Label.setFont(new Font("Arial", Font.BOLD, 40)); // Set font size
         player1Label.setForeground(Color.orange); // Set font color
 
-        JLabel player2Label = new JLabel(Server.match.getPlayers().get(1).getName(), SwingConstants.CENTER);
+        JLabel player2Label = new JLabel(Server.match.getTeam1().getPlayer2().getName(), SwingConstants.CENTER);
         player2Label.setFont(new Font("Arial", Font.BOLD, 40)); // Set font size
         player2Label.setForeground(Color.orange); // Set font color
 
-        JLabel player3Label = new JLabel(Server.match.getPlayers().get(2).getName(), SwingConstants.CENTER);
+        JLabel player3Label = new JLabel(Server.match.getTeam2().getPlayer1().getName(), SwingConstants.CENTER);
         player3Label.setFont(new Font("Arial", Font.BOLD, 40)); // Set font size
         player3Label.setForeground(Color.orange); // Set font color
 
-JLabel player4Label = new JLabel(Server.match.getPlayers().get(3).getName(), SwingConstants.CENTER);
+        JLabel player4Label = new JLabel(Server.match.getTeam2().getPlayer2().getName(), SwingConstants.CENTER);
         player4Label.setFont(new Font("Arial", Font.BOLD, 40)); // Set font size
         player4Label.setForeground(Color.orange); // Set font color
 
@@ -160,21 +163,27 @@ JLabel player4Label = new JLabel(Server.match.getPlayers().get(3).getName(), Swi
         cardPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
         cardPanel.setOpaque(false); // Make panel transparent
         buttons = new ArrayList<>();
-
         ArrayList<Card> hand = new ArrayList<>();
-        hand.add(new Card(CardSuit.Hearts, Rank.Five));
-        hand.add(new Card(CardSuit.Clubs, Rank.Six));
-        hand.add(new Card(CardSuit.Diamonds, Rank.Five));
-        hand.add(new Card(CardSuit.Spades, Rank.Ten));
-        hand.add(new Card(CardSuit.Diamonds, Rank.Jack));
-        hand.add(new Card(CardSuit.Hearts, Rank.Queen));
-        hand.add(new Card(CardSuit.Hearts, Rank.Ace));
-        hand.add(new Card(CardSuit.Clubs, Rank.Queen));
-        hand.add(new Card(CardSuit.Diamonds, Rank.Ace));
-        hand.add(new Card(CardSuit.Spades, Rank.Six));
-        hand.add(new Card(CardSuit.Diamonds, Rank.Seven));
-        hand.add(new Card(CardSuit.Clubs, Rank.King));
-        hand.add(new Card(CardSuit.Diamonds, Rank.Six));
+        if (massege.startsWith("Cards")) {
+            String[] list = massege.split("/");
+            for (int i = 1; i < list.length; i++) {
+                hand.add(Card.ConvertPlayingCards(list[i]));
+            }
+        }
+
+//        hand.add(new Card(CardSuit.Hearts, Rank.Five));
+//        hand.add(new Card(CardSuit.Clubs, Rank.Six));
+//        hand.add(new Card(CardSuit.Diamonds, Rank.Five));
+//        hand.add(new Card(CardSuit.Spades, Rank.Ten));
+//        hand.add(new Card(CardSuit.Diamonds, Rank.Jack));
+//        hand.add(new Card(CardSuit.Hearts, Rank.Queen));
+//        hand.add(new Card(CardSuit.Hearts, Rank.Ace));
+//        hand.add(new Card(CardSuit.Clubs, Rank.Queen));
+//        hand.add(new Card(CardSuit.Diamonds, Rank.Ace));
+//        hand.add(new Card(CardSuit.Spades, Rank.Six));
+//        hand.add(new Card(CardSuit.Diamonds, Rank.Seven));
+//        hand.add(new Card(CardSuit.Clubs, Rank.King));
+//        hand.add(new Card(CardSuit.Diamonds, Rank.Six));
 
         // Sort hand by suit and then by rank
         Collections.sort(hand, new Comparator<Card>() {
@@ -243,7 +252,12 @@ JLabel player4Label = new JLabel(Server.match.getPlayers().get(3).getName(), Swi
         button1.revalidate();
         button1.repaint();
     }
-
+    public static String getMassege() {
+        return Massege;
+    }
+    public static void setMassege(String massege) {
+        Massege = massege;
+    }
     public static void main(String[] args) {
 //        SwingUtilities.invokeLater(() -> new GamePanel();
     }

@@ -70,7 +70,7 @@ public class StartingPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                     String ID = nameTextField.getText();
-                    Client client = new Client();
+                    Client client = new Client(ID);
 
                 if (client.connect()) {
                     JOptionPane info = new JOptionPane("Connected to server. \n Waiting for players to join...");
@@ -130,7 +130,7 @@ public class StartingPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String ID = nameTextField.getText();
-                Client client = new Client();
+                Client client = new Client(ID);
 
                 if (client.connect()) {
                     JOptionPane info = new JOptionPane("Connected to server. \n Waiting for players to join...");
@@ -142,7 +142,7 @@ public class StartingPanel{
                     if (client.isGameStarted()) {
                         frame.setVisible(false);
                         dialog.setVisible(false);
-//                        SwingUtilities.invokeLater(() -> new GamePanel());
+//                        SwingUtilities.invokeLater(() -> new GamePanel(client));
                     }
                 } else
                     JOptionPane.showMessageDialog(frame, "Couldn't connect to server! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);

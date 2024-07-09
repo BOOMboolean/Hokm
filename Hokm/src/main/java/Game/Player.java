@@ -16,16 +16,16 @@ public class Player {
         this.isHakem = false;
     }
 
-        public Card playCard(Card card){
-        if(isPlayable(card,this.hand,this.playerMatch.getOnGoingGame().getOnGoingRound())) {
-            throwCard(card);
-            return card;
-        }
-        else{
-            System.out.println("try another one dumbass");
-        }
-        return null;
-    }
+//        public Card playCard(Card card){
+//        if(isPlayable(card,this.hand,this.playerMatch.getOnGoingGame().getOnGoingRound())) {
+//            throwCard(card);
+//            return card;
+//        }
+//        else{
+//            System.out.println("try another one dumbass");
+//        }
+//        return null;
+//    }
     public boolean isPlayable(Card card,ArrayList<Card> hand,Round onGoingRound){
     for(int i = 0 ; i<hand.size(); i++){
         if(onGoingRound.getPlayedCards().get(0).getSuit().equals(hand.get(i).getSuit())){//checks if you have the first played card's suit in your hand
@@ -85,14 +85,14 @@ public class Player {
     public Team getTeam() {
       return team;
     }
-    public void setTeam(Team team) {
+    public void setTeam(Team Cteam) {
       this.team = team;
     }
     public ArrayList<Card> getHand() {
         return hand;
     }
     public void setHand(ArrayList<Card> hand) {
-        hand = hand;
+        this.hand = hand;
     }
 
     public void setHakem(boolean hakem) {

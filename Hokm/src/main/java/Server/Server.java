@@ -1,6 +1,8 @@
 package Server;
 
 import GUI.GamePanel;
+import Game.Card;
+import Game.GameMethods;
 import Game.Match;
 import Game.Player;
 
@@ -41,7 +43,7 @@ public class Server {
                     broadcastPlayerCount();
                     broadcastPlayerIDs();
                 } else if(clients.size() == MAX_PLAYERS && isOpened) {
-                    SwingUtilities.invokeLater(() -> new GamePanel());
+                            SwingUtilities.invokeLater(() ->    new GamePanel(ClientHandler.getMassege()));
                     isOpened = false;
                 } else {
                     try {
@@ -98,14 +100,25 @@ public class Server {
         System.out.println("A client has been disconnected.");
         broadcastPlayerCount();
     }
-
+    public static List<ClientHandler> getClients() {
+        return clients;
+    }
 }
 class ClientHandler implements Runnable {
     private Socket clientSocket;
     private BufferedReader in;
     private PrintWriter out;
     private String name;
+    private static  String massege;
 //    private int index;
+
+    public static String getMassege() {
+        return massege;
+    }
+
+    public void setMassege(String Massege) {
+            massege = Massege;
+    }
 
     public ClientHandler(Socket socket, int index) {
         this.clientSocket = socket;
@@ -152,9 +165,14 @@ class ClientHandler implements Runnable {
     @Override
     public void run() {
         try {
-            String msg;
+            String msg = in.readLine();
+            setMassege(msg);
+            String[] commend = msg.split("/");
+//            if (commend[0].equals("SHOW_HAND")) {
+//                getHand(commend[1]);
+//            }
             while((msg = in.readLine()) != null) {
-                switch (msg) {
+                switch (commend[0]) {
                     case "GET_HAKEM":
                         getHakemName();
                         break;
@@ -170,6 +188,9 @@ class ClientHandler implements Runnable {
                     case "SPECIFY_HOKM":
                         specifyHokm();
                         break;
+                    case"SET_HOKM":
+                        setHokm();
+                        break;
                     case "THROW_CARD":
                         throwCard();
                         break;
@@ -181,6 +202,9 @@ class ClientHandler implements Runnable {
                         break;
                     case "GET_ROUND_SCORE":
                         getRoundScore();
+                        break;
+                    case "SHOW_HAND":
+                        getHand(commend[1]);
                         break;
                     default:
                         System.out.println("___________Invalid request________________");
@@ -197,6 +221,18 @@ class ClientHandler implements Runnable {
             }
             Server.removeClient(this);
         }
+    }
+    private void setHokm() {
+    }
+    private void getHand(String clientName) {
+        // return hand to client
+        GameMethods.handDistributer(Server.match.getDeck(), Server.match.getTeam1(), Server.match.getTeam2());
+        Player player = specifyPlayer(clientName);
+        String handToString = "Cards";
+        for (int i = 0; i < player.getHand().size(); i++) {
+            handToString += "/" + player.getHand().get(i).toString();
+        }
+        sendMessage(handToString);
     }
     private void getRoundScore() {
 
@@ -220,5 +256,29 @@ class ClientHandler implements Runnable {
 
     }
     private void getHakemName() {
+    }
+    public static Player specifyPlayer(String clientName) {
+        if (clientName.equals(Server.match.getTeam1().getPlayer1().getName())) {
+            return Server.match.getTeam1().getPlayer1();
+        } else if (clientName.equals(Server.match.getTeam1().getPlayer2().getName())) {
+            return Server.match.getTeam1().getPlayer2();
+        } else if (clientName.equals(Server.match.getTeam2().getPlayer1().getName())) {
+            return  Server.match.getTeam2().getPlayer1();
+        } else if (clientName.equals(Server.match.getTeam2().getPlayer2().getName())) {
+            return  Server.match.getTeam2().getPlayer2();
+        }
+        return null;
+    }
+    public static int specifyClientIndex(String clientName) {
+        if (clientName.equals(Server.getClients().get(0))) {
+            return 0;
+        } else if (clientName.equals(Server.getClients().get(1))) {
+            return 1;
+        } else if (clientName.equals(Server.getClients().get(2))) {
+            return  2;
+        } else if (clientName.equals(Server.getClients().get(3))) {
+            return  3;
+        }
+        return -1;
     }
 }

@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Objects;
 
 public class Client implements Runnable {
     private Socket socket;
@@ -21,8 +22,10 @@ public class Client implements Runnable {
     private int PLAYER_COUNT;
     private boolean running;
     private boolean gameStarted;
-
-    public Client() {
+    private String name;
+    private String Massege;
+    public Client(String name) {
+        this.name = name;
         this.running = false;
         this.PLAYER_COUNT = -1;
     }
@@ -44,9 +47,12 @@ public class Client implements Runnable {
                 System.out.println("Received: " + msg);
                 if (msg.equals("GAME_START")) {
                     setGameStarted(true);
+                    sendMessage("SHOW_HAND");
                     System.out.println("Game has started!");
                 } else if (msg.startsWith("PLAYER_COUNT:")) {
                     PLAYER_COUNT = Integer.valueOf(msg);
+                } else if (msg.startsWith("Cards")) {
+                    GamePanel.setMassege(msg);
                 }
             }
         } catch (IOException e) {
@@ -79,12 +85,27 @@ public class Client implements Runnable {
             }
     }
     public void sendMessage(String message) {
-        if (out != null) {
+        if (Objects.equals(message, getName()) && out != null) {
             out.println(message);
+        }
+        else   {
+            out.println(message + "/" +  getName());
         }
     }
     public int getPlayersCount() {
         sendMessage("GET_PLAYER_COUNT");
         return this.PLAYER_COUNT;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getMassege() {
+        return Massege;
+    }
+    public void setMassege(String massege) {
+        Massege = massege;
     }
 }

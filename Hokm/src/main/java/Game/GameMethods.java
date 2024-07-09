@@ -37,7 +37,8 @@ public class GameMethods {
         }
         return null;
     }
-    public static void HandDistributer(ArrayList<Card> deck , Team team1 , Team team2) {
+    public static void handDistributer(ArrayList<Card> deck , Team team1 , Team team2) {
+        Collections.shuffle(deck);
         ArrayList<Card> hand1 = new ArrayList<>();
         ArrayList<Card> hand2 = new ArrayList<>();
         ArrayList<Card> hand3 = new ArrayList<>();
@@ -53,10 +54,6 @@ public class GameMethods {
         team2.getPlayer1().setHand(hand2);
         team1.getPlayer2().setHand(hand3);
         team2.getPlayer2().setHand(hand4);
-    }
-    public static ArrayList<Card> deckShuffler(ArrayList<Card> deck) {
-        Collections.shuffle(deck);
-        return deck;
     }
     public static void hakemRandomiser(Team team1 , Team team2){
         Player[] players = {team1.getPlayer1(),team2.getPlayer1(),team1.getPlayer2(),team2.getPlayer2()};

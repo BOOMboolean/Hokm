@@ -21,7 +21,7 @@ public class Card {
     public CardSuit getSuit() {
         return suit;
     }
-    public Card ConvertPlayingCards (String input) {
+    public static Card ConvertPlayingCards(String input) {
         Card card = null;
         String[] list = input.split("\\.");
         if (Objects.equals(list[0], CardSuit.Spades.getName())) {card.setSuit(CardSuit.Spades);}
