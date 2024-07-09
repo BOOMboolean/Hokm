@@ -96,5 +96,5 @@ public class GameMethods {
         temp.remove(card);
         player.setHand(temp);
     }
-    public static
+//    public static
 }

@@ -1,5 +1,6 @@
 package Server;
 
+import Client.Client;
 import GUI.GamePanel;
 import Game.Card;
 import Game.GameMethods;
@@ -19,16 +20,22 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static Server.Server.getMatch;
+
 public class Server {
     private static final int MAX_PLAYERS = 4;
     private static final int port = 4000;
     private static ExecutorService pool = Executors.newFixedThreadPool(MAX_PLAYERS);
     private static List<ClientHandler> clients = Collections.synchronizedList(new ArrayList<>());
-    public static Match match;
+    public static Match match = new Match();
     private static boolean isOpened = true;
-
+    public static Match getMatch() {
+        return match;
+    }
+    public static void setMatch(Match match) {
+        Server.match = match;
+    }
     public static void main(String[] args) {
-        match = new Match();
         try {
             ServerSocket serverSocket = new ServerSocket(port);
             System.out.println("Server started. Waiting for clients..."); //System.out.println is for logging
@@ -39,6 +46,7 @@ public class Server {
                     System.out.println("A new client has joined.");
                     ClientHandler clientHandler = new ClientHandler(clientSocket,clients.size());
                     clients.add(clientHandler);
+                    Client.setMatch(Server.match);
                     pool.execute(clientHandler);
                     broadcastPlayerCount();
                     broadcastPlayerIDs();
@@ -126,12 +134,15 @@ public class Server {
         return clients;
     }
 }
+
+
+
 class ClientHandler implements Runnable {
     private Socket clientSocket;
     private BufferedReader in;
     private PrintWriter out;
     private String name;
-    private static  String massege;
+    private static String massege;
     private int index;
 
     public static String getMassege() {
@@ -193,7 +204,7 @@ class ClientHandler implements Runnable {
             String[] commend = msg.split("/");
             if (commend[0].equals("GET_PANEL") && isFirstTime) {
                 GameMethods.handDistributer(Server.match.getDeck(), Server.match.getTeam1(), Server.match.getTeam2());
-                new GamePanel(msg);
+//                new GamePanel(msg);
                 isFirstTime = false;
 //                SwingUtilities.invokeLater(() ->    new GamePanel(getMassege()));
             }
@@ -255,11 +266,11 @@ class ClientHandler implements Runnable {
     }
     private void getHand(String clientName) {
         // return hand to client
-        Player player = Server.specifyPlayer(clientName);
+//        Player player = Server.specifyPlayer(clientName);
         String handToString = "Cards";
-        for (int i = 0; i < player.getHand().size(); i++) {
-            handToString += "/" + player.getHand().get(i).toString();
-        }
+//        for (int i = 0; i < player.getHand().size(); i++) {
+//            handToString += "/" + player.getHand().get(i).toString();
+//        }
         sendMessage(handToString);
     }
     private void getRoundScore() {

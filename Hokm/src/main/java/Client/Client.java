@@ -4,6 +4,7 @@ import GUI.GamePanel;
 import GUI.StartingPanel;
 import Game.Match;
 import Game.Player;
+import Server.Server;
 
 import javax.swing.*;
 import java.io.BufferedReader;
@@ -23,9 +24,9 @@ public class Client implements Runnable {
     private boolean running;
     private boolean gameStarted;
     private String name;
-    private String Massege;
-    private Match match;
-    public Client(String name) {
+    private static Match match;
+    public Client(String name, Match match) {
+        this.match = match;
         this.name = name;
         this.running = false;
         this.PLAYER_COUNT = -1;
@@ -42,19 +43,22 @@ public class Client implements Runnable {
     }
     @Override
     public void run() {
+        setMatch(Server.getMatch());
         String msg;
         try {
             while (running && ((msg = in.readLine()) != null)) {
                 System.out.println("Received: " + msg);
                 if (msg.equals("GAME_START")) {
-                    setGameStarted(true);
-                    sendMessage("GET_PANEL");
+                      setGameStarted(true);
+//                    sendMessage("GET_PANEL");
                     sendMessage("SHOW_HAND");
+
                     System.out.println("Game has started!");
                 } else if (msg.startsWith("PLAYER_COUNT:")) {
                     PLAYER_COUNT = Integer.valueOf(msg);
                 } else if (msg.startsWith("Cards")) {
-                    GamePanel.setMassege(msg);
+                    new GamePanel(getName() , getMatch());
+                    sendMessage("Fuck");
                 }
             }
         } catch (IOException e) {
@@ -104,10 +108,10 @@ public class Client implements Runnable {
     public void setName(String name) {
         this.name = name;
     }
-    public String getMassege() {
-        return Massege;
+    public static Match getMatch() {
+        return match;
     }
-    public void setMassege(String massege) {
-        Massege = massege;
+    public static void setMatch(Match Match) {
+        match = Match;
     }
 }

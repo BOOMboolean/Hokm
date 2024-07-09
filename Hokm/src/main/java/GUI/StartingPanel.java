@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import Client.Client;
 import Game.Match;
 import Game.Player;
+import Server.Server;
 
 public class StartingPanel {
     public StartingPanel() {
@@ -108,7 +109,7 @@ public class StartingPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String ID = nameTextField.getText();
-                Client client = new Client(ID);
+                Client client = new Client(ID, Server.match);
 
                 if (client.connect()) {
                     JOptionPane info = new JOptionPane("Connected to server. \n Waiting for players to join...");
@@ -186,7 +187,7 @@ public class StartingPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String ID = nameTextField.getText();
-                Client client = new Client(ID);
+                Client client = new Client(ID, Server.match);
 
                 if (client.connect()) {
                     JOptionPane info = new JOptionPane("Connected to server. \n Waiting for players to join...");

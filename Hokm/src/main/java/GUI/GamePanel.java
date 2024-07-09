@@ -23,7 +23,7 @@ public class GamePanel extends JFrame {
     private JButton button1, button2, button3, button4;
 //    private Match match;
 
-    public GamePanel(String massege) {
+    public GamePanel(String massege , Match match) {
 //        this.match = match;
         setTitle("Play Game");
         setSize(1500, 1200);
@@ -91,7 +91,7 @@ public class GamePanel extends JFrame {
         player1Label.setFont(new Font("Arial", Font.BOLD, 40)); // Set font size
         player1Label.setForeground(Color.orange); // Set font color
 
-        JLabel player2Label = new JLabel(Server.match.getTeam1().getPlayer2().getName(), SwingConstants.CENTER);
+        JLabel player2Label = new JLabel(match.getTeam1().getPlayer2().getName(), SwingConstants.CENTER);
         player2Label.setFont(new Font("Arial", Font.BOLD, 40)); // Set font size
         player2Label.setForeground(Color.orange); // Set font color
 
@@ -134,10 +134,10 @@ public class GamePanel extends JFrame {
         button2 = new JButton();
         button3 = new JButton();
         button4 = new JButton();
-        button1.setToolTipText(Server.match.getTeam1().getPlayer1().getName());
-        button2.setToolTipText(Server.match.getTeam1().getPlayer2().getName());
-        button3.setToolTipText(Server.match.getTeam2().getPlayer1().getName());
-        button4.setToolTipText(Server.match.getTeam2().getPlayer2().getName());
+        button1.setToolTipText(match.getTeam1().getPlayer1().getName());
+        button2.setToolTipText(match.getTeam1().getPlayer2().getName());
+        button3.setToolTipText(match.getTeam2().getPlayer1().getName());
+        button4.setToolTipText(match.getTeam2().getPlayer2().getName());
 
         centralGbc.gridx = 0;
         centralGbc.gridy = 0;
@@ -164,8 +164,20 @@ public class GamePanel extends JFrame {
         cardPanel.setOpaque(false); // Make panel transparent
         buttons = new ArrayList<>();
         String[] lis = massege.split("/");
-        Player player = Server.specifyPlayer(lis[1]);
+        Player player = null;
+        if (lis[1].equals(match.getTeam1().getPlayer1().getName())) {
+             player = match.getTeam1().getPlayer1();
+        } else if (lis[1].equals(match.getTeam1().getPlayer2().getName())) {
+             player = match.getTeam1().getPlayer2();
+        } else if (lis[1].equals(match.getTeam2().getPlayer1().getName())) {
+             player = match.getTeam2().getPlayer1();
+        } else if (lis[1].equals(match.getTeam2().getPlayer2().getName())) {
+             player =  match.getTeam2().getPlayer2();
+        }
+//        Player player = new Player()
         ArrayList<Card> hand = player.getHand();
+        
+            
 //        ArrayList<Card> hand = new ArrayList<>();
 //        if (massege.startsWith("Cards")) {
 //            String[] list = massege.split("/");
