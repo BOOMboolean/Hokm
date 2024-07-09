@@ -28,7 +28,7 @@ public class GameMethods {
         }
         return winningCard;
     }
-    public static Team winnerTeam(ArrayList<Card> playedCards , CardSuit hokm , Team team1 , Team team2){
+    public static Team roundWinner(ArrayList<Card> playedCards , CardSuit hokm , Team team1 , Team team2){
         if(team1.getPlayer1().getPlayingCard().equals(winnerCard(playedCards,hokm)) ||team1.getPlayer2().getPlayingCard().equals(winnerCard(playedCards,hokm)) ){
             return team1;
         }
@@ -70,6 +70,31 @@ public class GameMethods {
         }
         return null;
     }
+
+    public static boolean isPlayable(Card cardBeingPlayed, Player cardPlayer, Card firstPlayedCard){
+        boolean suitExists = false;
+                for(int i = 0; i < cardPlayer.getHand().size(); i++){
+                    if(cardPlayer.getHand().get(i).getSuit().equals(firstPlayedCard.getSuit())){
+                        suitExists = true;
+                    }
+                }
+                if(suitExists){
+                    if(cardBeingPlayed.getSuit().equals(firstPlayedCard)){
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                else {
+                    return true;
+                }
+    }
+    public static void removeCard (Card card , Player player) {
+        ArrayList<Card> temp;
+        temp = player.getHand();
+        temp.remove(card);
+        player.setHand(temp);
+    }
+    public static
 }
-
-

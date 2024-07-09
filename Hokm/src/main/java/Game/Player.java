@@ -26,19 +26,6 @@ public class Player {
 //        }
 //        return null;
 //    }
-    public boolean isPlayable(Card card,ArrayList<Card> hand,Round onGoingRound){
-    for(int i = 0 ; i<hand.size(); i++){
-        if(onGoingRound.getPlayedCards().get(0).getSuit().equals(hand.get(i).getSuit())){//checks if you have the first played card's suit in your hand
-            if(onGoingRound.getPlayedCards().get(0).getSuit().equals(card)){
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-    }
-    return true;
-    }
     public Card throwCard(Card card){
         //some ifs and elses have to be implemented to check whether the card can be played or not
         //the thrown card by this method will be displayed to everyone once the gui is completed
@@ -60,7 +47,6 @@ public class Player {
             return hokmChosenByHakem;
 
     }
-
     public void RemoveCard (Card card) {
         ArrayList<Card> temp = new ArrayList<>();
         temp = getHand();
@@ -85,7 +71,7 @@ public class Player {
     public Team getTeam() {
       return team;
     }
-    public void setTeam(Team Cteam) {
+    public void setTeam(Team team) {
       this.team = team;
     }
     public ArrayList<Card> getHand() {

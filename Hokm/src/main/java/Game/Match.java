@@ -6,8 +6,6 @@ public class Match {
     private Team team1;
     private Team team2;
     private ArrayList<Card> deck;
-
-
     public Match(){
         this.team1 = new Team();
         this.team2 = new Team();
