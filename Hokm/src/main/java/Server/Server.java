@@ -43,7 +43,6 @@ public class Server {
                     broadcastPlayerCount();
                     broadcastPlayerIDs();
                 } else if(clients.size() == MAX_PLAYERS && isOpened) {
-                            SwingUtilities.invokeLater(() ->    new GamePanel(ClientHandler.getMassege()));
                     isOpened = false;
                 } else {
                     try {
@@ -188,9 +187,16 @@ class ClientHandler implements Runnable {
     @Override
     public void run() {
         try {
+            boolean isFirstTime = true;
             String msg = in.readLine();
             setMassege(msg);
             String[] commend = msg.split("/");
+            if (commend[0].equals("GET_PANEL") && isFirstTime) {
+                GameMethods.handDistributer(Server.match.getDeck(), Server.match.getTeam1(), Server.match.getTeam2());
+                new GamePanel(msg);
+                isFirstTime = false;
+//                SwingUtilities.invokeLater(() ->    new GamePanel(getMassege()));
+            }
             if (commend[0].equals("SHOW_HAND")) {
                 getHand(commend[1]);
             }
@@ -230,7 +236,7 @@ class ClientHandler implements Runnable {
                         getHand(commend[1]);
                         break;
                     default:
-                        System.out.println("___________Invalid request________________");
+                        System.out.println("______________Invalid request________________");
                         break;
                 }
             }
@@ -249,7 +255,6 @@ class ClientHandler implements Runnable {
     }
     private void getHand(String clientName) {
         // return hand to client
-        GameMethods.handDistributer(Server.match.getDeck(), Server.match.getTeam1(), Server.match.getTeam2());
         Player player = Server.specifyPlayer(clientName);
         String handToString = "Cards";
         for (int i = 0; i < player.getHand().size(); i++) {

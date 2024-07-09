@@ -14,8 +14,6 @@ import Game.Match;
 import Game.Player;
 
 public class StartingPanel {
-    private Match match = new Match();
-
     public StartingPanel() {
         JFrame frame = new JFrame();
         frame.setTitle("Welcome");
@@ -25,8 +23,8 @@ public class StartingPanel {
         frame.setResizable(false);
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(2, 1));
-        ImageIcon createGameIcon = new ImageIcon("Hokm\\images\\Join4.png");
-        ImageIcon joinGameIcon = new ImageIcon("Hokm\\images\\Join3.png");
+        ImageIcon createGameIcon = new ImageIcon("images\\Join4.png");
+        ImageIcon joinGameIcon = new ImageIcon("images\\Join3.png");
 
         JButton createGame = new JButton("", createGameIcon);
         JButton joinGame = new JButton("Join Game", joinGameIcon);
@@ -84,7 +82,7 @@ public class StartingPanel {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
-        BackgroundPanel panel = new BackgroundPanel("Hokm\\images\\Game.png");
+        BackgroundPanel panel = new BackgroundPanel("images\\Game.png");
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
 
@@ -161,7 +159,7 @@ public class StartingPanel {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
-        BackgroundPanel panel = new BackgroundPanel("Hokm\\images\\Game.png");
+        BackgroundPanel panel = new BackgroundPanel("images\\Game.png");
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
 

@@ -47,6 +47,7 @@ public class Client implements Runnable {
                 System.out.println("Received: " + msg);
                 if (msg.equals("GAME_START")) {
                     setGameStarted(true);
+                    sendMessage("GET_PANEL");
                     sendMessage("SHOW_HAND");
                     System.out.println("Game has started!");
                 } else if (msg.startsWith("PLAYER_COUNT:")) {
@@ -67,7 +68,7 @@ public class Client implements Runnable {
     }
     public boolean connect() {
             try {
-                socket = new Socket("localhost", 4000);
+                socket = new Socket("192.168.10.140", 4000);
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 out = new PrintWriter(socket.getOutputStream(), true);
                 System.out.println("Connected to server.");
