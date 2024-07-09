@@ -60,7 +60,30 @@ public class Server {
             throw new RuntimeException(e);
         }
     }
-
+    public static Player specifyPlayer(String clientName) {
+        if (clientName.equals(Server.match.getTeam1().getPlayer1().getName())) {
+            return Server.match.getTeam1().getPlayer1();
+        } else if (clientName.equals(Server.match.getTeam1().getPlayer2().getName())) {
+            return Server.match.getTeam1().getPlayer2();
+        } else if (clientName.equals(Server.match.getTeam2().getPlayer1().getName())) {
+            return  Server.match.getTeam2().getPlayer1();
+        } else if (clientName.equals(Server.match.getTeam2().getPlayer2().getName())) {
+            return  Server.match.getTeam2().getPlayer2();
+        }
+        return null;
+    }
+    public static int specifyClientIndex(String clientName) {
+        if (clientName.equals(Server.getClients().get(0))) {
+            return 0;
+        } else if (clientName.equals(Server.getClients().get(1))) {
+            return 1;
+        } else if (clientName.equals(Server.getClients().get(2))) {
+            return  2;
+        } else if (clientName.equals(Server.getClients().get(3))) {
+            return  3;
+        }
+        return -1;
+    }
     public static void broadcastPlayerCount() {
         synchronized (clients) {
             System.out.println("Number of clients present: " + clients.size());
@@ -168,9 +191,9 @@ class ClientHandler implements Runnable {
             String msg = in.readLine();
             setMassege(msg);
             String[] commend = msg.split("/");
-//            if (commend[0].equals("SHOW_HAND")) {
-//                getHand(commend[1]);
-//            }
+            if (commend[0].equals("SHOW_HAND")) {
+                getHand(commend[1]);
+            }
             while((msg = in.readLine()) != null) {
                 switch (commend[0]) {
                     case "GET_HAKEM":
@@ -227,7 +250,7 @@ class ClientHandler implements Runnable {
     private void getHand(String clientName) {
         // return hand to client
         GameMethods.handDistributer(Server.match.getDeck(), Server.match.getTeam1(), Server.match.getTeam2());
-        Player player = specifyPlayer(clientName);
+        Player player = Server.specifyPlayer(clientName);
         String handToString = "Cards";
         for (int i = 0; i < player.getHand().size(); i++) {
             handToString += "/" + player.getHand().get(i).toString();
@@ -256,29 +279,5 @@ class ClientHandler implements Runnable {
 
     }
     private void getHakemName() {
-    }
-    public static Player specifyPlayer(String clientName) {
-        if (clientName.equals(Server.match.getTeam1().getPlayer1().getName())) {
-            return Server.match.getTeam1().getPlayer1();
-        } else if (clientName.equals(Server.match.getTeam1().getPlayer2().getName())) {
-            return Server.match.getTeam1().getPlayer2();
-        } else if (clientName.equals(Server.match.getTeam2().getPlayer1().getName())) {
-            return  Server.match.getTeam2().getPlayer1();
-        } else if (clientName.equals(Server.match.getTeam2().getPlayer2().getName())) {
-            return  Server.match.getTeam2().getPlayer2();
-        }
-        return null;
-    }
-    public static int specifyClientIndex(String clientName) {
-        if (clientName.equals(Server.getClients().get(0))) {
-            return 0;
-        } else if (clientName.equals(Server.getClients().get(1))) {
-            return 1;
-        } else if (clientName.equals(Server.getClients().get(2))) {
-            return  2;
-        } else if (clientName.equals(Server.getClients().get(3))) {
-            return  3;
-        }
-        return -1;
     }
 }
