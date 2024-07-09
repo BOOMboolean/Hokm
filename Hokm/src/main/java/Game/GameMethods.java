@@ -70,7 +70,6 @@ public class GameMethods {
         }
         return null;
     }
-
     public static boolean isPlayable(Card cardBeingPlayed, Player cardPlayer, Card firstPlayedCard){
         boolean suitExists = false;
                 for(int i = 0; i < cardPlayer.getHand().size(); i++){
@@ -90,6 +89,7 @@ public class GameMethods {
                     return true;
                 }
     }
+
     public static void removeCard (Card card , Player player) {
         ArrayList<Card> temp;
         temp = player.getHand();

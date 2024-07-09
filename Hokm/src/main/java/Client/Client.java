@@ -24,6 +24,7 @@ public class Client implements Runnable {
     private boolean gameStarted;
     private String name;
     private String Massege;
+    private Match match;
     public Client(String name) {
         this.name = name;
         this.running = false;

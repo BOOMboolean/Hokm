@@ -132,7 +132,7 @@ class ClientHandler implements Runnable {
     private PrintWriter out;
     private String name;
     private static  String massege;
-//    private int index;
+    private int index;
 
     public static String getMassege() {
         return massege;
