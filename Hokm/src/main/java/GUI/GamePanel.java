@@ -134,10 +134,10 @@ public class GamePanel extends JFrame {
         button2 = new JButton();
         button3 = new JButton();
         button4 = new JButton();
-        button1.setToolTipText("Player1.getname");
-        button2.setToolTipText("player2.getname");
-        button3.setToolTipText("Player3.getname");
-        button4.setToolTipText("Player4.getname");
+        button1.setToolTipText(Server.match.getTeam1().getPlayer1().getName());
+        button2.setToolTipText(Server.match.getTeam1().getPlayer2().getName());
+        button3.setToolTipText(Server.match.getTeam2().getPlayer1().getName());
+        button4.setToolTipText(Server.match.getTeam2().getPlayer2().getName());
 
         centralGbc.gridx = 0;
         centralGbc.gridy = 0;
@@ -163,14 +163,16 @@ public class GamePanel extends JFrame {
         cardPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
         cardPanel.setOpaque(false); // Make panel transparent
         buttons = new ArrayList<>();
-        ArrayList<Card> hand = new ArrayList<>();
-        if (massege.startsWith("Cards")) {
-            String[] list = massege.split("/");
-            for (int i = 1; i < list.length; i++) {
-                hand.add(Card.ConvertPlayingCards(list[i]));
-            }
-        }
-
+        String[] lis = massege.split("/");
+        Player player = Server.specifyPlayer(lis[1]);
+        ArrayList<Card> hand = player.getHand();
+//        ArrayList<Card> hand = new ArrayList<>();
+//        if (massege.startsWith("Cards")) {
+//            String[] list = massege.split("/");
+//            for (int i = 1; i < list.length; i++) {
+//                hand.add(Card.ConvertPlayingCards(list[i]));
+//            }
+//        }
 //        hand.add(new Card(CardSuit.Hearts, Rank.Five));
 //        hand.add(new Card(CardSuit.Clubs, Rank.Six));
 //        hand.add(new Card(CardSuit.Diamonds, Rank.Five));
@@ -217,7 +219,7 @@ public class GamePanel extends JFrame {
         Timer timer = new Timer(120, new ActionListener() {
             int index = 0;
 
-@Override
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (index < buttons.size()) {
                     cardPanel.add(buttons.get(index));
@@ -235,7 +237,9 @@ public class GamePanel extends JFrame {
         panel.add(cardPanel, BorderLayout.SOUTH);
 
         add(panel);
-        setVisible(true);
+//        if (massege.startsWith("Cards")) {
+            setVisible(true);
+//        }
     }
 
     // Function to be called when a card button is pressed
