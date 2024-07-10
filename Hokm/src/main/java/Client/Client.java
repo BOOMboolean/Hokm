@@ -94,7 +94,6 @@ public class Client implements Runnable {
                 socket = new Socket("192.168.10.140", 4001);
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 out = new PrintWriter(socket.getOutputStream(), true);
-                System.out.println("Connected to server.");
                 running = true;
                 new Thread(this).start();
                 return true;

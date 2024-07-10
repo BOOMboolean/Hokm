@@ -45,6 +45,8 @@ public class Server {
                 if (clients.size() < MAX_PLAYERS) {
                     Socket clientSocket = serverSocket.accept();
                     System.out.println("A new client has joined.");
+                    PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+                    out.println("connected to server");
                     ClientHandler clientHandler = new ClientHandler(clientSocket,clients.size());
                     clients.add(clientHandler);
                     Client.setMatch(Server.match);
