@@ -45,7 +45,6 @@ public class Client implements Runnable {
     public void run() {
         setMatch(Server.getMatch());
         String msg;
-        boolean isFirstTime = true;
         try {
             while (running && ((msg = in.readLine()) != null)) {
                 System.out.println("Received: " + msg);
@@ -57,11 +56,10 @@ public class Client implements Runnable {
                     System.out.println("Game has started!");
                 } else if (msg.startsWith("PLAYER_COUNT:")) {
                     PLAYER_COUNT = Integer.valueOf(msg);
-                } else if (msg.startsWith("Cards")&& isFirstTime) {
-                    isFirstTime = false;
+                } else if (msg.startsWith("Cards")) {
                     System.out.println("FFFFFFFFFFFFFFFFFFFFFFFUCK");
-                    GamePanel gamePanel = new GamePanel(msg);
                     sendMessage("Fuck");
+                    GamePanel gamePanel = new GamePanel(msg);
                 } else if (msg.startsWith("yes")) {
                     System.out.println("sexxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
                     break;
@@ -79,7 +77,7 @@ public class Client implements Runnable {
     }
     public boolean connect() {
             try {
-                socket = new Socket("localhost", 4001);
+                socket = new Socket("192.168.10.140", 4001);
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 out = new PrintWriter(socket.getOutputStream(), true);
                 System.out.println("Connected to server.");

@@ -210,11 +210,13 @@ class ClientHandler implements Runnable {
 //                }
 
 //            }
-            while(true) {
+            boolean flag = true;
+            while(flag) {
                 if (commend[0].equals("SHOW_HAND")) {
                     GameMethods.handDistributer(Server.match.getDeck(), Server.match.getTeam1(), Server.match.getTeam2());
                     getHand(commend[1]);
-                } else if (commend[0].equals("FUCK")){
+                    flag = false;
+                } else if (commend[0].equals("Fuck")){
                     sendMessage("yes");
                     break;
                 }
@@ -280,7 +282,7 @@ class ClientHandler implements Runnable {
         for (int i = 0; i < player.getHand().size(); i++) {
             handToString += "/" + player.getHand().get(i).toString();
         }
-        sendMessage(handToString);
+        sendMessage(handToString + "/" + player.getName());
     }
     private void getRoundScore() {
 

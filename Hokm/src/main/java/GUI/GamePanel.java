@@ -23,8 +23,9 @@ public class GamePanel extends JFrame {
     private JButton button1, button2, button3, button4;
 //    private Match match;
 
-    public GamePanel(String massege ) {
+    public GamePanel(String massege) {
 //        this.match = match;
+        String[] list = massege.split("/");
         setTitle("Play Game");
         setSize(1500, 1200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -87,38 +88,38 @@ public class GamePanel extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(50, 180, 50, 180);
 
-        JLabel player1Label = new JLabel("Server.match.getTeam1().getPlayer1().getName()", SwingConstants.CENTER);
+        JLabel player1Label = new JLabel(list[2], SwingConstants.CENTER);
         player1Label.setFont(new Font("Arial", Font.BOLD, 40)); // Set font size
         player1Label.setForeground(Color.orange); // Set font color
 
-        JLabel player2Label = new JLabel("match.getTeam1().getPlayer2().getName()", SwingConstants.CENTER);
-        player2Label.setFont(new Font("Arial", Font.BOLD, 40)); // Set font size
-        player2Label.setForeground(Color.orange); // Set font color
-
-        JLabel player3Label = new JLabel("Server.match.getTeam2().getPlayer1().getName()", SwingConstants.CENTER);
-        player3Label.setFont(new Font("Arial", Font.BOLD, 40)); // Set font size
-        player3Label.setForeground(Color.orange); // Set font color
-
-        JLabel player4Label = new JLabel("Server.match.getTeam2().getPlayer2().getName()", SwingConstants.CENTER);
-        player4Label.setFont(new Font("Arial", Font.BOLD, 40)); // Set font size
-        player4Label.setForeground(Color.orange); // Set font color
+//        JLabel player2Label = new JLabel("match.getTeam1().getPlayer2().getName()", SwingConstants.CENTER);
+//        player2Label.setFont(new Font("Arial", Font.BOLD, 40)); // Set font size
+//        player2Label.setForeground(Color.orange); // Set font color
+//
+//        JLabel player3Label = new JLabel("Server.match.getTeam2().getPlayer1().getName()", SwingConstants.CENTER);
+//        player3Label.setFont(new Font("Arial", Font.BOLD, 40)); // Set font size
+//        player3Label.setForeground(Color.orange); // Set font color
+//
+//        JLabel player4Label = new JLabel("Server.match.getTeam2().getPlayer2().getName()", SwingConstants.CENTER);
+//        player4Label.setFont(new Font("Arial", Font.BOLD, 40)); // Set font size
+//        player4Label.setForeground(Color.orange); // Set font color
 
         // Add player labels to the grid
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        playerPanel.add(player3Label, gbc);
+//        gbc.gridx = 1;
+//        gbc.gridy = 0;
+//        playerPanel.add(player3Label, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
         playerPanel.add(Box.createVerticalStrut(1), gbc); // Add empty space
 
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        playerPanel.add(player4Label, gbc);
-
-        gbc.gridx = 2;
-        gbc.gridy = 2;
-        playerPanel.add(player2Label, gbc);
+//        gbc.gridx = 0;
+//        gbc.gridy = 2;
+//        playerPanel.add(player4Label, gbc);
+//
+//        gbc.gridx = 2;
+//        gbc.gridy = 2;
+//        playerPanel.add(player2Label, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 3;
@@ -181,8 +182,7 @@ public class GamePanel extends JFrame {
             
         ArrayList<Card> hand = new ArrayList<>();
         if (massege.startsWith("Cards")) {
-            String[] list = massege.split("/");
-            for (int i = 1; i < list.length; i++) {
+            for (int i = 1; i < list.length-1; i++) {
                 hand.add(Card.ConvertPlayingCards(list[i]));
             }
         }
