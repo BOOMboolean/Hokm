@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -17,12 +18,17 @@ import Server.*;
 
 public class GamePanel extends JFrame {
     private JPanel panel;
-    private static String Massege;
     private JPanel cardPanel;
     private ArrayList<NewButton> buttons;
     private JButton button1, button2, button3, button4;
+    private String message;
 //    private Match match;
-
+    public  String getMessage() {
+        return message;
+    }
+    public void setMessage(String message) {
+        this.message = message;
+    }
     public GamePanel(String massege) {
 //        this.match = match;
         String[] list = massege.split("/");
@@ -222,7 +228,7 @@ public class GamePanel extends JFrame {
             newButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    Client.setMassege(newButton.getCardName());
+//                    setMessage(newButton.getCardName());
                     throwCard(newButton);
                 }
             });
@@ -258,11 +264,14 @@ public class GamePanel extends JFrame {
 
     // Function to be called when a card button is pressed
     private void throwCard(NewButton button) {
+        String cardName = button.getCardName();
+        Client.setMassege(cardName);
         cardPanel.remove(button);
         cardPanel.revalidate();
         cardPanel.repaint();
         // Change icon of one of the central buttons
 //        Client.setMassege(button.getCardName());
+//        button1 = new NewButton(Card.ConvertPlayingCards(Client.getMassege()));
         button1.setIcon(button.getIcon());
         button1.setPreferredSize(new Dimension(button1.getIcon().getIconWidth(), button1.getIcon().getIconHeight()));
         button1.setMinimumSize(new Dimension(button1.getIcon().getIconWidth(), button1.getIcon().getIconHeight()));
@@ -270,12 +279,6 @@ public class GamePanel extends JFrame {
         button1.setSize(new Dimension(button1.getIcon().getIconWidth(), button1.getIcon().getIconHeight()));
         button1.revalidate();
         button1.repaint();
-    }
-    public static String getMassege() {
-        return Massege;
-    }
-    public static void setMassege(String massege) {
-        Massege = massege;
     }
     public static void main(String[] args) {
 //        SwingUtilities.invokeLater(() -> new GamePanel();

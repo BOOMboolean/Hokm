@@ -26,6 +26,7 @@ public class Client implements Runnable {
     private String name;
     private static Match match;
     private static String massege;
+    GamePanel gamePanel;
     public static String getMassege() {
         return massege;
     }
@@ -65,11 +66,12 @@ public class Client implements Runnable {
                     PLAYER_COUNT = Integer.valueOf(msg);
                 } else if (msg.startsWith("Cards")) {
 //                    System.out.println("FFFFFFFFFFFFFFFFFFFFFFFUCK");
-                    GamePanel gamePanel = new GamePanel(msg);
-                    sendMessage("TH/"+ getMassege());
+                    gamePanel = new GamePanel(msg);
+                    sendMessage("THROW/"+ gamePanel.getMessage());
                 }
-                else if (msg.startsWith("TH")) {
-                    System.out.println("$$$$$$$$$$" + msg + "$$$$$$$$$$$");
+                else if (msg.startsWith("THROW")) {
+                    String[] list = msg.split("/");
+                    gamePanel.setMessage(list[1]);
                     sendMessage("no");
                 }
             else if (msg.startsWith("yes")) {

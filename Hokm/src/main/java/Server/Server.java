@@ -225,9 +225,9 @@ class ClientHandler implements Runnable {
                     GameMethods.handDistributer(Server.match.getDeck(), Server.match.getTeam1(), Server.match.getTeam2());
                     getHand(commend[1]);
                     isFirstGAme = false;
-                } else if (commend[0].equals("TH/")){
+                } else if (commend[0].equals("THROW/")){
 //                    broadcast(commend[1]);
-                    sendMessage("TH" + commend[1]);
+                    sendMessage("THROW" + commend[1]);
                 } else if (commend[0].equals("no")) {
                     sendMessage("yes");
                     flag = false;
