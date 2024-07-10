@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static Server.Server.broadcast;
 import static Server.Server.getMatch;
 
 public class Server {
@@ -96,6 +97,13 @@ public class Server {
             System.out.println("Number of clients present: " + clients.size());
             for(ClientHandler client : clients)
                 client.sendMessage("Number of clients present: " + clients.size());
+        }
+    }
+    public static void broadcast(String massege) {
+        synchronized (clients) {
+//            System.out.println(massege);
+            for(ClientHandler client : clients)
+                client.sendMessage(massege);
         }
     }
     public static void broadcastPlayerIDs() {
@@ -216,7 +224,8 @@ class ClientHandler implements Runnable {
                     GameMethods.handDistributer(Server.match.getDeck(), Server.match.getTeam1(), Server.match.getTeam2());
                     getHand(commend[1]);
                     flag = false;
-                } else if (commend[0].equals("Fuck")){
+                } else if (commend[0].equals("TH")){
+                    broadcast(commend[1]);
                     sendMessage("yes");
                     break;
                 }

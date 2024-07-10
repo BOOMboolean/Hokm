@@ -88,7 +88,7 @@ public class GamePanel extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(50, 180, 50, 180);
 
-        JLabel player1Label = new JLabel(list[2], SwingConstants.CENTER);
+        JLabel player1Label = new JLabel(list[list.length-1], SwingConstants.CENTER);
         player1Label.setFont(new Font("Arial", Font.BOLD, 40)); // Set font size
         player1Label.setForeground(Color.orange); // Set font color
 
@@ -261,6 +261,7 @@ public class GamePanel extends JFrame {
         cardPanel.revalidate();
         cardPanel.repaint();
         // Change icon of one of the central buttons
+        Client.setMassege(button.getCardName());
         button1.setIcon(button.getIcon());
         button1.setPreferredSize(new Dimension(button1.getIcon().getIconWidth(), button1.getIcon().getIconHeight()));
         button1.setMinimumSize(new Dimension(button1.getIcon().getIconWidth(), button1.getIcon().getIconHeight()));
