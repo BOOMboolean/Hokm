@@ -222,6 +222,7 @@ public class GamePanel extends JFrame {
             newButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    Client.setMassege(newButton.getCardName());
                     throwCard(newButton);
                 }
             });
@@ -261,7 +262,7 @@ public class GamePanel extends JFrame {
         cardPanel.revalidate();
         cardPanel.repaint();
         // Change icon of one of the central buttons
-        Client.setMassege(button.getCardName());
+//        Client.setMassege(button.getCardName());
         button1.setIcon(button.getIcon());
         button1.setPreferredSize(new Dimension(button1.getIcon().getIconWidth(), button1.getIcon().getIconHeight()));
         button1.setMinimumSize(new Dimension(button1.getIcon().getIconWidth(), button1.getIcon().getIconHeight()));

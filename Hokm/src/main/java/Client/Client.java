@@ -25,13 +25,13 @@ public class Client implements Runnable {
     private boolean gameStarted;
     private String name;
     private static Match match;
+    private static String massege;
     public static String getMassege() {
         return massege;
     }
     public static void setMassege(String massege) {
         Client.massege = massege;
     }
-    private static String massege;
     public Client(String name, Match match) {
         this.match = match;
         this.name = name;
@@ -64,12 +64,13 @@ public class Client implements Runnable {
                 } else if (msg.startsWith("PLAYER_COUNT:")) {
                     PLAYER_COUNT = Integer.valueOf(msg);
                 } else if (msg.startsWith("Cards")) {
-                    System.out.println("FFFFFFFFFFFFFFFFFFFFFFFUCK");
-                    sendMessage("TH"+ getMassege());
+//                    System.out.println("FFFFFFFFFFFFFFFFFFFFFFFUCK");
                     GamePanel gamePanel = new GamePanel(msg);
+                    sendMessage("TH/"+ getMassege());
                 }
                 else if (msg.startsWith("TH")) {
                     System.out.println("$$$$$$$$$$" + msg + "$$$$$$$$$$$");
+                    sendMessage("no");
                 }
             else if (msg.startsWith("yes")) {
                 System.out.println("sexxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");

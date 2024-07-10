@@ -103,7 +103,7 @@ public class Server {
         synchronized (clients) {
 //            System.out.println(massege);
             for(ClientHandler client : clients)
-                client.sendMessage(massege);
+                client.sendMessage("TH" + massege);
         }
     }
     public static void broadcastPlayerIDs() {
@@ -218,20 +218,23 @@ class ClientHandler implements Runnable {
 //                }
 
 //            }
+            boolean isFirstGAme = true;
             boolean flag = true;
             while(flag) {
-                if (commend[0].equals("SHOW_HAND")) {
+                if (commend[0].equals("SHOW_HAND") && isFirstGAme) {
                     GameMethods.handDistributer(Server.match.getDeck(), Server.match.getTeam1(), Server.match.getTeam2());
                     getHand(commend[1]);
-                    flag = false;
-                } else if (commend[0].equals("TH")){
-                    broadcast(commend[1]);
+                    isFirstGAme = false;
+                } else if (commend[0].equals("TH/")){
+//                    broadcast(commend[1]);
+                    sendMessage("TH" + commend[1]);
+                } else if (commend[0].equals("no")) {
                     sendMessage("yes");
-                    break;
+                    flag = false;
                 }
-                else {
-                    System.out.println("fuck");
-                }
+//                else {
+//                    System.out.println("fuck");
+//                }
 //                switch (commend[0]) {
 //                    case "GET_HAKEM":
 //                        getHakemName();
