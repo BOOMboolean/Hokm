@@ -65,7 +65,7 @@ public class Client implements Runnable {
                 } else if (msg.startsWith("PLAYER_COUNT:")) {
                     PLAYER_COUNT = Integer.valueOf(msg);
                 } else if (msg.startsWith("Cards")) {
-//                    System.out.println("FFFFFFFFFFFFFFFFFFFFFFFUCK");
+//                    System.out.println("Hi");
                     gamePanel = new GamePanel(msg);
                     sendMessage("THROW/"+ gamePanel.getMessage());
                 }
@@ -75,7 +75,7 @@ public class Client implements Runnable {
                     sendMessage("no");
                 }
             else if (msg.startsWith("yes")) {
-                System.out.println("sexxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+                System.out.println("Hello");
                 break;
             }
             }

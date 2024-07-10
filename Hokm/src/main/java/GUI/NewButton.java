@@ -11,7 +11,7 @@ public class NewButton extends JButton {
     private String iconAddress;
     private String cardName;
     public NewButton(Card card){
-        this.iconAddress = "images\\" + card.getSuit().getName() + "." + card.getRank().getName() + ".jpg" ;
+        this.iconAddress = "Hokm\\images\\" + card.getSuit().getName() + "." + card.getRank().getName() + ".jpg" ;
         this.cardName =  card.getSuit().getName() + "." + card.getRank().getName();
         ImageIcon test = new ImageIcon(this.iconAddress);
         int width = test.getIconWidth();

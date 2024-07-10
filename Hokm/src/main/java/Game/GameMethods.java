@@ -38,7 +38,7 @@ public class GameMethods {
         return null;
     }
     public static void handDistributer(ArrayList<Card> deck , Team team1 , Team team2) {
-        Collections.shuffle(deck);
+        shuffleDeck(deck);
         ArrayList<Card> hand1 = new ArrayList<>();
         ArrayList<Card> hand2 = new ArrayList<>();
         ArrayList<Card> hand3 = new ArrayList<>();
@@ -46,14 +46,32 @@ public class GameMethods {
         for(int i = 0 ; i < 13 ; i++ )
         {
             hand1.add(deck.get(i));
+        }
+        for(int i = 0; i < 13; i++)
+        {
             hand2.add(deck.get(i+13));
+        }
+        for(int i = 0 ; i < 13 ; i++ )
+        {
             hand3.add(deck.get(i+26));
+        }
+        for(int i = 0 ; i < 13 ; i++ )
+        {
             hand4.add(deck.get(i+39));
         }
         team1.getPlayer1().setHand(hand1);
         team2.getPlayer1().setHand(hand2);
         team1.getPlayer2().setHand(hand3);
         team2.getPlayer2().setHand(hand4);
+    }
+    private static void shuffleDeck(ArrayList<Card> deck) {
+        Random rand = new Random();
+        for (int i = 0; i < deck.size(); i++) {
+            int randomIndexToSwap = rand.nextInt(deck.size());
+            Card temp = deck.get(randomIndexToSwap);
+            deck.set(randomIndexToSwap, deck.get(i));
+            deck.set(i, temp);
+        }
     }
     public static void hakemRandomiser(Team team1 , Team team2){
         Player[] players = {team1.getPlayer1(),team2.getPlayer1(),team1.getPlayer2(),team2.getPlayer2()};

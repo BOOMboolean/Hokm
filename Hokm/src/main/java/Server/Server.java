@@ -183,7 +183,7 @@ class ClientHandler implements Runnable {
                         Server.match.getTeam2().setPlayer2(player);
                         break;
                     default:
-                        System.out.println("fuck");
+                        System.out.println("Hi");
                 }
 //                Server.match.getPlayers().add(player);
             }
@@ -233,7 +233,7 @@ class ClientHandler implements Runnable {
                     flag = false;
                 }
 //                else {
-//                    System.out.println("fuck");
+//                    System.out.println("Hi");
 //                }
 //                switch (commend[0]) {
 //                    case "GET_HAKEM":
