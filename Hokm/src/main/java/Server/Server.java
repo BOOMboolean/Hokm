@@ -24,7 +24,7 @@ import static Server.Server.getMatch;
 
 public class Server {
     private static final int MAX_PLAYERS = 4;
-    private static final int port = 4000;
+    private static final int port = 4001;
     private static ExecutorService pool = Executors.newFixedThreadPool(MAX_PLAYERS);
     private static List<ClientHandler> clients = Collections.synchronizedList(new ArrayList<>());
     public static Match match = new Match();
@@ -202,54 +202,63 @@ class ClientHandler implements Runnable {
             String msg = in.readLine();
             setMassege(msg);
             String[] commend = msg.split("/");
-            if (commend[0].equals("GET_PANEL") && isFirstTime) {
-                GameMethods.handDistributer(Server.match.getDeck(), Server.match.getTeam1(), Server.match.getTeam2());
+//            while((msg = in.readLine()) != null) {
+//                if (commend[0].equals("GET_PANEL") && isFirstTime) {
 //                new GamePanel(msg);
-                isFirstTime = false;
+//                    isFirstTime = false;
 //                SwingUtilities.invokeLater(() ->    new GamePanel(getMassege()));
-            }
-            if (commend[0].equals("SHOW_HAND")) {
-                getHand(commend[1]);
-            }
-            while((msg = in.readLine()) != null) {
-                switch (commend[0]) {
-                    case "GET_HAKEM":
-                        getHakemName();
-                        break;
-                    case "GET_HOKM":
-                        getHokm();
-                        break;
-                    case "JOIN_MATCH":
-                        joinMatch();
-                        break;
-                    case "CREATE_MATCH":
-                        createMatch();
-                        break;
-                    case "SPECIFY_HOKM":
-                        specifyHokm();
-                        break;
-                    case"SET_HOKM":
-                        setHokm();
-                        break;
-                    case "THROW_CARD":
-                        throwCard();
-                        break;
-                    case "PLAYER_COUNT":
-                        sendMessage(String.valueOf(Server.getPlayerCount()));
-                        break;
-                    case "GET_TEAM_SCORE":
-                        getTeamScore();
-                        break;
-                    case "GET_ROUND_SCORE":
-                        getRoundScore();
-                        break;
-                    case "SHOW_HAND":
-                        getHand(commend[1]);
-                        break;
-                    default:
-                        System.out.println("______________Invalid request________________");
-                        break;
+//                }
+
+//            }
+            while(true) {
+                if (commend[0].equals("SHOW_HAND")) {
+                    GameMethods.handDistributer(Server.match.getDeck(), Server.match.getTeam1(), Server.match.getTeam2());
+                    getHand(commend[1]);
+                } else if (commend[0].equals("FUCK")){
+                    sendMessage("yes");
+                    break;
                 }
+                else {
+                    System.out.println("fuck");
+                }
+//                switch (commend[0]) {
+//                    case "GET_HAKEM":
+//                        getHakemName();
+//                        break;
+//                    case "GET_HOKM":
+//                        getHokm();
+//                        break;
+//                    case "JOIN_MATCH":
+//                        joinMatch();
+//                        break;
+//                    case "CREATE_MATCH":
+//                        createMatch();
+//                        break;
+//                    case "SPECIFY_HOKM":
+//                        specifyHokm();
+//                        break;
+//                    case"SET_HOKM":
+//                        setHokm();
+//                        break;
+//                    case "THROW_CARD":
+//                        throwCard();
+//                        break;
+//                    case "PLAYER_COUNT":
+//                        sendMessage(String.valueOf(Server.getPlayerCount()));
+//                        break;
+//                    case "GET_TEAM_SCORE":
+//                        getTeamScore();
+//                        break;
+//                    case "GET_ROUND_SCORE":
+//                        getRoundScore();
+//                        break;
+//                    case "SHOW_HANDk":
+//                        getHand(commend[1]);
+//                        break;
+//                    default:
+//                        System.out.println("______________Invalid request________________");
+//                        break;
+//                }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -266,11 +275,11 @@ class ClientHandler implements Runnable {
     }
     private void getHand(String clientName) {
         // return hand to client
-//        Player player = Server.specifyPlayer(clientName);
+        Player player = Server.specifyPlayer(clientName);
         String handToString = "Cards";
-//        for (int i = 0; i < player.getHand().size(); i++) {
-//            handToString += "/" + player.getHand().get(i).toString();
-//        }
+        for (int i = 0; i < player.getHand().size(); i++) {
+            handToString += "/" + player.getHand().get(i).toString();
+        }
         sendMessage(handToString);
     }
     private void getRoundScore() {

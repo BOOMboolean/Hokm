@@ -23,7 +23,7 @@ public class GamePanel extends JFrame {
     private JButton button1, button2, button3, button4;
 //    private Match match;
 
-    public GamePanel(String massege , Match match) {
+    public GamePanel(String massege ) {
 //        this.match = match;
         setTitle("Play Game");
         setSize(1500, 1200);
@@ -87,19 +87,19 @@ public class GamePanel extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(50, 180, 50, 180);
 
-        JLabel player1Label = new JLabel(Server.match.getTeam1().getPlayer1().getName(), SwingConstants.CENTER);
+        JLabel player1Label = new JLabel("Server.match.getTeam1().getPlayer1().getName()", SwingConstants.CENTER);
         player1Label.setFont(new Font("Arial", Font.BOLD, 40)); // Set font size
         player1Label.setForeground(Color.orange); // Set font color
 
-        JLabel player2Label = new JLabel(match.getTeam1().getPlayer2().getName(), SwingConstants.CENTER);
+        JLabel player2Label = new JLabel("match.getTeam1().getPlayer2().getName()", SwingConstants.CENTER);
         player2Label.setFont(new Font("Arial", Font.BOLD, 40)); // Set font size
         player2Label.setForeground(Color.orange); // Set font color
 
-        JLabel player3Label = new JLabel(Server.match.getTeam2().getPlayer1().getName(), SwingConstants.CENTER);
+        JLabel player3Label = new JLabel("Server.match.getTeam2().getPlayer1().getName()", SwingConstants.CENTER);
         player3Label.setFont(new Font("Arial", Font.BOLD, 40)); // Set font size
         player3Label.setForeground(Color.orange); // Set font color
 
-        JLabel player4Label = new JLabel(Server.match.getTeam2().getPlayer2().getName(), SwingConstants.CENTER);
+        JLabel player4Label = new JLabel("Server.match.getTeam2().getPlayer2().getName()", SwingConstants.CENTER);
         player4Label.setFont(new Font("Arial", Font.BOLD, 40)); // Set font size
         player4Label.setForeground(Color.orange); // Set font color
 
@@ -134,10 +134,10 @@ public class GamePanel extends JFrame {
         button2 = new JButton();
         button3 = new JButton();
         button4 = new JButton();
-        button1.setToolTipText(match.getTeam1().getPlayer1().getName());
-        button2.setToolTipText(match.getTeam1().getPlayer2().getName());
-        button3.setToolTipText(match.getTeam2().getPlayer1().getName());
-        button4.setToolTipText(match.getTeam2().getPlayer2().getName());
+//        button1.setToolTipText(match.getTeam1().getPlayer1().getName());
+//        button2.setToolTipText(match.getTeam1().getPlayer2().getName());
+//        button3.setToolTipText(match.getTeam2().getPlayer1().getName());
+//        button4.setToolTipText(match.getTeam2().getPlayer2().getName());
 
         centralGbc.gridx = 0;
         centralGbc.gridy = 0;
@@ -163,28 +163,29 @@ public class GamePanel extends JFrame {
         cardPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
         cardPanel.setOpaque(false); // Make panel transparent
         buttons = new ArrayList<>();
-        String[] lis = massege.split("/");
-        Player player = null;
-        if (lis[1].equals(match.getTeam1().getPlayer1().getName())) {
-             player = match.getTeam1().getPlayer1();
-        } else if (lis[1].equals(match.getTeam1().getPlayer2().getName())) {
-             player = match.getTeam1().getPlayer2();
-        } else if (lis[1].equals(match.getTeam2().getPlayer1().getName())) {
-             player = match.getTeam2().getPlayer1();
-        } else if (lis[1].equals(match.getTeam2().getPlayer2().getName())) {
-             player =  match.getTeam2().getPlayer2();
-        }
+
+//        String[] lis = massege.split("/");
+//        Player player = null;
+//        if (lis[1].equals(match.getTeam1().getPlayer1().getName())) {
+//             player = match.getTeam1().getPlayer1();
+//        } else if (lis[1].equals(match.getTeam1().getPlayer2().getName())) {
+//             player = match.getTeam1().getPlayer2();
+//        } else if (lis[1].equals(match.getTeam2().getPlayer1().getName())) {
+//             player = match.getTeam2().getPlayer1();
+//        } else if (lis[1].equals(match.getTeam2().getPlayer2().getName())) {
+//             player =  match.getTeam2().getPlayer2();
+//        }
 //        Player player = new Player()
-        ArrayList<Card> hand = player.getHand();
+//        ArrayList<Card> hand = player.getHand();
         
             
-//        ArrayList<Card> hand = new ArrayList<>();
-//        if (massege.startsWith("Cards")) {
-//            String[] list = massege.split("/");
-//            for (int i = 1; i < list.length; i++) {
-//                hand.add(Card.ConvertPlayingCards(list[i]));
-//            }
-//        }
+        ArrayList<Card> hand = new ArrayList<>();
+        if (massege.startsWith("Cards")) {
+            String[] list = massege.split("/");
+            for (int i = 1; i < list.length; i++) {
+                hand.add(Card.ConvertPlayingCards(list[i]));
+            }
+        }
 //        hand.add(new Card(CardSuit.Hearts, Rank.Five));
 //        hand.add(new Card(CardSuit.Clubs, Rank.Six));
 //        hand.add(new Card(CardSuit.Diamonds, Rank.Five));

@@ -45,20 +45,26 @@ public class Client implements Runnable {
     public void run() {
         setMatch(Server.getMatch());
         String msg;
+        boolean isFirstTime = true;
         try {
             while (running && ((msg = in.readLine()) != null)) {
                 System.out.println("Received: " + msg);
                 if (msg.equals("GAME_START")) {
                       setGameStarted(true);
 //                    sendMessage("GET_PANEL");
-                    sendMessage("SHOW_HAND");
-
+                      sendMessage("SHOW_HAND");
+//                    out.println("SHOW_HAND");
                     System.out.println("Game has started!");
                 } else if (msg.startsWith("PLAYER_COUNT:")) {
                     PLAYER_COUNT = Integer.valueOf(msg);
-                } else if (msg.startsWith("Cards")) {
-                    new GamePanel(getName() , getMatch());
+                } else if (msg.startsWith("Cards")&& isFirstTime) {
+                    isFirstTime = false;
+                    System.out.println("FFFFFFFFFFFFFFFFFFFFFFFUCK");
+                    GamePanel gamePanel = new GamePanel(msg);
                     sendMessage("Fuck");
+                } else if (msg.startsWith("yes")) {
+                    System.out.println("sexxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+                    break;
                 }
             }
         } catch (IOException e) {
@@ -73,7 +79,7 @@ public class Client implements Runnable {
     }
     public boolean connect() {
             try {
-                socket = new Socket("192.168.10.140", 4000);
+                socket = new Socket("localhost", 4001);
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 out = new PrintWriter(socket.getOutputStream(), true);
                 System.out.println("Connected to server.");
@@ -91,10 +97,10 @@ public class Client implements Runnable {
             }
     }
     public void sendMessage(String message) {
-        if (Objects.equals(message, getName()) && out != null) {
+        if (Objects.equals(message, getName())) {
             out.println(message);
         }
-        else   {
+        else {
             out.println(message + "/" +  getName());
         }
     }
