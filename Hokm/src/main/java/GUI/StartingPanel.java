@@ -24,10 +24,10 @@ public class StartingPanel {
         frame.setResizable(false);
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(2, 1));
-        ImageIcon createGameIcon = new ImageIcon("images\\Join4.png");
-        ImageIcon joinGameIcon = new ImageIcon("images\\Join3.png");
+        ImageIcon createGameIcon = new ImageIcon("Hokm\\images\\Join4.png");
+        ImageIcon joinGameIcon = new ImageIcon("Hokm\\images\\Join3.png");
 
-        JButton createGame = new JButton("", createGameIcon);
+        JButton createGame = new JButton("Create Game", createGameIcon);
         JButton joinGame = new JButton("Join Game", joinGameIcon);
         createGame.setToolTipText("Create game for playing :)");
         joinGame.setToolTipText("Join game for playing :)");
@@ -38,7 +38,7 @@ public class StartingPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.setVisible(false);
-                Frame startframe = createGame("Token number");
+                Frame startframe = createGame();
                 startframe.setVisible(true);
             }
         });
@@ -77,13 +77,13 @@ public class StartingPanel {
         }
     }
 
-    public Frame createGame(String Token) {
+    public Frame createGame() {
         JFrame frame = new JFrame("Create Game");
         frame.setSize(600, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
-        BackgroundPanel panel = new BackgroundPanel("images\\Game.png");
+        BackgroundPanel panel = new BackgroundPanel("Hokm\\images\\Game.png");
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
 
@@ -112,17 +112,33 @@ public class StartingPanel {
                 Client client = new Client(ID, Server.match);
 
                 if (client.connect()) {
-                    JOptionPane info = new JOptionPane("Connected to server. \n Waiting for players to join...");
+                    JOptionPane info = new JOptionPane("Connected to server. \n Waiting for players to join...",JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{},null);
                     client.sendMessage(ID);
 
                     JDialog dialog = info.createDialog("");
+                    dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+                    dialog.setModal(false);
                     dialog.setVisible(true);
 
-                    if (client.isGameStarted()) {
-                        frame.setVisible(false);
-                        dialog.setVisible(false);
-//                        SwingUtilities.invokeLater(() -> new GamePanel());
-                    }
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            while (!client.isGameStarted()) {
+                                try {
+                                    Thread.sleep(100);
+                                } catch (InterruptedException ex) {
+                                    ex.printStackTrace();
+                                }
+                            }
+                            SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    dialog.setVisible(false);
+                                    frame.setVisible(false);
+                                }
+                            });
+                        }
+                    }).start();
                 } else {
                     JOptionPane.showMessageDialog(frame, "Couldn't connect to server! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
@@ -160,7 +176,7 @@ public class StartingPanel {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
-        BackgroundPanel panel = new BackgroundPanel("images\\Game.png");
+        BackgroundPanel panel = new BackgroundPanel("Hokm\\images\\Game.png");
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
 
@@ -190,22 +206,38 @@ public class StartingPanel {
                 Client client = new Client(ID, Server.match);
 
                 if (client.connect()) {
-                    JOptionPane info = new JOptionPane("Connected to server. \n Waiting for players to join...");
+                    JOptionPane info = new JOptionPane("Connected to server. \n Waiting for players to join...", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
                     client.sendMessage(ID);
 
-                    JDialog dialog = info.createDialog("");
+                    JDialog dialog = info.createDialog("Info");
+                    dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+                    dialog.setModal(false);
                     dialog.setVisible(true);
-
-                    if (client.isGameStarted()) {
-                        frame.setVisible(false);
-                        dialog.setVisible(false);
-//                        SwingUtilities.invokeLater(() -> new GamePanel(client));
-                    }
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            while (!client.isGameStarted()) {
+                                try {
+                                    Thread.sleep(100);
+                                } catch (InterruptedException ex) {
+                                    ex.printStackTrace();
+                                }
+                            }
+                            SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    dialog.setVisible(false);
+                                    frame.setVisible(false);
+                                }
+                            });
+                        }
+                    }).start();
                 } else {
                     JOptionPane.showMessageDialog(frame, "Couldn't connect to server! Try again.", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
+
 
         gbc.gridx = 0;
         gbc.gridy = 0;

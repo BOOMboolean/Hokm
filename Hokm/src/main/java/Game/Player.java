@@ -10,7 +10,7 @@ public class Player {
     private ArrayList<Card> hand;
     private Card playingCard;
     private Match playerMatch;
-    public Player(String name , Match match) {
+    public Player(String name, Match match) {
         this.playerMatch = match;
         this.Name = name;
         this.isHakem = false;
